@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yash Dugar — AI-native builder. Data-driven thinker.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --surface: #f9f9f6;
+      --surface-dim: #dadad7;
+      --primary: #1a6fd1;
+      --text: #1f1f1f;
+      --text-muted: #6b6b6b;
+      --card: #ffffff;
+      --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+      --r4: 4px;
+      --r8: 8px;
+      --r12: 12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Hanken Grotesk', system-ui, sans-serif;
+      background: var(--surface);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(249,249,246,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--surface-dim);
+      padding: 12px 0;
+    }
+    nav .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    nav a.btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: var(--r4);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    nav a.btn:hover {
+      background: #1457a3;
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+    }
+    .filler { height: 56px; }
+
+    /* Hero */
+    .hero {
+      padding: 96px 0 80px;
+    }
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+    .hero-text {
+      flex: 1;
+      min-width: 0;
+    }
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+    .hero h1 i {
+      color: var(--primary);
+      font-weight: 500;
+    }
+    .hero-meta {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+    .hero-img {
+      flex-shrink: 0;
+      width: 320px;
+      height: 400px;
+      border-radius: var(--r8);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Logos */
+    .logos { padding: 40px 0; }
+    .logos h6 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .logos-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .logos-list .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--card);
+      border: 1px solid var(--surface-dim);
+      border-radius: var(--r4);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .logos-list .pill:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .logos-list .pill .dot {
+      width: 4px; height: 4px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+
+    /* Sections */
+    section { padding: 64px 0; }
+    .section-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    /* Chapter cards */
+    .chapter {
+      background: var(--card);
+      border: 1px solid var(--surface-dim);
+      border-radius: var(--r8);
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-xs);
+      transition: all 0.2s;
+    }
+    .chapter.active {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .chapter-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      cursor: pointer;
+      gap: 16px;
+    }
+    .chapter-left {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .chapter-num {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .chapter-num i {
+      font-size: 24px;
+      line-height: 1.2;
+    }
+    .chapter.active .chapter-num,
+    .chapter.active .chapter-num i {
+      color: var(--primary);
+    }
+    .chapter h2 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .chapter-org {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .chapter-tag {
+      font-size: 12px;
+      color: var(--primary);
+      background: rgba(26, 111, 209, 0.08);
+      padding: 4px 8px;
+      border-radius: var(--r4);
+      white-space: nowrap;
+      font-weight: 500;
+    }
+    .chapter.active .chapter-tag {
+      background: var(--primary);
+      color: white;
+    }
+    .chapter-toggle {
+      font-size: 18px;
+      color: var(--text-muted);
+      transition: 0.2s;
+    }
+    .chapter.active .chapter-toggle {
+      color: var(--primary);
+    }
+    .chapter-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .chapter.active .chapter-body {
+      max-height: 800px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--surface-dim);
+    }
+    .chapter-body ul {
+      list-style: none;
+    }
+    .chapter-body li {
+      font-size: 14px;
+      color: var(--text);
+      padding: 6px 0;
+      padding-left: 16px;
+      position: relative;
+    }
+    .chapter-body li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 13px;
+      width: 4px; height: 4px;
+      background: var(--surface-dim);
+      border-radius: 50%;
+    }
+
+    /* Education grid */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--surface-dim);
+      border-radius: var(--r8);
+      padding: 20px;
+    }
+    .edu-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .edu-card .meta {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .edu-chip {
+      display: inline-block;
+      font-size: 12px;
+      color: var(--primary);
+      background: rgba(26, 111, 209, 0.08);
+      padding: 4px 8px;
+      border-radius: var(--r4);
+      margin-top: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    /* Marquee */
+    .marquee-wrap {
+      overflow: hidden;
+      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+    .marquee {
+      display: flex;
+      gap: 16px;
+      animation: marquee 30s linear infinite;
+      width: max-content;
+    }
+    .marquee:hover {
+      animation-play-state: paused;
+    }
+    .win-pill {
+      background: var(--card);
+      border: 1px solid var(--surface-dim);
+      border-radius: var(--r4);
+      padding: 10px 16px;
+      font-size: 13px;
+      white-space: nowrap;
+      font-weight: 500;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Projects */
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--surface-dim);
+      border-radius: var(--r8);
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+    .project-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .project-card .period {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .project-card ul { list-style: none; }
+    .project-card li {
+      font-size: 14px;
+      padding: 4px 0;
+      color: var(--text);
+    }
+    .project-card a {
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* Beliefs */
+    .belief {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: clamp(20px, 4vw, 32px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--surface-dim);
+    }
+    .belief:last-child { border-bottom: none; }
+    .belief em {
+      font-weight: 500;
+      color: var(--primary);
+      font-style: italic;
+    }
+
+    /* Footer */
+    footer {
+      padding: 64px 0;
+      text-align: center;
+    }
+    footer h2 {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    footer .email {
+      font-size: 18px;
+      color: var(--text);
+    }
+    footer .email a {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    @media (max-width: 720px) {
+      .hero-inner {
+        flex-direction: column-reverse;
+        gap: 32px;
+      }
+      .hero-img {
+        width: 240px;
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container nav-inner">
+      <div class="logo">Yash Dugar</div>
+      <a href="mailto:yash.dugar@mastersunion.org" class="btn">Get in touch</a>
+    </div>
+  </nav>
+  <div class="filler"></div>
+
+  <header class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <h1>AI-native builder.<br/>Data-driven <i>thinker.</i></h1>
+        <p class="hero-meta">Delhi, India · Masters' Union '27 · CFA L2 Candidate</p>
+      </div>
+      <div class="hero-img">
+        <img src="./profile.jpg" alt="Yash Dugar" />
+      </div>
+    </div>
+  </header>
+
+  <div class="logos">
+    <div class="container">
+      <h6>Associations</h6>
+      <div class="logos-list">
+        <span class="pill"><span class="dot"></span>Madverse</span>
+        <span class="pill"><span class="dot"></span>Veriseek</span>
+        <span class="pill"><span class="dot"></span>Youse AI</span>
+        <span class="pill"><span class="dot"></span>Masters' Union</span>
+        <span class="pill"><span class="dot"></span>Microsoft</span>
+        <span class="pill"><span class="dot"></span>Swiggy Instamart</span>
+        <span class="pill"><span class="dot"></span>Wharton</span>
+        <span class="pill"><span class="dot"></span>Perplexity</span>
+        <span class="pill"><span class="dot"></span>Google</span>
+        <span class="pill"><span class="dot"></span>CFA Institute</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="experience">
+    <div class="container">
+      <div class="section-label">Experience</div>
+
+      <div class="chapter" onclick="toggleChapter(this)">
+        <div class="chapter-head">
+          <div class="chapter-left">
+            <div class="chapter-num"><i>I</i><br/>CHAPTER</div>
+            <div>
+              <h2>Founder's Office Intern</h2>
+              <p class="chapter-org">Veriseek Education · May '24 – Aug '24</p>
+            </div>
+          </div>
+          <span class="chapter-tag">EdTech</span>
+          <span class="chapter-toggle">+</span>
+        </div>
+        <div class="chapter-body">
+          <ul>
+            <li>Conducted secondary research on India's ed-tech landscape to develop a B-plan for the higher ed vertical</li>
+            <li>Created 50+ gamified slides on Accounting and Finance to enhance course engagement</li>
+            <li>Tested in-house LMS, identified 10+ bugs, recommended 5+ improvements that enhanced functionality</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chapter" onclick="toggleChapter(this)">
+        <div class="chapter-head">
+          <div class="chapter-left">
+            <div class="chapter-num"><i>II</i><br/>CHAPTER</div>
+            <div>
+              <h2>Founder's Office GTM Intern</h2>
+              <p class="chapter-org">Youse AI · Jan '25 – Mar '25</p>
+            </div>
+          </div>
+          <span class="chapter-tag">B2B SaaS</span>
+          <span class="chapter-toggle">+</span>
+        </div>
+        <div class="chapter-body">
+          <ul>
+            <li>Led lead generation, reaching out to 1,000+ companies via LinkedIn and email</li>
+            <li>Oversaw B2B SaaS sales processes for Kandid AI, booked 40+ sales calls, accelerated user acquisition</li>
+            <li>Developed 20+ Demo AI agents for D2C brands, enhancing their conversion rates</li>
+            <li>Assisted the Founder & CEO in driving various marketing and product initiatives</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chapter" onclick="toggleChapter(this)">
+        <div class="chapter-head">
+          <div class="chapter-left">
+            <div class="chapter-num"><i>III</i><br/>CHAPTER</div>
+            <div>
+              <h2>Founder's Office Intern</h2>
+              <p class="chapter-org">Veriseek Education · Mar '25 – Aug '25</p>
+            </div>
+          </div>
+          <span class="chapter-tag">EdTech</span>
+          <span class="chapter-toggle">+</span>
+        </div>
+        <div class="chapter-body">
+          <ul>
+            <li>Built a 10+ member team for the Sharkathon Program</li>
+            <li>Designed curriculum for Sharkathon 2025, resulting in 125+ paying users</li>
+            <li>Achieved ₹4.3 lakh+ GMV with 40%+ project profitability by optimizing workflows</li>
+            <li>Implemented AI-driven workflows, enhancing team efficiency</li>
+            <li>Mentored 3 junior interns, accelerating their skill growth</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chapter" onclick="toggleChapter(this)">
+        <div class="chapter-head">
+          <div class="chapter-left">
+            <div class="chapter-num"><i>IV</i><br/>CHAPTER</div>
+            <div>
+              <h2>Founder's Office Intern</h2>
+              <p class="chapter-org">Madverse Music Group · Jan '26 – May '26</p>
+            </div>
+          </div>
+          <span class="chapter-tag">Music x AI</span>
+          <span class="chapter-toggle">+</span>
+        </div>
+        <div class="chapter-body">
+          <ul>
+            <li>Owned initiatives across Fundraising, M&A, Product, Analytics, Content, HR, and Agentic Automations</li>
+            <li>Built 5+ agentic automations to eliminate manual overhead across core business functions</li>
+            <li>Analyzed 7+ music catalogues for acquisition/advance decisions under Madverse Capital</li>
+            <li>Built a Python-based secure internal tool for financial due diligence of music catalogues</li>
+            <li>Grew founder's LinkedIn presence by 17%+ in followers and 70%+ in impressions within 4 months</li>
+            <li>Delivered 10+ assets: research reports, investor decks, B-plans, MIS, financial models, and BI dashboards</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="container">
+      <div class="section-label">Education</div>
+      <div class="edu-grid">
+        <div class="edu-card">
+          <h3>Masters' Union</h3>
+          <p class="meta">Technology & Business Management · Aug '23 – Jul '27</p>
+          <p class="meta">#2 Dean's List · CFA L2 Candidate</p>
+        </div>
+        <div class="edu-card">
+          <h3>Kirori Mal College, DU</h3>
+          <p class="meta">UG Certificate in Commerce · Nov '22 – Jul '23</p>
+        </div>
+        <div class="edu-card">
+          <h3>Ralli International School</h3>
+          <p class="meta">Class 12 · 99.4% · Acharya Tulsi Gold Medal · Apr '19 – Mar '22</p>
+        </div>
+      </div>
+      <div class="edu-chip">CUET 2022 — AIR 1 in English & Business Studies</div>
+    </div>
+  </section>
+
+  <section id="wins">
+    <div class="container">
+      <div class="section-label">Wins & Highlights</div>
+    </div>
+    <div class="marquee-wrap">
+      <div class="marquee">
+        <span class="win-pill">Wharton — Global Semi-finalist (Top 50)</span>
+        <span class="win-pill">Winner · Maverion 2026 (Swiggy Instamart)</span>
+        <span class="win-pill">Runner Up · Microsoft × Interview Club GenAI Hackathon</span>
+        <span class="win-pill">Runner Up · MS Excel Hackathon</span>
+        <span class="win-pill">15+ National Case Competition Finals</span>
+        <span class="win-pill">1,000+ Students Taught · 8 Cities</span>
+        <span class="win-pill">200+ Comet Activations · Perplexity Campus Partner</span>
+        <span class="win-pill">Co-managing UGIF</span>
+        <span class="win-pill">Wharton — Global Semi-finalist (Top 50)</span>
+        <span class="win-pill">Winner · Maverion 2026 (Swiggy Instamart)</span>
+        <span class="win-pill">Runner Up · Microsoft × Interview Club GenAI Hackathon</span>
+        <span class="win-pill">Runner Up · MS Excel Hackathon</span>
+        <span class="win-pill">15+ National Case Competition Finals</span>
+        <span class="win-pill">1,000+ Students Taught · 8 Cities</span>
+        <span class="win-pill">200+ Comet Activations · Perplexity Campus Partner</span>
+        <span class="win-pill">Co-managing UGIF</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <div class="section-label">Projects</div>
+
+      <div class="project-card">
+        <h3>Drop Shipping Business</h3>
+        <p class="period">Nov '23 – Feb '24</p>
+        <ul>
+          <li>Achieved GMV of ₹2.5L+ in 3 months via Targeted Ads on Meta Platforms</li>
+          <li>Built website, sourced products, maintained accounts, designed GTM strategy</li>
+          <li>Ranked Top 4/25+ teams · Marketing Maestro Award</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <h3>180° Consulting × Falhari</h3>
+        <p class="period">Shark Tank S1 · 2-Month Live Project</p>
+        <ul>
+          <li>Achieved 10/10 CSAT for consultation during 2-month live project</li>
+          <li>Formulated 5+ Marketing & Expansion Strategies</li>
+          <li>Developed 20+ Product Development & Waste Reduction Methods</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <h3>Madverse Capital Catalogue Tool</h3>
+        <ul>
+          <li>Built a Python-based secure internal tool for financial due diligence of music catalogues</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <h3>Off-Campus — Masters' Union</h3>
+        <p class="period">Live Project</p>
+        <ul>
+          <li>Visited Cityfurnish (YC W19) — explored full-stack manufacturing-to-delivery model</li>
+          <li>Visited Eupheus Learning (Series C) — explored B2B school model, product suite</li>
+          <li>Interacted with 10+ Management Leaders across both companies</li>
+          <li>Featured in <a href="https://www.youtube.com/watch?v=82kxP7OaYcE">Cityfurnish Episode</a> · <a href="https://www.youtube.com/watch?v=m3tEaS3GBh0">Eupheus Learning Episode</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="beliefs">
+    <div class="container">
+      <div class="section-label">Beliefs</div>
+      <div class="belief">1 — Speed of <em>execution</em> &gt; perfection.</div>
+      <div class="belief">2 — Data should tell a <em>story</em>, not just a number.</div>
+      <div class="belief">3 — The biggest risk is <em>not taking a risk</em>.</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <h2>If you're building something ambitious — let's talk.</h2>
+      <p class="email">yash.dugar@mastersunion.org · <a href="https://linkedin.com/in/yash--dugar">LinkedIn</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleChapter(el) {
+      const isActive = el.classList.contains('active');
+      document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
+      if (!isActive) el.classList.add('active');
+    }
+  </script>
+</body>
+</html>
