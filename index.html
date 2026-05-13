@@ -334,6 +334,42 @@
       color: var(--text-muted);
     }
 
+    /* Skills */
+    .skills-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .skills-group h4 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .skills-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .skill-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      background: var(--card);
+      border: 1px solid var(--surface-dim);
+      border-radius: var(--r4);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    .skill-tag:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
     /* Projects */
     .project-card {
       background: var(--card);
@@ -580,6 +616,39 @@
         <li><span class="win-title">200+ Comet Activations</span> <span class="win-detail">· Perplexity Campus Partner</span></li>
         <li><span class="win-title">Co-managed UGIF</span> <span class="win-detail">· Undergraduate Investment Fund · Multi-asset class</span></li>
       </ul>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <div class="section-label">Skills</div>
+      <div class="skills-grid">
+        <div class="skills-group">
+          <h4>Technical</h4>
+          <div class="skills-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">AI Agents</span>
+            <span class="skill-tag">Data Analytics</span>
+            <span class="skill-tag">Financial Modeling</span>
+            <span class="skill-tag">Financial Analysis</span>
+          </div>
+        </div>
+        <div class="skills-group">
+          <h4>Domain</h4>
+          <div class="skills-tags">
+            <span class="skill-tag">Investment Management</span>
+            <span class="skill-tag">B2B SaaS Sales</span>
+            <span class="skill-tag">Entrepreneurship</span>
+          </div>
+        </div>
+        <div class="skills-group">
+          <h4>Soft Skills</h4>
+          <div class="skills-tags">
+            <span class="skill-tag">Team Leadership</span>
+            <span class="skill-tag">Communication</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
