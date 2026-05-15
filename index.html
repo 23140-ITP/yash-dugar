@@ -144,19 +144,23 @@
     }
     .hero-img img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* Logo Marquee */
+    /* Logo Strip */
     .logos {
       padding: 32px 0;
-      overflow: hidden;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       position: relative;
     }
+    .logos::-webkit-scrollbar { display: none; }
     .logos::before,
     .logos::after {
       content: '';
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 80px;
+      width: 48px;
       z-index: 2;
       pointer-events: none;
     }
@@ -173,12 +177,7 @@
       align-items: center;
       gap: 20px;
       width: max-content;
-      animation: marquee 22s linear infinite;
-    }
-    .logos-track:hover { animation-play-state: paused; }
-    @keyframes marquee {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+      padding-right: 24px;
     }
     .logo-item {
       display: inline-flex;
@@ -404,6 +403,10 @@
       .hero-img { width: 240px; height: 300px; }
       .nav-links { display: none; }
       .filler { height: 56px; }
+      .chapter-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
@@ -436,25 +439,17 @@
     </div>
   </header>
 
-  <!-- Logo marquee -->
   <div class="logos">
-    <div class="logos-track">
-      <!-- set 1 -->
-      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" /></a>
-      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" /></a>
-      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" /></a>
-      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" /></a>
-      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" /></a>
-      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" /></a>
-      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" /></a>
-      <!-- set 2 (duplicate for seamless loop) -->
-      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" /></a>
-      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" /></a>
-      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" /></a>
-      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" /></a>
-      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" /></a>
-      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" /></a>
-      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" /></a>
+    <div class="container">
+      <div class="logos-track">
+        <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" /></a>
+        <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" /></a>
+        <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" /></a>
+        <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" /></a>
+        <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" /></a>
+        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" /></a>
+        <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" /></a>
+      </div>
     </div>
   </div>
 
@@ -468,17 +463,20 @@
             <div class="chapter-num"><i>I</i><br/>CHAPTER</div>
             <div>
               <h2>Founder's Office Intern</h2>
-              <p class="chapter-org">Veriseek Education · Summer '24</p>
+              <p class="chapter-org">Madverse Music Group · Winter '26</p>
             </div>
           </div>
-          <span class="chapter-tag">EdTech - K12</span>
+          <span class="chapter-tag">B2C SaaS for Music Artists</span>
           <span class="chapter-toggle">+</span>
         </div>
         <div class="chapter-body">
           <ul>
-            <li>Conducted secondary research on India's ed-tech landscape to develop a B-plan for the higher ed vertical</li>
-            <li>Created 50+ gamified slides on Accounting and Finance to enhance course engagement</li>
-            <li>Tested in-house LMS, identified 10+ bugs, recommended 5+ improvements that enhanced functionality</li>
+            <li>Owned initiatives across Fundraising, M&A, Product, Analytics, Content, HR, and Agentic Automations</li>
+            <li>Built 5+ agentic automations to eliminate manual overhead across core business functions</li>
+            <li>Analyzed 7+ music catalogues for acquisition/advance decisions under Madverse Capital</li>
+            <li>Built a Python-based secure internal tool for financial due diligence of music catalogues</li>
+            <li>Grew founder's LinkedIn presence by 17%+ in followers and 70%+ in impressions within 4 months</li>
+            <li>Delivered 10+ assets: research reports, investor decks, B-plans, MIS, financial models, and BI dashboards</li>
           </ul>
         </div>
       </div>
@@ -487,28 +485,6 @@
         <div class="chapter-head">
           <div class="chapter-left">
             <div class="chapter-num"><i>II</i><br/>CHAPTER</div>
-            <div>
-              <h2>Founder's Office GTM Intern</h2>
-              <p class="chapter-org">Youse AI · Winter '25</p>
-            </div>
-          </div>
-          <span class="chapter-tag">B2B SaaS for D2C Brands</span>
-          <span class="chapter-toggle">+</span>
-        </div>
-        <div class="chapter-body">
-          <ul>
-            <li>Led lead generation, reaching out to 1,000+ companies via LinkedIn and email</li>
-            <li>Oversaw B2B SaaS sales processes for Kandid AI, booked 40+ sales calls, accelerated user acquisition</li>
-            <li>Developed 20+ Demo AI agents for D2C brands, enhancing their conversion rates</li>
-            <li>Assisted the Founder & CEO in driving various marketing and product initiatives</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="chapter" onclick="toggleChapter(this)">
-        <div class="chapter-head">
-          <div class="chapter-left">
-            <div class="chapter-num"><i>III</i><br/>CHAPTER</div>
             <div>
               <h2>Founder's Office Intern</h2>
               <p class="chapter-org">Veriseek Education · Summer '25</p>
@@ -531,23 +507,42 @@
       <div class="chapter" onclick="toggleChapter(this)">
         <div class="chapter-head">
           <div class="chapter-left">
-            <div class="chapter-num"><i>IV</i><br/>CHAPTER</div>
+            <div class="chapter-num"><i>III</i><br/>CHAPTER</div>
             <div>
-              <h2>Founder's Office Intern</h2>
-              <p class="chapter-org">Madverse Music Group · Winter '26</p>
+              <h2>Founder's Office GTM Intern</h2>
+              <p class="chapter-org">Youse AI · Winter '25</p>
             </div>
           </div>
-          <span class="chapter-tag">B2C SaaS for Music Artists</span>
+          <span class="chapter-tag">B2B SaaS for D2C Brands</span>
           <span class="chapter-toggle">+</span>
         </div>
         <div class="chapter-body">
           <ul>
-            <li>Owned initiatives across Fundraising, M&A, Product, Analytics, Content, HR, and Agentic Automations</li>
-            <li>Built 5+ agentic automations to eliminate manual overhead across core business functions</li>
-            <li>Analyzed 7+ music catalogues for acquisition/advance decisions under Madverse Capital</li>
-            <li>Built a Python-based secure internal tool for financial due diligence of music catalogues</li>
-            <li>Grew founder's LinkedIn presence by 17%+ in followers and 70%+ in impressions within 4 months</li>
-            <li>Delivered 10+ assets: research reports, investor decks, B-plans, MIS, financial models, and BI dashboards</li>
+            <li>Led lead generation, reaching out to 1,000+ companies via LinkedIn and email</li>
+            <li>Oversaw B2B SaaS sales processes for Kandid AI, booked 40+ sales calls, accelerated user acquisition</li>
+            <li>Developed 20+ Demo AI agents for D2C brands, enhancing their conversion rates</li>
+            <li>Assisted the Founder & CEO in driving various marketing and product initiatives</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chapter" onclick="toggleChapter(this)">
+        <div class="chapter-head">
+          <div class="chapter-left">
+            <div class="chapter-num"><i>IV</i><br/>CHAPTER</div>
+            <div>
+              <h2>Founder's Office Intern</h2>
+              <p class="chapter-org">Veriseek Education · Summer '24</p>
+            </div>
+          </div>
+          <span class="chapter-tag">EdTech - K12</span>
+          <span class="chapter-toggle">+</span>
+        </div>
+        <div class="chapter-body">
+          <ul>
+            <li>Conducted secondary research on India's ed-tech landscape to develop a B-plan for the higher ed vertical</li>
+            <li>Created 50+ gamified slides on Accounting and Finance to enhance course engagement</li>
+            <li>Tested in-house LMS, identified 10+ bugs, recommended 5+ improvements that enhanced functionality</li>
           </ul>
         </div>
       </div>
