@@ -23,6 +23,7 @@
       --r12: 12px;
     }
 
+    html { scroll-behavior: smooth; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -58,11 +59,40 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 24px;
     }
     nav .logo {
       font-size: 18px;
       font-weight: 700;
       letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .nav-link {
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: var(--r4);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .nav-link:hover {
+      color: var(--primary);
+      background: rgba(26, 111, 209, 0.08);
+      text-decoration: none;
+    }
+    .nav-link.active {
+      color: var(--primary);
+      background: rgba(26, 111, 209, 0.12);
+      font-weight: 600;
     }
     nav a.btn {
       background: var(--primary);
@@ -74,6 +104,7 @@
       font-weight: 600;
       cursor: pointer;
       text-decoration: none;
+      white-space: nowrap;
     }
     nav a.btn:hover {
       background: #1457a3;
@@ -168,7 +199,10 @@
     }
 
     /* Sections */
-    section { padding: 64px 0; }
+    section {
+      padding: 64px 0;
+      scroll-margin-top: 64px;
+    }
     .section-label {
       font-size: 12px;
       text-transform: uppercase;
@@ -451,6 +485,10 @@
         width: 240px;
         height: 300px;
       }
+      .nav-links {
+        display: none;
+      }
+      .filler { height: 56px; }
     }
   </style>
 </head>
@@ -458,6 +496,14 @@
   <nav>
     <div class="container nav-inner">
       <div class="logo">Yash Dugar</div>
+      <div class="nav-links">
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#education" class="nav-link">Education</a>
+        <a href="#wins" class="nav-link">Wins</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#beliefs" class="nav-link">Beliefs</a>
+      </div>
       <a href="mailto:yash.dugar@mastersunion.org" class="btn">Get in touch</a>
     </div>
   </nav>
@@ -731,6 +777,32 @@
       document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
       if (!isActive) el.classList.add('active');
     }
+
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    function setActiveNav() {
+      const scrollY = window.scrollY + 120;
+      let currentId = '';
+
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        if (scrollY >= top && scrollY < top + height) {
+          currentId = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentId}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', setActiveNav);
+    window.addEventListener('load', setActiveNav);
   </script>
 </body>
 </html>
