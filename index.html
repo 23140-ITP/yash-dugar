@@ -336,30 +336,102 @@
     .wins-list li span.win-title { font-weight: 600; color: var(--text); }
     .wins-list li span.win-detail { color: var(--text-muted); }
 
-    /* Skills */
-    .skills-grid { display: flex; flex-direction: column; gap: 20px; }
-    .skills-group h4 {
+    /* ── Skills ── */
+    .skills-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .skill-category-label {
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
+      font-weight: 700;
       color: var(--text-muted);
-      font-weight: 600;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
-    .skills-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .skill-tag {
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    /* Technical pills — solid primary background */
+    .pill-tech {
       display: inline-flex;
       align-items: center;
-      padding: 6px 14px;
+      padding: 8px 16px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      cursor: default;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 2px 6px rgba(26,111,209,0.25);
+    }
+    .pill-tech:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(26,111,209,0.35);
+    }
+    /* Domain pills — outlined */
+    .pill-domain {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 16px;
       background: var(--card);
-      border: 1px solid var(--surface-dim);
-      border-radius: var(--r4);
+      color: var(--text);
+      border: 1.5px solid var(--surface-dim);
+      border-radius: 999px;
       font-size: 13px;
       font-weight: 500;
-      color: var(--text);
-      transition: all 0.2s;
+      cursor: default;
+      transition: border-color 0.15s, color 0.15s, transform 0.15s;
     }
-    .skill-tag:hover { border-color: var(--primary); color: var(--primary); }
+    .pill-domain:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* ── Tool Stack ── */
+    .tool-stack-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .tool-cluster-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .tool-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pill-tool {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 12px;
+      background: var(--card);
+      border: 1px solid var(--surface-dim);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: default;
+      transition: border-color 0.15s, color 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+    .pill-tool:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-xs);
+    }
 
     /* Beliefs */
     .belief {
@@ -389,10 +461,11 @@
       .hero-img { width: 240px; height: 300px; }
       .nav-links { display: none; }
       .filler { height: 56px; }
-      .chapter-head {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+      .chapter-head { flex-direction: column; align-items: flex-start; }
+      .tool-stack-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .tool-stack-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -406,6 +479,7 @@
         <a href="#wins" class="nav-link">Wins</a>
         <a href="#campus-leadership" class="nav-link">Campus</a>
         <a href="#skills" class="nav-link">Skills</a>
+        <a href="#tool-stack" class="nav-link">Tools</a>
         <a href="#beliefs" class="nav-link">Beliefs</a>
       </div>
       <a href="mailto:yash.dugar@mastersunion.org" class="btn">Get in touch</a>
@@ -417,7 +491,7 @@
     <div class="container hero-inner">
       <div class="hero-text">
         <h1>Data-driven &amp; AI-native <i>Builder</i></h1>
-        <p class="hero-meta">Delhi, India · Masters' Union '27 · CFA L2 Candidate</p>
+        <p class="hero-meta">Delhi, India · Masters’ Union ’27 · CFA L2 Candidate</p>
       </div>
       <div class="hero-img">
         <img src="./YD-PH.png" alt="Yash Dugar" />
@@ -431,7 +505,7 @@
         <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" /></a>
         <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" /></a>
         <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" /></a>
-        <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" /></a>
+        <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters’ Union" /></a>
         <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" /></a>
         <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" /></a>
         <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" /></a>
@@ -448,8 +522,8 @@
           <div class="chapter-left">
             <div class="chapter-num"><i>I</i><br/>CHAPTER</div>
             <div>
-              <h2>Founder's Office Intern</h2>
-              <p class="chapter-org">Madverse Music Group · Winter '26</p>
+              <h2>Founder’s Office Intern</h2>
+              <p class="chapter-org">Madverse Music Group · Winter ’26</p>
             </div>
           </div>
           <span class="chapter-tag">B2C SaaS for Music Artists</span>
@@ -457,11 +531,11 @@
         </div>
         <div class="chapter-body">
           <ul>
-            <li>Owned initiatives across Fundraising, M&A, Product, Analytics, Content, HR, and Agentic Automations</li>
+            <li>Owned initiatives across Fundraising, M&amp;A, Product, Analytics, Content, HR, and Agentic Automations</li>
             <li>Built 5+ agentic automations to eliminate manual overhead across core business functions</li>
             <li>Analyzed 7+ music catalogues for acquisition/advance decisions under Madverse Capital</li>
             <li>Built a Python-based secure internal tool for financial due diligence of music catalogues</li>
-            <li>Grew founder's LinkedIn presence by 17%+ in followers and 70%+ in impressions within 4 months</li>
+            <li>Grew founder’s LinkedIn presence by 17%+ in followers and 70%+ in impressions within 4 months</li>
             <li>Delivered 10+ assets: research reports, investor decks, B-plans, MIS, financial models, and BI dashboards</li>
           </ul>
         </div>
@@ -472,8 +546,8 @@
           <div class="chapter-left">
             <div class="chapter-num"><i>II</i><br/>CHAPTER</div>
             <div>
-              <h2>Founder's Office Intern</h2>
-              <p class="chapter-org">Veriseek Education · Summer '25</p>
+              <h2>Founder’s Office Intern</h2>
+              <p class="chapter-org">Veriseek Education · Summer ’25</p>
             </div>
           </div>
           <span class="chapter-tag">EdTech - K12</span>
@@ -495,8 +569,8 @@
           <div class="chapter-left">
             <div class="chapter-num"><i>III</i><br/>CHAPTER</div>
             <div>
-              <h2>Founder's Office GTM Intern</h2>
-              <p class="chapter-org">Youse AI · Winter '25</p>
+              <h2>Founder’s Office GTM Intern</h2>
+              <p class="chapter-org">Youse AI · Winter ’25</p>
             </div>
           </div>
           <span class="chapter-tag">B2B SaaS for D2C Brands</span>
@@ -507,7 +581,7 @@
             <li>Led lead generation, reaching out to 1,000+ companies via LinkedIn and email</li>
             <li>Oversaw B2B SaaS sales processes for Kandid AI, booked 40+ sales calls, accelerated user acquisition</li>
             <li>Developed 20+ Demo AI agents for D2C brands, enhancing their conversion rates</li>
-            <li>Assisted the Founder & CEO in driving various marketing and product initiatives</li>
+            <li>Assisted the Founder &amp; CEO in driving various marketing and product initiatives</li>
           </ul>
         </div>
       </div>
@@ -517,8 +591,8 @@
           <div class="chapter-left">
             <div class="chapter-num"><i>IV</i><br/>CHAPTER</div>
             <div>
-              <h2>Founder's Office Intern</h2>
-              <p class="chapter-org">Veriseek Education · Summer '24</p>
+              <h2>Founder’s Office Intern</h2>
+              <p class="chapter-org">Veriseek Education · Summer ’24</p>
             </div>
           </div>
           <span class="chapter-tag">EdTech - K12</span>
@@ -526,7 +600,7 @@
         </div>
         <div class="chapter-body">
           <ul>
-            <li>Conducted secondary research on India's ed-tech landscape to develop a B-plan for the higher ed vertical</li>
+            <li>Conducted secondary research on India’s ed-tech landscape to develop a B-plan for the higher ed vertical</li>
             <li>Created 50+ gamified slides on Accounting and Finance to enhance course engagement</li>
             <li>Tested in-house LMS, identified 10+ bugs, recommended 5+ improvements that enhanced functionality</li>
           </ul>
@@ -540,32 +614,32 @@
       <div class="section-label">Education</div>
       <div class="edu-grid">
         <div class="edu-card">
-          <h3>Masters' Union</h3>
-          <p class="meta">Undergraduate · Technology & Business Management · 2023 - 2027</p>
-          <p class="meta">#2 Dean's List · CFA L2 Candidate</p>
+          <h3>Masters’ Union</h3>
+          <p class="meta">Undergraduate · Technology &amp; Business Management · 2023 – 2027</p>
+          <p class="meta">#2 Dean’s List · CFA L2 Candidate</p>
         </div>
         <div class="edu-card">
           <h3>Kirori Mal College, DU</h3>
-          <p class="meta">Undergraduate · UG Certificate in Commerce · 2022 - 2023</p>
+          <p class="meta">Undergraduate · UG Certificate in Commerce · 2022 – 2023</p>
         </div>
         <div class="edu-card">
           <h3>Ralli International School</h3>
-          <p class="meta">High School · Class 12 · 99.4% · Acharya Tulsi Gold Medal · 2019 - 2022</p>
+          <p class="meta">High School · Class 12 · 99.4% · Acharya Tulsi Gold Medal · 2019 – 2022</p>
         </div>
       </div>
-      <div class="edu-chip">CUET 2022 - AIR 1 in English & Business Studies</div>
+      <div class="edu-chip">CUET 2022 — AIR 1 in English &amp; Business Studies</div>
     </div>
   </section>
 
   <section id="wins">
     <div class="container">
-      <div class="section-label">Wins & Highlights</div>
+      <div class="section-label">Wins &amp; Highlights</div>
       <ul class="wins-list">
         <li><span class="win-title">Wharton Global HS Investment Competition</span> <span class="win-detail">· Global Semi-finalist, Top 50 · UPenn, USA</span></li>
         <li><span class="win-title">Maverion 2026</span> <span class="win-detail">· Winner, Business Case Competition · Mesa School of Business × Swiggy Instamart</span></li>
         <li><span class="win-title">48-hr GenAI Hackathon</span> <span class="win-detail">· Runner Up · Microsoft × Interview Club</span></li>
-        <li><span class="win-title">MS Excel Hackathon</span> <span class="win-detail">· Runner Up · Masters' Union × Havish M Consulting</span></li>
-        <li><span class="win-title">15+ National Case Competition Finals</span> <span class="win-detail">· SRCC, SSCBS, IITs, Masters' Union & more</span></li>
+        <li><span class="win-title">MS Excel Hackathon</span> <span class="win-detail">· Runner Up · Masters’ Union × Havish M Consulting</span></li>
+        <li><span class="win-title">15+ National Case Competition Finals</span> <span class="win-detail">· SRCC, SSCBS, IITs, Masters’ Union &amp; more</span></li>
       </ul>
     </div>
   </section>
@@ -574,42 +648,98 @@
     <div class="container">
       <div class="section-label">Campus Leadership &amp; Impact</div>
       <ul class="wins-list">
-        <li><span class="win-title">1,000+ School Students Taught</span> <span class="win-detail">· Finance &amp; AI · 8 Cities · Masters' Union</span></li>
+        <li><span class="win-title">1,000+ School Students Taught</span> <span class="win-detail">· Finance &amp; AI · 8 Cities · Masters’ Union</span></li>
         <li><span class="win-title">200+ Comet Activations</span> <span class="win-detail">· Perplexity Campus Partner</span></li>
         <li><span class="win-title">Co-managed UGIF</span> <span class="win-detail">· Undergraduate Investment Fund · Multi-asset class</span></li>
       </ul>
     </div>
   </section>
 
+  <!-- Skills -->
   <section id="skills">
     <div class="container">
       <div class="section-label">Skills</div>
-      <div class="skills-grid">
-        <div class="skills-group">
-          <h4>Technical</h4>
-          <div class="skills-tags">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">AI Agents</span>
-            <span class="skill-tag">Data Analytics</span>
-            <span class="skill-tag">Financial Modeling</span>
-            <span class="skill-tag">Financial Analysis</span>
+      <div class="skills-layout">
+
+        <div>
+          <div class="skill-category-label">Technical</div>
+          <div class="skill-pills">
+            <span class="pill-tech">Machine Learning</span>
+            <span class="pill-tech">Generative AI</span>
+            <span class="pill-tech">Data Visualization</span>
+            <span class="pill-tech">Business Intelligence</span>
+            <span class="pill-tech">Workflow Automation</span>
+            <span class="pill-tech">Web Scraping</span>
+            <span class="pill-tech">Python</span>
+            <span class="pill-tech">AI Video &amp; Image Generation</span>
+            <span class="pill-tech">AI Music Generation</span>
           </div>
         </div>
-        <div class="skills-group">
-          <h4>Domain</h4>
-          <div class="skills-tags">
-            <span class="skill-tag">Investment Management</span>
-            <span class="skill-tag">B2B SaaS Sales</span>
-            <span class="skill-tag">Entrepreneurship</span>
+
+        <div>
+          <div class="skill-category-label">Domain</div>
+          <div class="skill-pills">
+            <span class="pill-domain">Finance</span>
+            <span class="pill-domain">Strategy</span>
+            <span class="pill-domain">AI Agents</span>
+            <span class="pill-domain">Marketing</span>
+            <span class="pill-domain">Sales</span>
           </div>
         </div>
-        <div class="skills-group">
-          <h4>Soft Skills</h4>
-          <div class="skills-tags">
-            <span class="skill-tag">Team Leadership</span>
-            <span class="skill-tag">Communication</span>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Tool Stack -->
+  <section id="tool-stack">
+    <div class="container">
+      <div class="section-label">Tool Stack</div>
+      <div class="tool-stack-grid">
+
+        <div>
+          <div class="tool-cluster-label">AI &amp; Automation</div>
+          <div class="tool-pills">
+            <span class="pill-tool">n8n</span>
+            <span class="pill-tool">Google AI Studio</span>
+            <span class="pill-tool">Antigravity</span>
+            <span class="pill-tool">Gemini</span>
+            <span class="pill-tool">Perplexity</span>
+            <span class="pill-tool">Comet</span>
           </div>
         </div>
+
+        <div>
+          <div class="tool-cluster-label">Data</div>
+          <div class="tool-pills">
+            <span class="pill-tool">MS Excel</span>
+            <span class="pill-tool">Power BI</span>
+            <span class="pill-tool">Tableau</span>
+            <span class="pill-tool">Data Studio</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="tool-cluster-label">Productivity</div>
+          <div class="tool-pills">
+            <span class="pill-tool">Notion</span>
+            <span class="pill-tool">NotebookLM</span>
+            <span class="pill-tool">Wispr Flow</span>
+            <span class="pill-tool">Google Workspace</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="tool-cluster-label">Creative AI</div>
+          <div class="tool-pills">
+            <span class="pill-tool">Higgsfield</span>
+            <span class="pill-tool">Suno AI</span>
+            <span class="pill-tool">Framer</span>
+            <span class="pill-tool">Gamma</span>
+            <span class="pill-tool">MS PowerPoint</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -617,17 +747,17 @@
   <section id="beliefs">
     <div class="container">
       <div class="section-label">Beliefs</div>
-      <div class="belief">1 - Put <em>integrity</em> first.</div>
-      <div class="belief">2 - Take the <em>risk</em>.</div>
-      <div class="belief">3 - Be willing to be <em>misunderstood</em> for innovation.</div>
-      <div class="belief">4 - Choose <em>execution</em> over perfection.</div>
-      <div class="belief">5 - Keep <em>learning, unlearning, and relearning</em>.</div>
+      <div class="belief">1 — Put <em>integrity</em> first.</div>
+      <div class="belief">2 — Take the <em>risk</em>.</div>
+      <div class="belief">3 — Be willing to be <em>misunderstood</em> for innovation.</div>
+      <div class="belief">4 — Choose <em>execution</em> over perfection.</div>
+      <div class="belief">5 — Keep <em>learning, unlearning, and relearning</em>.</div>
     </div>
   </section>
 
   <footer>
     <div class="container">
-      <h2>If you're building something ambitious - let's talk.</h2>
+      <h2>If you’re building something ambitious — let’s talk.</h2>
       <p class="email">yash.dugar@mastersunion.org · <a href="https://linkedin.com/in/yash--dugar">LinkedIn</a></p>
     </div>
   </footer>
