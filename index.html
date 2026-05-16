@@ -660,66 +660,63 @@
     }
     .ft-top, .ft-bot, .ft-flap, .ft-flap-bot {
       position: absolute;
-      left: 0; right: 0;
-      height: calc(50% - 0.5px);
+      left: 0; right: 0; top: 0; bottom: 0;
       overflow: hidden;
       color: #fff;
-    }
-    .ft-top::after, .ft-flap::after, .ft-flap-bot::after, .ft-bot::after {
-      content: attr(data-char);
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 200%;
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: 'JetBrains Mono', 'Courier New', monospace;
-      font-weight: 700;
-      font-size: clamp(14px, 4.2vw, 56px);
+      font-weight: 800;
+      font-size: clamp(16px, 4.5vw, 58px);
       line-height: 1;
-      color: #fff;
       text-transform: uppercase;
+      user-select: none;
+      backface-visibility: hidden;
     }
-    /* Nudge alignment to fix font-specific vertical offsets */
-    .ft-top::after, .ft-flap::after {
-      top: 0;
-      transform: translateY(1.5%);
+    .ft-top, .ft-flap {
+      clip-path: inset(0 0 50% 0);
+      background: #1a1a1a;
+      z-index: 1;
     }
-    .ft-bot::after, .ft-flap-bot::after {
-      bottom: 0;
-      transform: translateY(-1.5%);
+    .ft-bot, .ft-flap-bot {
+      clip-path: inset(50% 0 0 0);
+      background: #161616;
+      z-index: 1;
+    }
+    
+    .ft-top::after, .ft-bot::after, .ft-flap::after, .ft-flap-bot::after {
+      content: attr(data-char);
     }
 
-    .ft-top { top: 0; background: #1a1a1a; border-radius: 3px 3px 0 0; }
-    .ft-bot { bottom: 0; background: #161616; border-radius: 0 0 3px 3px; }
-    
     .ft-flap {
-      top: 0; background: #222; border-radius: 3px 3px 0 0;
-      transform-origin: bottom center; transform: rotateX(0deg);
-      backface-visibility: hidden; z-index: 3; perspective: 400px;
+      background: #222;
+      transform-origin: center;
+      transform: rotateX(0deg);
+      z-index: 3;
     }
     .ft-flap.dropping {
-      transition: transform 0.18s cubic-bezier(0.55,0.055,0.675,0.19);
-      transform: rotateX(-95deg);
+      transition: transform 0.15s ease-in;
+      transform: rotateX(-90deg);
     }
     .ft-flap-bot {
-      bottom: 0; background: #1a1a1a; border-radius: 0 0 3px 3px;
-      transform-origin: top center; transform: rotateX(90deg);
-      backface-visibility: hidden; z-index: 3;
+      background: #1a1a1a;
+      transform-origin: center;
+      transform: rotateX(90deg);
+      z-index: 2;
     }
     .ft-flap-bot.rising {
-      transition: transform 0.17s cubic-bezier(0.33,1.55,0.64,1);
+      transition: transform 0.15s ease-out;
       transform: rotateX(0deg);
     }
     .ft-split {
       position: absolute; top: 50%; left: 0; right: 0;
-      height: 1px; background: #000; z-index: 10; transform: translateY(-0.5px);
+      height: 1.5px; background: #000; z-index: 10; transform: translateY(-0.75px);
     }
     .ft-stripe {
       position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
       background: repeating-linear-gradient(to bottom, #444 0, #444 1px, transparent 1px, transparent 3px);
-      opacity: 0.3; z-index: 5;
+      opacity: 0.2; z-index: 5;
     }
 
     /* Accents mapping Aceternity colors */
@@ -1098,50 +1095,52 @@
             if(t.current === normalizedTarget) { resolve(); return; }
 
             const scrambleSteps = normalizedTarget === ' ' 
-              ? 8 + Math.floor(Math.random() * 8) 
-              : 25 + Math.floor(Math.random() * 15);
+              ? 6 + Math.floor(Math.random() * 6) 
+              : 15 + Math.floor(Math.random() * 10);
               
             let step = 0;
-            const STEP_MS = 220;
-            const FLIP_MS = 160;
-            const RISE_DELAY = FLIP_MS * 0.45;
+            const FLIP_MS = 140;
 
             function doStep() {
-              const isLast = (step === scrambleSteps);
-              const nextChar = isLast ? normalizedTarget : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+              if (step > scrambleSteps) {
+                // Ensure final state is perfectly clean
+                t.top.setAttribute('data-char', ch(normalizedTarget));
+                t.bot.setAttribute('data-char', ch(normalizedTarget));
+                t.current = normalizedTarget;
+                resolve();
+                return;
+              }
+
+              const nextChar = (step === scrambleSteps) ? normalizedTarget : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
               
-              const useAccent = !isLast && Math.random() < 0.15;
+              const useAccent = (step < scrambleSteps) && Math.random() < 0.1;
               const accent = useAccent ? ACCENTS[Math.floor(Math.random() * ACCENTS.length)] : null;
 
-              // Top static reveals NEXT. Top flap shows CURRENT.
+              // Setup flip
               t.top.setAttribute('data-char', ch(nextChar));
               t.flap.setAttribute('data-char', ch(t.current));
-              
-              // Bottom static shows CURRENT. Bottom flap lands with NEXT.
               t.bot.setAttribute('data-char', ch(t.current));
               t.flapBot.setAttribute('data-char', ch(nextChar));
 
               ACCENTS.forEach(a => t.cell.classList.remove(a));
               if(accent) t.cell.classList.add(accent);
 
+              // Trigger 3D flip
               t.flap.classList.remove('dropping'); void t.flap.offsetWidth; t.flap.classList.add('dropping');
-              t.flapBot.classList.remove('rising');
-              setTimeout(() => { void t.flapBot.offsetWidth; t.flapBot.classList.add('rising'); }, RISE_DELAY);
+              
+              setTimeout(() => {
+                t.flapBot.classList.remove('rising'); void t.flapBot.offsetWidth; t.flapBot.classList.add('rising');
+              }, FLIP_MS * 0.5);
 
-              t.current = nextChar;
-              step++;
-
-              if(!isLast) {
-                setTimeout(doStep, STEP_MS);
-              } else {
-                setTimeout(() => {
-                  ACCENTS.forEach(a => t.cell.classList.remove(a));
-                  t.flap.classList.remove('dropping');
-                  t.flapBot.classList.remove('rising');
-                  t.bot.setAttribute('data-char', ch(normalizedTarget));
-                  resolve();
-                }, FLIP_MS + 40);
-              }
+              // Wait for completion before next step
+              setTimeout(() => {
+                t.current = nextChar;
+                t.bot.setAttribute('data-char', ch(nextChar));
+                t.flap.classList.remove('dropping');
+                t.flapBot.classList.remove('rising');
+                step++;
+                doStep();
+              }, FLIP_MS + 20);
             }
             doStep();
           }, delay);
