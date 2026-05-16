@@ -7,7 +7,7 @@
   <meta name="description" content="Yash Dugar — Data-driven & AI-native builder. Masters' Union '27, CFA L2 Candidate, Delhi, India." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Gochi+Hand&family=Special+Elite&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #ffffff;
@@ -484,72 +484,81 @@
       margin: 0 auto;
       padding: 40px 0;
     }
-    .paper-card {
+        .paper-card {
       position: absolute;
-      padding: 30px 40px;
-      box-shadow: 3px 6px 20px rgba(0,0,0,0.07);
+      padding: 35px 45px;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       z-index: 1;
       width: fit-content;
-      max-width: 380px;
+      max-width: 350px;
       min-width: 260px;
+      filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.12));
+      cursor: pointer;
     }
     .paper-card:hover {
       transform: scale(1.05) rotate(0deg) !important;
       z-index: 20;
-      box-shadow: 10px 20px 40px rgba(0,0,0,0.1);
+      filter: drop-shadow(15px 25px 35px rgba(0,0,0,0.15));
     }
     
     /* Washi Tape Effect */
     .paper-card::after {
       content: '';
       position: absolute;
-      top: -15px;
+      top: -18px;
       left: 50%;
       transform: translateX(-50%) rotate(-2deg);
-      width: 100px;
-      height: 35px;
-      background: rgba(255, 255, 255, 0.3);
+      width: 110px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.4);
       backdrop-filter: blur(2px);
-      box-shadow: inset 0 0 5px rgba(0,0,0,0.02);
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
       z-index: 5;
+      border: 1px solid rgba(255,255,255,0.2);
     }
 
+    /* Complex, irregular torn edges */
     .torn-edge {
       clip-path: polygon(
-        0% 2%, 5% 0%, 10% 3%, 15% 1%, 20% 4%, 25% 1%, 30% 3%, 35% 0%, 40% 2%, 45% 1%, 50% 3%, 55% 1%, 60% 4%, 65% 1%, 70% 3%, 75% 0%, 80% 2%, 85% 1%, 90% 4%, 95% 1%, 100% 2%,
-        100% 98%, 95% 100%, 90% 97%, 85% 99%, 80% 96%, 75% 100%, 70% 97%, 65% 99%, 60% 96%, 55% 100%, 50% 97%, 45% 99%, 40% 96%, 35% 100%, 30% 97%, 25% 99%, 20% 96%, 15% 100%, 10% 97%, 5% 99%, 0% 98%
+        0% 5%, 3% 2%, 8% 6%, 12% 1%, 18% 5%, 22% 0%, 28% 4%, 35% 1%, 42% 5%, 50% 2%, 58% 6%, 65% 1%, 72% 4%, 80% 0%, 88% 5%, 94% 2%, 100% 5%,
+        98% 15%, 100% 25%, 97% 35%, 100% 45%, 98% 55%, 100% 65%, 97% 75%, 100% 85%, 98% 95%,
+        100% 98%, 94% 96%, 88% 100%, 80% 95%, 72% 99%, 65% 94%, 58% 98%, 50% 95%, 42% 99%, 35% 94%, 28% 98%, 22% 95%, 18% 100%, 12% 96%, 8% 99%, 3% 95%, 0% 98%,
+        2% 85%, 0% 75%, 3% 65%, 0% 55%, 2% 45%, 0% 35%, 3% 25%, 0% 15%
       );
     }
 
     .paper-lined {
-      background: #fff;
-      background-image: linear-gradient(#e8f1ff 1px, transparent 1px);
-      background-size: 100% 32px;
-      font-family: 'Caveat', cursive;
-      font-size: 28px;
-      line-height: 32px;
-      color: #2c3e50;
-      border-left: 2px solid #ffcfcf;
-      padding-top: 40px;
+      background: #fdfdfb;
+      background-image: 
+        linear-gradient(rgba(232, 241, 255, 0.6) 1.5px, transparent 1.5px);
+      background-size: 100% 34px;
+      font-family: 'Gochi Hand', cursive;
+      font-size: 26px;
+      line-height: 34px;
+      color: #34495e;
+      border-left: 3px solid rgba(255, 120, 120, 0.4);
+      padding-top: 45px;
     }
     .paper-grid {
-      background: #fdfdfd;
+      background: #f8f8f6;
       background-image: 
-        linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
-      background-size: 20px 20px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 17px;
-      color: #333;
+        linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px);
+      background-size: 24px 24px;
+      font-family: 'Special Elite', cursive;
+      font-size: 18px;
+      line-height: 1.5;
+      color: #222;
+      padding-top: 40px;
     }
     .paper-plain {
-      background: #f9f7f2;
+      background: #fcf9f2;
       font-family: 'Instrument Serif', serif;
       font-size: 30px;
       font-style: italic;
-      color: #1a1a1a;
+      color: #111;
       text-align: center;
+      line-height: 1.3;
     }
 
     /* Collage Positioning - Tighter & Overlapping */
