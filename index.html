@@ -451,55 +451,31 @@
       color: var(--muted);
       margin-bottom: 12px;
     }
-    .tool-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tool-pills { display: flex; flex-wrap: wrap; gap: 24px; }
     .pill-tool {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 10px;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      width: 54px;
-      height: 54px;
+      padding: 0;
+      background: transparent;
+      border: none;
       transition: all 0.2s;
       cursor: default;
     }
     .pill-tool img {
-      width: 32px;
-      height: 32px;
+      height: 60px;
+      width: auto;
       object-fit: contain;
-      filter: none;
-      opacity: 1;
+      opacity: 0.9;
       transition: all 0.2s;
     }
     .pill-tool:hover {
-      border-color: #000000;
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-sm);
+      transform: translateY(-4px);
     }
     .pill-tool:hover img {
-      
       opacity: 1;
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
-    .pill-tool img {
-      width: 18px;
-      height: 18px;
-      object-fit: contain;
-      filter: none;
-      opacity: 1;
-    }
-    .pill-tool:hover {
-      border-color: #000000;
-      background: #ffffff;
-      box-shadow: var(--shadow-sm);
-    }
-    .pill-tool:hover img {
-      
-      opacity: 1;
-    }
-    .pill-tool:hover { border-color: #000000; transform: translateY(-1px); }
 
     /* ── Beliefs ── */
     .belief {
