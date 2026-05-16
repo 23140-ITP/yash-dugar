@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -1120,6 +1120,9 @@
                 t.current = nextChar;
                 t.top.setAttribute('data-char', ch(nextChar));
                 t.bot.setAttribute('data-char', ch(nextChar));
+                t.flap.setAttribute('data-char', ch(nextChar));
+                t.flapBot.setAttribute('data-char', ch(nextChar));
+                
                 t.flap.classList.remove('dropping');
                 t.flapBot.classList.remove('rising');
                 resolve();
