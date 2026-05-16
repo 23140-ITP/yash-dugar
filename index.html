@@ -668,42 +668,39 @@
       align-items: center;
       font-family: 'JetBrains Mono', 'Courier New', monospace;
       font-weight: 800;
-      font-size: clamp(16px, 4.5vw, 58px);
+      font-size: clamp(16px, 4.5vw, 62px);
       line-height: 1;
       text-transform: uppercase;
       user-select: none;
       backface-visibility: hidden;
     }
-    .ft-top, .ft-flap {
+    .ft-top {
       clip-path: inset(0 0 50% 0);
       background: #1a1a1a;
       z-index: 1;
     }
-    .ft-bot, .ft-flap-bot {
+    .ft-bot {
       clip-path: inset(50% 0 0 0);
       background: #161616;
       z-index: 1;
     }
-    
-    .ft-top::after, .ft-bot::after, .ft-flap::after, .ft-flap-bot::after {
-      content: attr(data-char);
-    }
-
     .ft-flap {
+      clip-path: inset(0 0 50% 0);
       background: #222;
       transform-origin: center;
       transform: rotateX(0deg);
-      z-index: 3;
+      z-index: 4;
     }
     .ft-flap.dropping {
-      transition: transform 0.15s ease-in;
+      transition: transform 0.14s ease-in;
       transform: rotateX(-90deg);
     }
     .ft-flap-bot {
+      clip-path: inset(50% 0 0 0);
       background: #1a1a1a;
       transform-origin: center;
       transform: rotateX(90deg);
-      z-index: 2;
+      z-index: 5;
     }
     .ft-flap-bot.rising {
       transition: transform 0.15s ease-out;
@@ -1101,9 +1098,13 @@
             let step = 0;
             const FLIP_MS = 140;
 
+            const scrambleSteps = normalizedTarget === ' ' ? 2 : 4;
+              
+            let step = 0;
+            const FLIP_MS = 140;
+
             function doStep() {
               if (step > scrambleSteps) {
-                // Ensure final state is perfectly clean
                 t.top.setAttribute('data-char', ch(normalizedTarget));
                 t.bot.setAttribute('data-char', ch(normalizedTarget));
                 t.current = normalizedTarget;
@@ -1116,10 +1117,12 @@
               const useAccent = (step < scrambleSteps) && Math.random() < 0.1;
               const accent = useAccent ? ACCENTS[Math.floor(Math.random() * ACCENTS.length)] : null;
 
-              // Setup flip
-              t.top.setAttribute('data-char', ch(nextChar));
-              t.flap.setAttribute('data-char', ch(t.current));
+              // The Fix: Keep static background consistent to prevent 'alien runes'
+              // Both top and bottom static show CURRENT char until the flap covers/reveals
+              t.top.setAttribute('data-char', ch(t.current));
               t.bot.setAttribute('data-char', ch(t.current));
+              
+              t.flap.setAttribute('data-char', ch(t.current));
               t.flapBot.setAttribute('data-char', ch(nextChar));
 
               ACCENTS.forEach(a => t.cell.classList.remove(a));
