@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -657,78 +657,48 @@
       overflow: hidden;
       aspect-ratio: 3/5;
     }
-    .ft-top, .ft-bot {
+    .ft-top, .ft-bot, .ft-flap, .ft-flap-bot {
       position: absolute;
       left: 0; right: 0;
       height: calc(50% - 0.5px);
+      overflow: hidden;
+      color: #e8e8e8;
+    }
+    .ft-top::after, .ft-bot::after, .ft-flap::after, .ft-flap-bot::after {
+      content: attr(data-char);
+      position: absolute;
+      left: 0; right: 0;
+      height: 200%;
       display: flex;
       justify-content: center;
-      overflow: hidden;
+      align-items: center;
       font-family: 'JetBrains Mono', 'Courier New', monospace;
       font-weight: 700;
-      font-size: clamp(7px, 1.8vw, 22px);
+      font-size: clamp(14px, 3.6vw, 44px);
       line-height: 1;
-      color: #e8e8e8;
-      user-select: none;
     }
+    .ft-top::after, .ft-flap::after { top: 0; }
+    .ft-bot::after, .ft-flap-bot::after { bottom: 0; }
+
     .ft-top {
-      top: 0;
-      background: #262626;
-      border-radius: 3px 3px 0 0;
-      align-items: flex-end;
-      padding-bottom: 1px;
+      top: 0; background: #262626; border-radius: 3px 3px 0 0;
     }
     .ft-bot {
-      bottom: 0;
-      background: #1e1e1e;
-      border-radius: 0 0 3px 3px;
-      align-items: flex-start;
-      padding-top: 1px;
+      bottom: 0; background: #1e1e1e; border-radius: 0 0 3px 3px;
     }
     .ft-flap {
-      position: absolute;
-      left: 0; right: 0; top: 0;
-      height: calc(50% - 0.5px);
-      background: #2e2e2e;
-      border-radius: 3px 3px 0 0;
-      transform-origin: bottom center;
-      transform: rotateX(0deg);
-      backface-visibility: hidden;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      overflow: hidden;
-      font-family: 'JetBrains Mono', 'Courier New', monospace;
-      font-weight: 700;
-      font-size: clamp(7px, 1.8vw, 22px);
-      line-height: 1;
-      padding-bottom: 1px;
-      z-index: 3;
-      perspective: 400px;
+      top: 0; background: #2e2e2e; border-radius: 3px 3px 0 0;
+      transform-origin: bottom center; transform: rotateX(0deg);
+      backface-visibility: hidden; z-index: 3; perspective: 400px;
     }
     .ft-flap.dropping {
       transition: transform 0.18s cubic-bezier(0.55,0.055,0.675,0.19);
       transform: rotateX(-95deg);
     }
     .ft-flap-bot {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      height: calc(50% - 0.5px);
-      background: #222;
-      border-radius: 0 0 3px 3px;
-      transform-origin: top center;
-      transform: rotateX(90deg);
-      backface-visibility: hidden;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      overflow: hidden;
-      font-family: 'JetBrains Mono', 'Courier New', monospace;
-      font-weight: 700;
-      font-size: clamp(7px, 1.8vw, 22px);
-      line-height: 1;
-      padding-top: 1px;
-      z-index: 3;
+      bottom: 0; background: #222; border-radius: 0 0 3px 3px;
+      transform-origin: top center; transform: rotateX(90deg);
+      backface-visibility: hidden; z-index: 3;
     }
     .ft-flap-bot.rising {
       transition: transform 0.17s cubic-bezier(0.33,1.55,0.64,1);
@@ -1092,10 +1062,10 @@
         let row=[];
         for(let c=0;c<COLS;c++){
           const cell=document.createElement('div'); cell.className='ft';
-          const top=document.createElement('div');     top.className='ft-top';     top.textContent='\u00A0';
-          const bot=document.createElement('div');     bot.className='ft-bot';     bot.textContent='\u00A0';
-          const flap=document.createElement('div');    flap.className='ft-flap';   flap.textContent='\u00A0';
-          const flapBot=document.createElement('div'); flapBot.className='ft-flap-bot'; flapBot.textContent='\u00A0';
+          const top=document.createElement('div');     top.className='ft-top';     top.setAttribute('data-char','\u00A0');
+          const bot=document.createElement('div');     bot.className='ft-bot';     bot.setAttribute('data-char','\u00A0');
+          const flap=document.createElement('div');    flap.className='ft-flap';   flap.setAttribute('data-char','\u00A0');
+          const flapBot=document.createElement('div'); flapBot.className='ft-flap-bot'; flapbot.setAttribute('data-char','\u00A0');
           const split=document.createElement('div');   split.className='ft-split';
           const stripe=document.createElement('div');  stripe.className='ft-stripe';
           cell.append(top,bot,flap,flapBot,split,stripe);
@@ -1117,10 +1087,10 @@
               const next=isLast?target:CHARS[1+Math.floor(Math.random()*(CHARS.length-1))];
               const useAccent=!isLast&&Math.random()<0.2;
               const accent=useAccent?ACCENTS[Math.floor(Math.random()*ACCENTS.length)]:null;
-              t.flap.textContent=c(t.current);
-              t.flapBot.textContent=c(next);
-              t.top.textContent=c(next);
-              t.bot.textContent=c(next);
+              t.flap.setAttribute('data-char',c(t.current));
+              t.flapBot.setAttribute('data-char',c(next));
+              t.top.setAttribute('data-char',c(next));
+              t.bot.setAttribute('data-char',c(next));
               ACCENTS.forEach(a=>t.cell.classList.remove(a));
               if(accent)t.cell.classList.add(accent);
               t.flap.classList.remove('dropping'); void t.flap.offsetWidth; t.flap.classList.add('dropping');
