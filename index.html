@@ -1100,6 +1100,12 @@
 
             function triggerFlip() {
               const nextChar = normalizedTarget;
+              
+              // Flash a random accent color during the transition
+              const useAccent = Math.random() < 0.25;
+              const accent = useAccent ? ACCENTS[Math.floor(Math.random() * ACCENTS.length)] : null;
+              ACCENTS.forEach(a => t.cell.classList.remove(a));
+              if (accent && nextChar !== ' ') t.cell.classList.add(accent);
 
               // Ensure background matches CURRENT until transition is complete
               t.top.setAttribute('data-char', ch(t.current));
@@ -1120,11 +1126,9 @@
                 t.current = nextChar;
                 t.top.setAttribute('data-char', ch(nextChar));
                 t.bot.setAttribute('data-char', ch(nextChar));
-                t.flap.setAttribute('data-char', ch(nextChar));
-                t.flapBot.setAttribute('data-char', ch(nextChar));
-                
                 t.flap.classList.remove('dropping');
                 t.flapBot.classList.remove('rising');
+                ACCENTS.forEach(a => t.cell.classList.remove(a)); // Clear color on landing
                 resolve();
               }, FLIP_MS + 50);
             }
