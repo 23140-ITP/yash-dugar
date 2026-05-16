@@ -676,16 +676,19 @@
       align-items: center;
       font-family: 'JetBrains Mono', 'Courier New', monospace;
       font-weight: 700;
-      font-size: clamp(14px, 4vw, 54px);
+      font-size: clamp(14px, 4.2vw, 56px);
       line-height: 1;
       color: #fff;
       text-transform: uppercase;
     }
+    /* Nudge alignment to fix font-specific vertical offsets */
     .ft-top::after, .ft-flap::after {
       top: 0;
+      transform: translateY(1.5%);
     }
     .ft-bot::after, .ft-flap-bot::after {
       bottom: 0;
+      transform: translateY(-1.5%);
     }
 
     .ft-top { top: 0; background: #1a1a1a; border-radius: 3px 3px 0 0; }
@@ -1099,9 +1102,9 @@
               : 25 + Math.floor(Math.random() * 15);
               
             let step = 0;
-            const STEP_MS = 80;
-            const FLIP_MS = 200;
-            const RISE_DELAY = FLIP_MS * 0.5;
+            const STEP_MS = 220;
+            const FLIP_MS = 160;
+            const RISE_DELAY = FLIP_MS * 0.45;
 
             function doStep() {
               const isLast = (step === scrambleSteps);
@@ -1110,13 +1113,13 @@
               const useAccent = !isLast && Math.random() < 0.15;
               const accent = useAccent ? ACCENTS[Math.floor(Math.random() * ACCENTS.length)] : null;
 
-              // Top static and bottom flap get the NEXT char
-              // Top flap and bottom static get the CURRENT char
+              // Top static reveals NEXT. Top flap shows CURRENT.
               t.top.setAttribute('data-char', ch(nextChar));
-              t.flapBot.setAttribute('data-char', ch(nextChar));
-              
               t.flap.setAttribute('data-char', ch(t.current));
+              
+              // Bottom static shows CURRENT. Bottom flap lands with NEXT.
               t.bot.setAttribute('data-char', ch(t.current));
+              t.flapBot.setAttribute('data-char', ch(nextChar));
 
               ACCENTS.forEach(a => t.cell.classList.remove(a));
               if(accent) t.cell.classList.add(accent);
@@ -1137,7 +1140,7 @@
                   t.flapBot.classList.remove('rising');
                   t.bot.setAttribute('data-char', ch(normalizedTarget));
                   resolve();
-                }, FLIP_MS + 50);
+                }, FLIP_MS + 40);
               }
             }
             doStep();
