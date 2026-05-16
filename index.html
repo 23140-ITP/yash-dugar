@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -629,9 +629,9 @@
       .tool-stack-grid { grid-template-columns: 1fr; }
     }
 
-    /* ── Split-Flap Board (High-Fidelity) ── */
+        /* ── Split-Flap Board (High-Fidelity Aceternity) ── */
     #flap-section {
-      background: #0d0d0d;
+      background: #0a0a0a;
       padding: 100px 24px;
       display: flex;
       flex-direction: column;
@@ -639,12 +639,12 @@
     }
     .flap-board {
       width: 100%;
-      max-width: 860px;
-      background: #1a1a1a;
-      border-radius: 20px;
-      padding: 20px 16px 16px;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06);
-      border: 1px solid #2a2a2a;
+      max-width: 900px;
+      background: #111;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.9), 0 30px 60px rgba(0,0,0,0.7);
+      border: 1px solid #222;
     }
     .flap-grid {
       display: grid;
@@ -653,16 +653,17 @@
     .ft {
       position: relative;
       border-radius: 3px;
-      border: 1px solid #111;
+      border: 2px solid #000;
       overflow: hidden;
-      aspect-ratio: 3/5;
+      aspect-ratio: 3/6;
+      background: #151515;
     }
     .ft-top, .ft-bot, .ft-flap, .ft-flap-bot {
       position: absolute;
       left: 0; right: 0;
       height: calc(50% - 0.5px);
       overflow: hidden;
-      color: #e8e8e8;
+      color: #fff;
     }
     .ft-top::after, .ft-bot::after, .ft-flap::after, .ft-flap-bot::after {
       content: attr(data-char);
@@ -674,20 +675,18 @@
       align-items: center;
       font-family: 'JetBrains Mono', 'Courier New', monospace;
       font-weight: 700;
-      font-size: clamp(14px, 3.6vw, 44px);
+      font-size: clamp(8px, 1.6vw, 22px);
       line-height: 1;
+      letter-spacing: 1px;
     }
     .ft-top::after, .ft-flap::after { top: 0; }
     .ft-bot::after, .ft-flap-bot::after { bottom: 0; }
 
-    .ft-top {
-      top: 0; background: #262626; border-radius: 3px 3px 0 0;
-    }
-    .ft-bot {
-      bottom: 0; background: #1e1e1e; border-radius: 0 0 3px 3px;
-    }
+    .ft-top { top: 0; background: #1a1a1a; border-radius: 3px 3px 0 0; }
+    .ft-bot { bottom: 0; background: #161616; border-radius: 0 0 3px 3px; }
+    
     .ft-flap {
-      top: 0; background: #2e2e2e; border-radius: 3px 3px 0 0;
+      top: 0; background: #222; border-radius: 3px 3px 0 0;
       transform-origin: bottom center; transform: rotateX(0deg);
       backface-visibility: hidden; z-index: 3; perspective: 400px;
     }
@@ -696,7 +695,7 @@
       transform: rotateX(-95deg);
     }
     .ft-flap-bot {
-      bottom: 0; background: #222; border-radius: 0 0 3px 3px;
+      bottom: 0; background: #1a1a1a; border-radius: 0 0 3px 3px;
       transform-origin: top center; transform: rotateX(90deg);
       backface-visibility: hidden; z-index: 3;
     }
@@ -705,34 +704,35 @@
       transform: rotateX(0deg);
     }
     .ft-split {
-      position: absolute;
-      top: 50%; left: 0; right: 0;
-      height: 1px;
-      background: #000;
-      z-index: 10;
-      transform: translateY(-0.5px);
+      position: absolute; top: 50%; left: 0; right: 0;
+      height: 1px; background: #000; z-index: 10; transform: translateY(-0.5px);
     }
     .ft-stripe {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 4px;
-      background: repeating-linear-gradient(to bottom,#333 0,#333 1px,transparent 1px,transparent 3px);
-      opacity: 0.4;
-      z-index: 5;
+      position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+      background: repeating-linear-gradient(to bottom, #444 0, #444 1px, transparent 1px, transparent 3px);
+      opacity: 0.3; z-index: 5;
     }
-    .ft.accent-red .ft-top,.ft.accent-red .ft-flap { background:#b91c1c; color:#fff; }
-    .ft.accent-red .ft-bot,.ft.accent-red .ft-flap-bot { background:#991b1b; color:#fff; }
-    .ft.accent-orange .ft-top,.ft.accent-orange .ft-flap { background:#c2410c; color:#fff; }
-    .ft.accent-orange .ft-bot,.ft.accent-orange .ft-flap-bot { background:#9a3412; color:#fff; }
-    .ft.accent-green .ft-top,.ft.accent-green .ft-flap { background:#15803d; color:#fff; }
-    .ft.accent-green .ft-bot,.ft.accent-green .ft-flap-bot { background:#166534; color:#fff; }
-    .ft.accent-blue .ft-top,.ft.accent-blue .ft-flap { background:#1d4ed8; color:#fff; }
-    .ft.accent-blue .ft-bot,.ft.accent-blue .ft-flap-bot { background:#1e40af; color:#fff; }
-    .ft.accent-violet .ft-top,.ft.accent-violet .ft-flap { background:#7c3aed; color:#fff; }
-    .ft.accent-violet .ft-bot,.ft.accent-violet .ft-flap-bot { background:#6d28d9; color:#fff; }
+
+    /* Accents mapping Aceternity colors */
+    .ft.ac-r .ft-top,.ft.ac-r .ft-flap { background:#dc2626; color:#fff; }
+    .ft.ac-r .ft-bot,.ft.ac-r .ft-flap-bot { background:#b91c1c; color:#fff; }
+    .ft.ac-o .ft-top,.ft.ac-o .ft-flap { background:#f97316; color:#fff; }
+    .ft.ac-o .ft-bot,.ft.ac-o .ft-flap-bot { background:#ea580c; color:#fff; }
+    .ft.ac-y .ft-top,.ft.ac-y .ft-flap { background:#facc15; color:#171717; }
+    .ft.ac-y .ft-bot,.ft.ac-y .ft-flap-bot { background:#eab308; color:#171717; }
+    .ft.ac-g .ft-top,.ft.ac-g .ft-flap { background:#16a34a; color:#fff; }
+    .ft.ac-g .ft-bot,.ft.ac-g .ft-flap-bot { background:#15803d; color:#fff; }
+    .ft.ac-b .ft-top,.ft.ac-b .ft-flap { background:#2563eb; color:#fff; }
+    .ft.ac-b .ft-bot,.ft.ac-b .ft-flap-bot { background:#1d4ed8; color:#fff; }
+    .ft.ac-v .ft-top,.ft.ac-v .ft-flap { background:#7c3aed; color:#fff; }
+    .ft.ac-v .ft-bot,.ft.ac-v .ft-flap-bot { background:#6d28d9; color:#fff; }
+    .ft.ac-w .ft-top,.ft.ac-w .ft-flap { background:#fff; color:#171717; }
+    .ft.ac-w .ft-bot,.ft.ac-w .ft-flap-bot { background:#f5f5f5; color:#171717; }
+
     @media (max-width: 720px) {
-      .flap-board { padding: 10px 6px 8px; border-radius: 12px; }
-      .flap-grid { gap: 2px; }
+      .flap-board { padding: 8px; border-radius: 8px; }
+      .flap-grid { gap: 1px; }
+      .ft { border-width: 1px; }
     }
   </style>
 </head>
@@ -1040,86 +1040,159 @@
   </footer>
 
   <script>
-    // -- Split-Flap Board (High-Fidelity 3D) --
+        // ── Split-Flap Board (High-Fidelity) ──
     (function() {
-      const CHARS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!\'?-';
-      const ACCENTS = ['accent-red','accent-orange','accent-green','accent-blue','accent-violet'];
+      const CHARS = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$()-+&=;:'\"%,./?°";
+      const ACCENTS = ['ac-r','ac-o','ac-y','ac-g','ac-b','ac-v','ac-w'];
       const MESSAGES = [
-        ["JACK OF ALL TRADES,","MASTER OF SOME."],
-        ["DON'T REINVENT THE WHEEL,","JUST AUTOMATE THE DRIVER."],
-        ["SLOW AND STEADY WINS THE RACE,","BUT FAST AND ITERATIVE","SHIPS THE PRODUCT."],
-        ["WHERE THERE'S A WILL,","THERE'S A WORKFLOW","TO AUTOMATE IT."]
+        "STAY HUNGRY \nSTAY IN BED \n- STEVE JOBS",
+        "What did you get done this week?",
+        "I burned $20 \nfor this shit.",
+        "DONT WORRY \nBE HAPPY FFS.",
+        "LADIES AND GENTLEMEN \nWELCOME TO F#!@# C!@$"
       ];
-      const ROWS=3,COLS=30;
-      const boardEl=document.getElementById('flap-board');
-      if(!boardEl)return;
-      const grid=document.createElement('div');
-      grid.className='flap-grid';
-      grid.style.gridTemplateColumns=`repeat(${COLS},1fr)`;
+      
+      const ROWS = 6;
+      const COLS = 22;
+      const boardEl = document.getElementById('flap-board');
+      if (!boardEl) return;
+
+      const grid = document.createElement('div');
+      grid.className = 'flap-grid';
+      grid.style.gridTemplateColumns = `repeat(${COLS}, 1fr)`;
       boardEl.appendChild(grid);
-      let tiles=[];
-      for(let r=0;r<ROWS;r++){
-        let row=[];
-        for(let c=0;c<COLS;c++){
-          const cell=document.createElement('div'); cell.className='ft';
-          const top=document.createElement('div');     top.className='ft-top';     top.setAttribute('data-char','\u00A0');
-          const bot=document.createElement('div');     bot.className='ft-bot';     bot.setAttribute('data-char','\u00A0');
-          const flap=document.createElement('div');    flap.className='ft-flap';   flap.setAttribute('data-char','\u00A0');
-          const flapBot=document.createElement('div'); flapBot.className='ft-flap-bot'; flapBot.setAttribute('data-char','\u00A0');
-          const split=document.createElement('div');   split.className='ft-split';
-          const stripe=document.createElement('div');  stripe.className='ft-stripe';
-          cell.append(top,bot,flap,flapBot,split,stripe);
+
+      let tiles = [];
+      for(let r=0; r<ROWS; r++) {
+        let row = [];
+        for(let c=0; c<COLS; c++) {
+          const cell = document.createElement('div'); cell.className = 'ft';
+          const top = document.createElement('div'); top.className = 'ft-top'; top.setAttribute('data-char', '\u00A0');
+          const bot = document.createElement('div'); bot.className = 'ft-bot'; bot.setAttribute('data-char', '\u00A0');
+          const flap = document.createElement('div'); flap.className = 'ft-flap'; flap.setAttribute('data-char', '\u00A0');
+          const flapBot = document.createElement('div'); flapBot.className = 'ft-flap-bot'; flapBot.setAttribute('data-char', '\u00A0');
+          const split = document.createElement('div'); split.className = 'ft-split';
+          const stripe = document.createElement('div'); stripe.className = 'ft-stripe';
+          cell.append(top, bot, flap, flapBot, split, stripe);
           grid.appendChild(cell);
-          row.push({cell,top,bot,flap,flapBot,current:' '});
+          row.push({cell, top, bot, flap, flapBot, current: ' '});
         }
         tiles.push(row);
       }
-      function c(ch){return ch===' '?'\u00A0':ch;}
-      function flipTile(t,target,delay){
-        return new Promise(resolve=>{
-          setTimeout(()=>{
-            if(t.current===target){resolve();return;}
-            const steps=target===' '?8+Math.floor(Math.random()*8):25+Math.floor(Math.random()*15);
-            let step=0;
-            const STEP_MS=55,FLIP_MS=180,RISE_DELAY=100;
-            function doStep(){
-              const isLast=step===steps;
-              const next=isLast?target:CHARS[1+Math.floor(Math.random()*(CHARS.length-1))];
-              const useAccent=!isLast&&Math.random()<0.2;
-              const accent=useAccent?ACCENTS[Math.floor(Math.random()*ACCENTS.length)]:null;
-              t.flap.setAttribute('data-char',c(t.current));
-              t.flapBot.setAttribute('data-char',c(next));
-              t.top.setAttribute('data-char',c(next));
-              t.bot.setAttribute('data-char',c(next));
-              ACCENTS.forEach(a=>t.cell.classList.remove(a));
-              if(accent)t.cell.classList.add(accent);
+
+      function ch(c) { return c === ' ' ? '\u00A0' : c.toUpperCase(); }
+
+      function flipTile(t, target, delay) {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            const normalizedTarget = CHARS.includes(target.toUpperCase()) ? target.toUpperCase() : ' ';
+            if(t.current === normalizedTarget) { resolve(); return; }
+
+            const scrambleSteps = normalizedTarget === ' ' 
+              ? 8 + Math.floor(Math.random() * 8) 
+              : 25 + Math.floor(Math.random() * 15);
+              
+            let step = 0;
+            const STEP_MS = 55;
+            const FLIP_MS = 180;
+            const RISE_DELAY = FLIP_MS * 0.55;
+
+            function doStep() {
+              const isLast = (step === scrambleSteps);
+              const nextChar = isLast ? normalizedTarget : CHARS[1 + Math.floor(Math.random() * (CHARS.length - 1))];
+              
+              const useAccent = !isLast && Math.random() < 0.2;
+              const accent = useAccent ? ACCENTS[Math.floor(Math.random() * ACCENTS.length)] : null;
+
+              t.flap.setAttribute('data-char', ch(t.current));
+              t.flapBot.setAttribute('data-char', ch(nextChar));
+              t.top.setAttribute('data-char', ch(nextChar));
+              t.bot.setAttribute('data-char', ch(nextChar));
+
+              ACCENTS.forEach(a => t.cell.classList.remove(a));
+              if(accent) t.cell.classList.add(accent);
+
               t.flap.classList.remove('dropping'); void t.flap.offsetWidth; t.flap.classList.add('dropping');
               t.flapBot.classList.remove('rising');
-              setTimeout(()=>{void t.flapBot.offsetWidth;t.flapBot.classList.add('rising');},RISE_DELAY);
-              t.current=next; step++;
-              if(!isLast){setTimeout(doStep,STEP_MS);}
-              else{setTimeout(()=>{ACCENTS.forEach(a=>t.cell.classList.remove(a));t.flap.classList.remove('dropping');t.flapBot.classList.remove('rising');resolve();},FLIP_MS+60);}
+              setTimeout(() => { void t.flapBot.offsetWidth; t.flapBot.classList.add('rising'); }, RISE_DELAY);
+
+              t.current = nextChar;
+              step++;
+
+              if(!isLast) {
+                setTimeout(doStep, STEP_MS);
+              } else {
+                setTimeout(() => {
+                  ACCENTS.forEach(a => t.cell.classList.remove(a));
+                  t.flap.classList.remove('dropping');
+                  t.flapBot.classList.remove('rising');
+                  resolve();
+                }, FLIP_MS + 60);
+              }
             }
             doStep();
-          },delay);
+          }, delay);
         });
       }
-      function padCenter(str,len){str=str.substring(0,len);const pad=Math.floor((len-str.length)/2);return str.padStart(str.length+pad).padEnd(len);}
-      let currentMsg=0,flipping=false;
-      function showMessage(msgIdx){
-        if(flipping)return; flipping=true;
-        const msg=MESSAGES[msgIdx];
-        const lines=Array.from({length:ROWS},(_,i)=>padCenter(msg[i]||'',COLS));
-        const promises=[];
-        tiles.forEach((row,r)=>row.forEach((t,col)=>{
-          const ch2=lines[r][col].toUpperCase();
-          const target=CHARS.includes(ch2)?ch2:' ';
-          promises.push(flipTile(t,target,(col*30)+(r*20)+(Math.random()*60)));
-        }));
-        Promise.all(promises).then(()=>{flipping=false;});
+
+      function wrapText(text, maxCols) {
+        const words = text.split(/[\s]+/);
+        let lines = [];
+        let currentLine = "";
+        for (let word of words) {
+          if (!currentLine) { currentLine = word; }
+          else if (currentLine.length + 1 + word.length <= maxCols) { currentLine += " " + word; }
+          else { lines.push(currentLine); currentLine = word; }
+        }
+        if (currentLine) lines.push(currentLine);
+        return lines;
       }
-      setTimeout(()=>showMessage(0),1000);
-      setInterval(()=>{currentMsg=(currentMsg+1)%MESSAGES.length;showMessage(currentMsg);},8000);
+
+      function getWrappedLines(text) {
+        const paras = text.split('\n');
+        let finalLines = [];
+        for (let p of paras) {
+          if (p.trim() === '') finalLines.push('');
+          else finalLines.push(...wrapText(p, COLS));
+        }
+        return finalLines;
+      }
+
+      let currentMsg = 0;
+      let flipping = false;
+
+      function showMessage(msgIdx) {
+        if(flipping) return;
+        flipping = true;
+        const msgLines = getWrappedLines(MESSAGES[msgIdx]);
+        
+        // Center vertically
+        const startRow = Math.max(0, Math.floor((ROWS - msgLines.length) / 2));
+        
+        const promises = [];
+        tiles.forEach((row, r) => {
+          const lineIdx = r - startRow;
+          const lineStr = (lineIdx >= 0 && lineIdx < msgLines.length) ? msgLines[lineIdx] : '';
+          
+          // Center horizontally
+          const startCol = Math.max(0, Math.floor((COLS - lineStr.length) / 2));
+          
+          row.forEach((t, c) => {
+            const charIdx = c - startCol;
+            const targetChar = (charIdx >= 0 && charIdx < lineStr.length) ? lineStr[charIdx] : ' ';
+            const delay = (c * 30) + (r * 20) + (Math.random() * 60);
+            promises.push(flipTile(t, targetChar, delay));
+          });
+        });
+        
+        Promise.all(promises).then(() => { flipping = false; });
+      }
+
+      setTimeout(() => showMessage(0), 1000);
+      setInterval(() => {
+        currentMsg = (currentMsg + 1) % MESSAGES.length;
+        showMessage(currentMsg);
+      }, 7000);
     })();
 
     // ── Accordion ──
