@@ -1048,7 +1048,7 @@
   </footer>
 
   <script>
-            // ── Split-Flap Board (High-Fidelity) ──
+                // ── Split-Flap Board (High-Fidelity) ──
     (function() {
       const CHARS = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$()-+&=;:'\"%,./?°";
       const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -1096,33 +1096,17 @@
             const normalizedTarget = CHARS.includes(target.toUpperCase()) ? target.toUpperCase() : ' ';
             if(t.current === normalizedTarget) { resolve(); return; }
 
-            const scrambleSteps = normalizedTarget === ' ' ? 2 : 4;
-            let step = 0;
-            const FLIP_MS = 150;
+            const FLIP_MS = 140;
 
-            function doStep() {
-              if (step > scrambleSteps) {
-                t.top.setAttribute('data-char', ch(normalizedTarget));
-                t.bot.setAttribute('data-char', ch(normalizedTarget));
-                t.current = normalizedTarget;
-                resolve();
-                return;
-              }
+            function triggerFlip() {
+              const nextChar = normalizedTarget;
 
-              const nextChar = (step === scrambleSteps) ? normalizedTarget : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
-              
-              const useAccent = (step < scrambleSteps) && Math.random() < 0.12;
-              const accent = useAccent ? ACCENTS[Math.floor(Math.random() * ACCENTS.length)] : null;
-
-              // Static layers always match current char to prevent alien runes
+              // Ensure background matches CURRENT until transition is complete
               t.top.setAttribute('data-char', ch(t.current));
               t.bot.setAttribute('data-char', ch(t.current));
               
               t.flap.setAttribute('data-char', ch(t.current));
               t.flapBot.setAttribute('data-char', ch(nextChar));
-
-              ACCENTS.forEach(a => t.cell.classList.remove(a));
-              if(accent) t.cell.classList.add(accent);
 
               // 3D Flip
               t.flap.classList.remove('dropping'); void t.flap.offsetWidth; t.flap.classList.add('dropping');
@@ -1131,18 +1115,17 @@
                 t.flapBot.classList.remove('rising'); void t.flapBot.offsetWidth; t.flapBot.classList.add('rising');
               }, FLIP_MS * 0.5);
 
-              // Wait for landing before next step
+              // Update state only after landing
               setTimeout(() => {
                 t.current = nextChar;
-                t.bot.setAttribute('data-char', ch(nextChar));
                 t.top.setAttribute('data-char', ch(nextChar));
+                t.bot.setAttribute('data-char', ch(nextChar));
                 t.flap.classList.remove('dropping');
                 t.flapBot.classList.remove('rising');
-                step++;
-                doStep();
-              }, FLIP_MS + 40);
+                resolve();
+              }, FLIP_MS + 50);
             }
-            doStep();
+            triggerFlip();
           }, delay);
         });
       }
@@ -1186,7 +1169,7 @@
           row.forEach((t, c) => {
             const charIdx = c - startCol;
             const targetChar = (charIdx >= 0 && charIdx < lineStr.length) ? lineStr[charIdx] : ' ';
-            promises.push(flipTile(t, targetChar, (c * 25) + (r * 15) + (Math.random() * 50)));
+            promises.push(flipTile(t, targetChar, (c * 20) + (r * 10) + (Math.random() * 30)));
           });
         });
         Promise.all(promises).then(() => { flipping = false; });
@@ -1196,7 +1179,7 @@
       setInterval(() => {
         currentMsg = (currentMsg + 1) % MESSAGES.length;
         showMessage(currentMsg);
-      }, 7000);
+      }, 8000);
     })();
 
     // ── Accordion ──
