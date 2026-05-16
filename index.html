@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -629,7 +629,7 @@
       .tool-stack-grid { grid-template-columns: 1fr; }
     }
 
-        /* ── Split-Flap Board (High-Fidelity Aceternity) ── */
+            /* ── Split-Flap Board (High-Fidelity Aceternity) ── */
     #flap-section {
       background: #0a0a0a;
       padding: 100px 24px;
@@ -658,6 +658,7 @@
       aspect-ratio: 3/6;
       background: #151515;
     }
+    /* Sliced Character Layers */
     .ft-top, .ft-bot, .ft-flap, .ft-flap-bot {
       position: absolute;
       left: 0; right: 0; top: 0; bottom: 0;
@@ -674,29 +675,32 @@
       user-select: none;
       backface-visibility: hidden;
     }
-    .ft-top {
+    .ft-top, .ft-flap {
       clip-path: inset(0 0 50% 0);
       background: #1a1a1a;
       z-index: 1;
     }
-    .ft-bot {
+    .ft-bot, .ft-flap-bot {
       clip-path: inset(50% 0 0 0);
       background: #161616;
       z-index: 1;
     }
+    .ft-top::after, .ft-bot::after, .ft-flap::after, .ft-flap-bot::after {
+      content: attr(data-char);
+      width: 100%; height: 100%;
+      display: flex; justify-content: center; align-items: center;
+    }
     .ft-flap {
-      clip-path: inset(0 0 50% 0);
       background: #222;
       transform-origin: center;
       transform: rotateX(0deg);
       z-index: 4;
     }
     .ft-flap.dropping {
-      transition: transform 0.14s ease-in;
+      transition: transform 0.15s ease-in;
       transform: rotateX(-90deg);
     }
     .ft-flap-bot {
-      clip-path: inset(50% 0 0 0);
       background: #1a1a1a;
       transform-origin: center;
       transform: rotateX(90deg);
@@ -713,7 +717,7 @@
     .ft-stripe {
       position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
       background: repeating-linear-gradient(to bottom, #444 0, #444 1px, transparent 1px, transparent 3px);
-      opacity: 0.2; z-index: 5;
+      opacity: 0.15; z-index: 6;
     }
 
     /* Accents mapping Aceternity colors */
@@ -732,6 +736,7 @@
     .ft.ac-w .ft-top,.ft.ac-w .ft-flap { background:#fff; color:#171717; }
     .ft.ac-w .ft-bot,.ft.ac-w .ft-flap-bot { background:#f5f5f5; color:#171717; }
 
+    @media (max-width: 720px) {
     @media (max-width: 720px) {
       .flap-board { padding: 8px; border-radius: 8px; }
       .flap-grid { gap: 1px; }
@@ -1043,7 +1048,7 @@
   </footer>
 
   <script>
-        // ── Split-Flap Board (High-Fidelity) ──
+            // ── Split-Flap Board (High-Fidelity) ──
     (function() {
       const CHARS = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$()-+&=;:'\"%,./?°";
       const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -1091,17 +1096,9 @@
             const normalizedTarget = CHARS.includes(target.toUpperCase()) ? target.toUpperCase() : ' ';
             if(t.current === normalizedTarget) { resolve(); return; }
 
-            const scrambleSteps = normalizedTarget === ' ' 
-              ? 6 + Math.floor(Math.random() * 6) 
-              : 15 + Math.floor(Math.random() * 10);
-              
-            let step = 0;
-            const FLIP_MS = 140;
-
             const scrambleSteps = normalizedTarget === ' ' ? 2 : 4;
-              
             let step = 0;
-            const FLIP_MS = 140;
+            const FLIP_MS = 150;
 
             function doStep() {
               if (step > scrambleSteps) {
@@ -1114,11 +1111,10 @@
 
               const nextChar = (step === scrambleSteps) ? normalizedTarget : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
               
-              const useAccent = (step < scrambleSteps) && Math.random() < 0.1;
+              const useAccent = (step < scrambleSteps) && Math.random() < 0.12;
               const accent = useAccent ? ACCENTS[Math.floor(Math.random() * ACCENTS.length)] : null;
 
-              // The Fix: Keep static background consistent to prevent 'alien runes'
-              // Both top and bottom static show CURRENT char until the flap covers/reveals
+              // Static layers always match current char to prevent alien runes
               t.top.setAttribute('data-char', ch(t.current));
               t.bot.setAttribute('data-char', ch(t.current));
               
@@ -1128,22 +1124,23 @@
               ACCENTS.forEach(a => t.cell.classList.remove(a));
               if(accent) t.cell.classList.add(accent);
 
-              // Trigger 3D flip
+              // 3D Flip
               t.flap.classList.remove('dropping'); void t.flap.offsetWidth; t.flap.classList.add('dropping');
               
               setTimeout(() => {
                 t.flapBot.classList.remove('rising'); void t.flapBot.offsetWidth; t.flapBot.classList.add('rising');
               }, FLIP_MS * 0.5);
 
-              // Wait for completion before next step
+              // Wait for landing before next step
               setTimeout(() => {
                 t.current = nextChar;
                 t.bot.setAttribute('data-char', ch(nextChar));
+                t.top.setAttribute('data-char', ch(nextChar));
                 t.flap.classList.remove('dropping');
                 t.flapBot.classList.remove('rising');
                 step++;
                 doStep();
-              }, FLIP_MS + 20);
+              }, FLIP_MS + 40);
             }
             doStep();
           }, delay);
@@ -1180,26 +1177,18 @@
         if(flipping) return;
         flipping = true;
         const msgLines = getWrappedLines(MESSAGES[msgIdx]);
-        
-        // Center vertically
         const startRow = Math.max(0, Math.floor((ROWS - msgLines.length) / 2));
-        
         const promises = [];
         tiles.forEach((row, r) => {
           const lineIdx = r - startRow;
           const lineStr = (lineIdx >= 0 && lineIdx < msgLines.length) ? msgLines[lineIdx] : '';
-          
-          // Center horizontally
           const startCol = Math.max(0, Math.floor((COLS - lineStr.length) / 2));
-          
           row.forEach((t, c) => {
             const charIdx = c - startCol;
             const targetChar = (charIdx >= 0 && charIdx < lineStr.length) ? lineStr[charIdx] : ' ';
-            const delay = (c * 30) + (r * 20) + (Math.random() * 60);
-            promises.push(flipTile(t, targetChar, delay));
+            promises.push(flipTile(t, targetChar, (c * 25) + (r * 15) + (Math.random() * 50)));
           });
         });
-        
         Promise.all(promises).then(() => { flipping = false; });
       }
 
