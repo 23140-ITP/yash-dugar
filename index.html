@@ -405,15 +405,21 @@
     .pill-tech {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 8px 20px;
+      justify-content: center;
+      padding: 10px;
       background: #000000;
       color: #ffffff;
-      border-radius: 999px;
-      font-size: 16px;
-      font-weight: 500;
+      border-radius: 12px;
+      width: 50px;
+      height: 50px;
       cursor: default;
       transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .pill-tech img {
+      width: 30px;
+      height: 30px;
+      filter: invert(1);
+      object-fit: contain;
     }
     .pill-tech img {
       width: 18px;
@@ -455,16 +461,33 @@
     .pill-tool {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 7px 16px;
-      background: #f9f9f9;
-      color: #000;
+      justify-content: center;
+      padding: 10px;
+      background: #ffffff;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 500;
+      border-radius: 12px;
+      width: 54px;
+      height: 54px;
       transition: all 0.2s;
       cursor: default;
+    }
+    .pill-tool img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      filter: grayscale(1);
+      opacity: 0.8;
+      transition: all 0.2s;
+    }
+    .pill-tool:hover {
+      border-color: #000000;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    .pill-tool:hover img {
+      filter: grayscale(0);
+      opacity: 1;
+      transform: scale(1.1);
     }
     .pill-tool img {
       width: 18px;
@@ -842,7 +865,7 @@
             <span class="pill-tech">Business Intelligence</span>
             <span class="pill-tech">Workflow Automation</span>
             <span class="pill-tech">Web Scraping</span>
-            <span class="pill-tech"><img src="https://cdn.simpleicons.org/python/white" alt=""/> Python</span>
+            <span class="pill-tech"><img src="https://cdn.simpleicons.org/python/white" alt="Python"/></span>
             <span class="pill-tech">AI Video &amp; Image Generation</span>
             <span class="pill-tech">AI Music Generation</span>
           </div>
@@ -872,43 +895,43 @@
         <div>
           <div class="tool-cluster-label">AI &amp; Automation</div>
           <div class="tool-pills">
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/n8n/black" alt=""/> n8n</span>
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/google/black" alt=""/> AI Studio</span>
-            <span class="pill-tool">Antigravity</span>
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/google/black" alt=""/> Gemini</span>
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/perplexity/black" alt=""/> Perplexity</span>
-            <span class="pill-tool">Comet</span>
+            <span class="pill-tool"><img src="./logos/n8n_logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/google_ai_studio_logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/google_antigravity_logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/gemini_logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/perplexity_ai_logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/comet-logo.jpg" alt=""/></span>
           </div>
         </div>
 
         <div>
           <div class="tool-cluster-label">Data</div>
           <div class="tool-pills">
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/microsoftexcel/black" alt=""/> MS Excel</span>
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/powerbi/black" alt=""/> Power BI</span>
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/tableau/black" alt=""/> Tableau</span>
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/googlesheets/black" alt=""/> Data Studio</span>
+            <span class="pill-tool"><img src="./logos/excel-4d54f0a88a.png" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/powerbi_logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/tableau_software_logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/data studio logo.png" alt=""/></span>
           </div>
         </div>
 
         <div>
           <div class="tool-cluster-label">Productivity</div>
           <div class="tool-pills">
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/notion/black" alt=""/> Notion</span>
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/google/black" alt=""/> NotebookLM</span>
-            <span class="pill-tool">Wispr Flow</span>
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/google/black" alt=""/> Workspace</span>
+            <span class="pill-tool"><img src="./logos/notionhq_logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/notebooklm-logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/wisprflow_logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/google_logo.jpg" alt=""/></span>
           </div>
         </div>
 
         <div>
           <div class="tool-cluster-label">Creative AI</div>
           <div class="tool-pills">
-            <span class="pill-tool">Higgsfield</span>
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/music/black" alt=""/> Suno AI</span>
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/framer/black" alt=""/> Framer</span>
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/gamma/black" alt=""/> Gamma</span>
-            <span class="pill-tool"><img src="https://cdn.simpleicons.org/microsoftpowerpoint/black" alt=""/> MS PowerPoint</span>
+            <span class="pill-tool"><img src="./logos/higgsfield_logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/sunomusic_logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/framer_logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/gamma_app_logo.jpg" alt=""/></span>
+            <span class="pill-tool"><img src="./logos/powerpoint-293be30303.png" alt=""/></span>
           </div>
         </div>
 
