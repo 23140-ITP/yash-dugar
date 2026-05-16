@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -628,6 +628,101 @@
     @media (max-width: 480px) {
       .tool-stack-grid { grid-template-columns: 1fr; }
     }
+
+    /* ── Split-Flap Board ── */
+    #flap-section {
+      background: #0a0a0a;
+      padding: 100px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+      overflow: hidden;
+    }
+    #flap-section .section-label {
+      color: #444;
+    }
+    .flap-board {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 28px;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 20px;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.9), 0 30px 60px rgba(0,0,0,0.7);
+    }
+    .flap-row {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+    }
+    .flap-tile {
+      width: 34px;
+      height: 50px;
+      background: #1a1a1a;
+      border-radius: 5px;
+      border: 1px solid #2a2a2a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), inset 0 -2px 4px rgba(0,0,0,0.6);
+      perspective: 300px;
+    }
+    /* centre divider line */
+    .flap-tile::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 0; right: 0;
+      height: 1px;
+      background: #000;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.03);
+      z-index: 10;
+    }
+    /* space tile - wider */
+    .flap-tile.flap-space { width: 18px; background: transparent; border: none; box-shadow: none; }
+    .flap-tile.flap-space::after { display: none; }
+    .flap-char {
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 22px;
+      font-weight: 600;
+      color: #e8e8e8;
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+    .flap-tile.is-flipping .flap-char {
+      animation: flip-anim 0.08s steps(1) infinite;
+      color: #555;
+    }
+    @keyframes flip-anim {
+      0%   { transform: scaleY(1); }
+      49%  { transform: scaleY(0); }
+      51%  { transform: scaleY(0); }
+      100% { transform: scaleY(1); }
+    }
+    .flap-progress {
+      display: flex;
+      gap: 10px;
+    }
+    .flap-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #333;
+      transition: background 0.4s;
+    }
+    .flap-dot.active { background: #e8e8e8; }
+    @media (max-width: 720px) {
+      .flap-tile { width: 20px; height: 32px; border-radius: 3px; }
+      .flap-tile.flap-space { width: 10px; }
+      .flap-char { font-size: 13px; }
+      .flap-board { padding: 14px; gap: 4px; }
+      .flap-row { gap: 3px; }
+    }
   </style>
 </head>
 <body>
@@ -921,6 +1016,13 @@
     </div>
   </section>
 
+  <!-- Split-Flap Board -->
+  <section id="flap-section">
+    <div class="section-label" style="color:#444;">Mantras</div>
+    <div id="flap-board" class="flap-board"></div>
+    <div id="flap-progress" class="flap-progress"></div>
+  </section>
+
   <footer>
     <div class="container">
       <h2>If you’re building something ambitious — let’s talk.</h2>
@@ -929,6 +1031,129 @@
   </footer>
 
   <script>
+    // ── Split-Flap Board ──
+    (function() {
+      const CHARS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?\'-';
+      const MESSAGES = [
+        [
+          'JACK OF ALL TRADES,',
+          'MASTER OF SOME.'
+        ],
+        [
+          "DON'T REINVENT THE WHEEL,",
+          'JUST AUTOMATE THE DRIVER.'
+        ],
+        [
+          'SLOW AND STEADY WINS THE RACE,',
+          'BUT FAST AND ITERATIVE',
+          'SHIPS THE PRODUCT.'
+        ],
+        [
+          "WHERE THERE'S A WILL,",
+          "THERE'S A WORKFLOW",
+          'TO AUTOMATE IT.'
+        ]
+      ];
+      const ROWS = 3;
+      const COLS = 30;
+      const boardEl = document.getElementById('flap-board');
+      const progressEl = document.getElementById('flap-progress');
+      if (!boardEl) return;
+
+      // Build grid
+      let tiles = [];
+      for (let r = 0; r < ROWS; r++) {
+        const rowEl = document.createElement('div');
+        rowEl.className = 'flap-row';
+        let rowTiles = [];
+        for (let c = 0; c < COLS; c++) {
+          const tile = document.createElement('div');
+          tile.className = 'flap-tile';
+          const span = document.createElement('span');
+          span.className = 'flap-char';
+          span.textContent = ' ';
+          tile.appendChild(span);
+          rowEl.appendChild(tile);
+          rowTiles.push({ tile, span, current: ' ' });
+        }
+        boardEl.appendChild(rowEl);
+        tiles.push(rowTiles);
+      }
+
+      // Progress dots
+      let dots = [];
+      MESSAGES.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'flap-dot' + (i === 0 ? ' active' : '');
+        progressEl.appendChild(dot);
+        dots.push(dot);
+      });
+
+      let currentMsg = 0;
+      let flipping = false;
+
+      function padCenter(str, len) {
+        str = str.substring(0, len);
+        const pad = Math.floor((len - str.length) / 2);
+        return str.padStart(str.length + pad).padEnd(len);
+      }
+
+      function flipTile(tileObj, target, delay) {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            if (tileObj.current === target) { resolve(); return; }
+            tileObj.tile.classList.add('is-flipping');
+            const startIdx = CHARS.indexOf(tileObj.current);
+            const endIdx   = CHARS.indexOf(target) === -1 ? 0 : CHARS.indexOf(target);
+            const totalChars = CHARS.length;
+            const steps = ((endIdx - startIdx + totalChars) % totalChars) || totalChars;
+            let step = 0;
+            const interval = setInterval(() => {
+              const idx = (startIdx + step) % totalChars;
+              tileObj.span.textContent = CHARS[idx];
+              step++;
+              if (step > steps) {
+                clearInterval(interval);
+                tileObj.tile.classList.remove('is-flipping');
+                tileObj.span.textContent = target;
+                tileObj.current = target;
+                resolve();
+              }
+            }, 55);
+          }, delay);
+        });
+      }
+
+      function showMessage(msgIdx) {
+        if (flipping) return;
+        flipping = true;
+        const msg = MESSAGES[msgIdx];
+        const lines = Array.from({ length: ROWS }, (_, i) =>
+          padCenter(msg[i] || '', COLS)
+        );
+        dots.forEach((d, i) => d.classList.toggle('active', i === msgIdx));
+        const promises = [];
+        tiles.forEach((row, r) => {
+          row.forEach((tileObj, c) => {
+            const target = lines[r][c].toUpperCase();
+            const realTarget = CHARS.includes(target) ? target : ' ';
+            const delay = (r * 120) + (c * 28) + (Math.random() * 80);
+            promises.push(flipTile(tileObj, realTarget, delay));
+          });
+        });
+        Promise.all(promises).then(() => { flipping = false; });
+      }
+
+      // First message after short delay
+      setTimeout(() => showMessage(0), 800);
+
+      // Cycle every 6s
+      setInterval(() => {
+        currentMsg = (currentMsg + 1) % MESSAGES.length;
+        showMessage(currentMsg);
+      }, 6000);
+    })();
+
     // ── Accordion ──
     function toggleChapter(el) {
       const isActive = el.classList.contains('active');
