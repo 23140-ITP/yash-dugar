@@ -665,22 +665,28 @@
       overflow: hidden;
       color: #fff;
     }
-    .ft-top::after, .ft-bot::after, .ft-flap::after, .ft-flap-bot::after {
+    .ft-top::after, .ft-flap::after, .ft-flap-bot::after, .ft-bot::after {
       content: attr(data-char);
       position: absolute;
-      left: 0; right: 0;
+      left: 0;
+      right: 0;
       height: 200%;
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: 'JetBrains Mono', 'Courier New', monospace;
       font-weight: 700;
-      font-size: clamp(14px, 3.8vw, 48px);
+      font-size: clamp(14px, 4vw, 54px);
       line-height: 1;
-      letter-spacing: 1px;
+      color: #fff;
+      text-transform: uppercase;
     }
-    .ft-top::after, .ft-flap::after { top: 0; }
-    .ft-bot::after, .ft-flap-bot::after { bottom: 0; }
+    .ft-top::after, .ft-flap::after {
+      top: 0;
+    }
+    .ft-bot::after, .ft-flap-bot::after {
+      bottom: 0;
+    }
 
     .ft-top { top: 0; background: #1a1a1a; border-radius: 3px 3px 0 0; }
     .ft-bot { bottom: 0; background: #161616; border-radius: 0 0 3px 3px; }
@@ -1043,6 +1049,7 @@
         // ── Split-Flap Board (High-Fidelity) ──
     (function() {
       const CHARS = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$()-+&=;:'\"%,./?°";
+      const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
       const ACCENTS = ['ac-r','ac-o','ac-y','ac-g','ac-b','ac-v','ac-w'];
       const MESSAGES = [
         "Jack of all trades, master of some.",
@@ -1092,22 +1099,24 @@
               : 25 + Math.floor(Math.random() * 15);
               
             let step = 0;
-            const STEP_MS = 55;
-            const FLIP_MS = 180;
-            const RISE_DELAY = FLIP_MS * 0.55;
+            const STEP_MS = 80;
+            const FLIP_MS = 200;
+            const RISE_DELAY = FLIP_MS * 0.5;
 
             function doStep() {
               const isLast = (step === scrambleSteps);
-              const nextChar = isLast ? normalizedTarget : CHARS[1 + Math.floor(Math.random() * (CHARS.length - 1))];
+              const nextChar = isLast ? normalizedTarget : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
               
-              const useAccent = !isLast && Math.random() < 0.2;
+              const useAccent = !isLast && Math.random() < 0.15;
               const accent = useAccent ? ACCENTS[Math.floor(Math.random() * ACCENTS.length)] : null;
 
+              // Top static and bottom flap get the NEXT char
+              // Top flap and bottom static get the CURRENT char
+              t.top.setAttribute('data-char', ch(nextChar));
+              t.flapBot.setAttribute('data-char', ch(nextChar));
+              
               t.flap.setAttribute('data-char', ch(t.current));
               t.bot.setAttribute('data-char', ch(t.current));
-
-              t.flapBot.setAttribute('data-char', ch(nextChar));
-              t.top.setAttribute('data-char', ch(nextChar));
 
               ACCENTS.forEach(a => t.cell.classList.remove(a));
               if(accent) t.cell.classList.add(accent);
@@ -1128,7 +1137,7 @@
                   t.flapBot.classList.remove('rising');
                   t.bot.setAttribute('data-char', ch(normalizedTarget));
                   resolve();
-                }, FLIP_MS + 60);
+                }, FLIP_MS + 50);
               }
             }
             doStep();
