@@ -695,8 +695,16 @@
       text-shadow: 0 1px 3px rgba(0,0,0,0.8);
     }
     .flap-tile.is-flipping .flap-char {
-      animation: flip-anim 0.08s steps(1) infinite;
-      color: #555;
+      animation: flip-anim 0.08s steps(1) infinite, color-cycle 0.3s linear infinite;
+      color: #f97316;
+    }
+    @keyframes color-cycle {
+      0%   { color: #f97316; }
+      20%  { color: #a855f7; }
+      40%  { color: #3b82f6; }
+      60%  { color: #10b981; }
+      80%  { color: #f43f5e; }
+      100% { color: #f97316; }
     }
     @keyframes flip-anim {
       0%   { transform: scaleY(1); }
@@ -704,18 +712,6 @@
       51%  { transform: scaleY(0); }
       100% { transform: scaleY(1); }
     }
-    .flap-progress {
-      display: flex;
-      gap: 10px;
-    }
-    .flap-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #333;
-      transition: background 0.4s;
-    }
-    .flap-dot.active { background: #e8e8e8; }
     @media (max-width: 720px) {
       .flap-tile { width: 20px; height: 32px; border-radius: 3px; }
       .flap-tile.flap-space { width: 10px; }
@@ -1018,10 +1014,8 @@
 
   <!-- Split-Flap Board -->
   <section id="flap-section">
-    <div class="section-label" style="color:#444;">Mantras</div>
-    <div id="flap-board" class="flap-board"></div>
-    <div id="flap-progress" class="flap-progress"></div>
-  </section>
+<div id="flap-board" class="flap-board"></div>
+</section>
 
   <footer>
     <div class="container">
@@ -1080,15 +1074,6 @@
         tiles.push(rowTiles);
       }
 
-      // Progress dots
-      let dots = [];
-      MESSAGES.forEach((_, i) => {
-        const dot = document.createElement('div');
-        dot.className = 'flap-dot' + (i === 0 ? ' active' : '');
-        progressEl.appendChild(dot);
-        dots.push(dot);
-      });
-
       let currentMsg = 0;
       let flipping = false;
 
@@ -1131,7 +1116,6 @@
         const lines = Array.from({ length: ROWS }, (_, i) =>
           padCenter(msg[i] || '', COLS)
         );
-        dots.forEach((d, i) => d.classList.toggle('active', i === msgIdx));
         const promises = [];
         tiles.forEach((row, r) => {
           row.forEach((tileObj, c) => {
@@ -1147,11 +1131,11 @@
       // First message after short delay
       setTimeout(() => showMessage(0), 800);
 
-      // Cycle every 6s
+      // Cycle every 8s
       setInterval(() => {
         currentMsg = (currentMsg + 1) % MESSAGES.length;
         showMessage(currentMsg);
-      }, 6000);
+      }, 8000);
     })();
 
     // ── Accordion ──
