@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -132,9 +132,9 @@
     .video-bg {
       position: absolute;
       inset: auto 0 0 0;
-      top: 300px;
+      top: 380px;
       width: 100%;
-      height: calc(100% - 300px);
+      height: calc(100% - 380px);
       object-fit: cover;
       z-index: 0;
       opacity: 0;
@@ -146,8 +146,8 @@
       z-index: 1;
       background: linear-gradient(to bottom,
         #ffffff 0%,
-        rgba(255,255,255,0.15) 45%,
-        rgba(255,255,255,0.15) 55%,
+        rgba(255,255,255,0.3) 40%,
+        rgba(255,255,255,0.1) 55%,
         #ffffff 100%
       );
       pointer-events: none;
@@ -157,8 +157,8 @@
     .hero {
       position: relative;
       z-index: 10;
-      padding-top: calc(8rem - 75px);
-      padding-bottom: 160px;
+      padding-top: 130px;
+      padding-bottom: 200px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -169,12 +169,12 @@
     }
     .hero h1 {
       font-family: 'Instrument Serif', Georgia, serif;
-      font-size: clamp(42px, 8vw, 88px);
+      font-size: clamp(36px, 6vw, 76px);
       font-weight: 400;
-      letter-spacing: -0.05em;
-      line-height: 0.95;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
       color: #000000;
-      max-width: 900px;
+      max-width: 860px;
       margin: 0 auto;
     }
     .hero h1 em {
