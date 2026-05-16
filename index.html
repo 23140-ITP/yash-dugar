@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -1014,7 +1014,7 @@
 
   <!-- Split-Flap Board -->
   <section id="flap-section">
-<div id="flap-board" class="flap-board"></div>
+  <div id="flap-board" class="flap-board"></div>
 </section>
 
   <footer>
@@ -1025,117 +1025,86 @@
   </footer>
 
   <script>
-    // ── Split-Flap Board ──
+    // -- Split-Flap Board (High-Fidelity 3D) --
     (function() {
-      const CHARS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?\'-';
+      const CHARS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!\'?-';
+      const ACCENTS = ['accent-red','accent-orange','accent-green','accent-blue','accent-violet'];
       const MESSAGES = [
-        [
-          'JACK OF ALL TRADES,',
-          'MASTER OF SOME.'
-        ],
-        [
-          "DON'T REINVENT THE WHEEL,",
-          'JUST AUTOMATE THE DRIVER.'
-        ],
-        [
-          'SLOW AND STEADY WINS THE RACE,',
-          'BUT FAST AND ITERATIVE',
-          'SHIPS THE PRODUCT.'
-        ],
-        [
-          "WHERE THERE'S A WILL,",
-          "THERE'S A WORKFLOW",
-          'TO AUTOMATE IT.'
-        ]
+        ["JACK OF ALL TRADES,","MASTER OF SOME."],
+        ["DON'T REINVENT THE WHEEL,","JUST AUTOMATE THE DRIVER."],
+        ["SLOW AND STEADY WINS THE RACE,","BUT FAST AND ITERATIVE","SHIPS THE PRODUCT."],
+        ["WHERE THERE'S A WILL,","THERE'S A WORKFLOW","TO AUTOMATE IT."]
       ];
-      const ROWS = 3;
-      const COLS = 30;
-      const boardEl = document.getElementById('flap-board');
-      const progressEl = document.getElementById('flap-progress');
-      if (!boardEl) return;
-
-      // Build grid
-      let tiles = [];
-      for (let r = 0; r < ROWS; r++) {
-        const rowEl = document.createElement('div');
-        rowEl.className = 'flap-row';
-        let rowTiles = [];
-        for (let c = 0; c < COLS; c++) {
-          const tile = document.createElement('div');
-          tile.className = 'flap-tile';
-          const span = document.createElement('span');
-          span.className = 'flap-char';
-          span.textContent = ' ';
-          tile.appendChild(span);
-          rowEl.appendChild(tile);
-          rowTiles.push({ tile, span, current: ' ' });
+      const ROWS=3,COLS=30;
+      const boardEl=document.getElementById('flap-board');
+      if(!boardEl)return;
+      const grid=document.createElement('div');
+      grid.className='flap-grid';
+      grid.style.gridTemplateColumns=`repeat(${COLS},1fr)`;
+      boardEl.appendChild(grid);
+      let tiles=[];
+      for(let r=0;r<ROWS;r++){
+        let row=[];
+        for(let c=0;c<COLS;c++){
+          const cell=document.createElement('div'); cell.className='ft';
+          const top=document.createElement('div');     top.className='ft-top';     top.textContent='\u00A0';
+          const bot=document.createElement('div');     bot.className='ft-bot';     bot.textContent='\u00A0';
+          const flap=document.createElement('div');    flap.className='ft-flap';   flap.textContent='\u00A0';
+          const flapBot=document.createElement('div'); flapBot.className='ft-flap-bot'; flapBot.textContent='\u00A0';
+          const split=document.createElement('div');   split.className='ft-split';
+          const stripe=document.createElement('div');  stripe.className='ft-stripe';
+          cell.append(top,bot,flap,flapBot,split,stripe);
+          grid.appendChild(cell);
+          row.push({cell,top,bot,flap,flapBot,current:' '});
         }
-        boardEl.appendChild(rowEl);
-        tiles.push(rowTiles);
+        tiles.push(row);
       }
-
-      let currentMsg = 0;
-      let flipping = false;
-
-      function padCenter(str, len) {
-        str = str.substring(0, len);
-        const pad = Math.floor((len - str.length) / 2);
-        return str.padStart(str.length + pad).padEnd(len);
-      }
-
-      function flipTile(tileObj, target, delay) {
-        return new Promise(resolve => {
-          setTimeout(() => {
-            if (tileObj.current === target) { resolve(); return; }
-            tileObj.tile.classList.add('is-flipping');
-            const startIdx = CHARS.indexOf(tileObj.current);
-            const endIdx   = CHARS.indexOf(target) === -1 ? 0 : CHARS.indexOf(target);
-            const totalChars = CHARS.length;
-            const steps = ((endIdx - startIdx + totalChars) % totalChars) || totalChars;
-            let step = 0;
-            const interval = setInterval(() => {
-              const idx = (startIdx + step) % totalChars;
-              tileObj.span.textContent = CHARS[idx];
-              step++;
-              if (step > steps) {
-                clearInterval(interval);
-                tileObj.tile.classList.remove('is-flipping');
-                tileObj.span.textContent = target;
-                tileObj.current = target;
-                resolve();
-              }
-            }, 55);
-          }, delay);
+      function c(ch){return ch===' '?'\u00A0':ch;}
+      function flipTile(t,target,delay){
+        return new Promise(resolve=>{
+          setTimeout(()=>{
+            if(t.current===target){resolve();return;}
+            const steps=target===' '?8+Math.floor(Math.random()*8):25+Math.floor(Math.random()*15);
+            let step=0;
+            const STEP_MS=55,FLIP_MS=180,RISE_DELAY=100;
+            function doStep(){
+              const isLast=step===steps;
+              const next=isLast?target:CHARS[1+Math.floor(Math.random()*(CHARS.length-1))];
+              const useAccent=!isLast&&Math.random()<0.2;
+              const accent=useAccent?ACCENTS[Math.floor(Math.random()*ACCENTS.length)]:null;
+              t.flap.textContent=c(t.current);
+              t.flapBot.textContent=c(next);
+              t.top.textContent=c(next);
+              t.bot.textContent=c(next);
+              ACCENTS.forEach(a=>t.cell.classList.remove(a));
+              if(accent)t.cell.classList.add(accent);
+              t.flap.classList.remove('dropping'); void t.flap.offsetWidth; t.flap.classList.add('dropping');
+              t.flapBot.classList.remove('rising');
+              setTimeout(()=>{void t.flapBot.offsetWidth;t.flapBot.classList.add('rising');},RISE_DELAY);
+              t.current=next; step++;
+              if(!isLast){setTimeout(doStep,STEP_MS);}
+              else{setTimeout(()=>{ACCENTS.forEach(a=>t.cell.classList.remove(a));t.flap.classList.remove('dropping');t.flapBot.classList.remove('rising');resolve();},FLIP_MS+60);}
+            }
+            doStep();
+          },delay);
         });
       }
-
-      function showMessage(msgIdx) {
-        if (flipping) return;
-        flipping = true;
-        const msg = MESSAGES[msgIdx];
-        const lines = Array.from({ length: ROWS }, (_, i) =>
-          padCenter(msg[i] || '', COLS)
-        );
-        const promises = [];
-        tiles.forEach((row, r) => {
-          row.forEach((tileObj, c) => {
-            const target = lines[r][c].toUpperCase();
-            const realTarget = CHARS.includes(target) ? target : ' ';
-            const delay = (r * 120) + (c * 28) + (Math.random() * 80);
-            promises.push(flipTile(tileObj, realTarget, delay));
-          });
-        });
-        Promise.all(promises).then(() => { flipping = false; });
+      function padCenter(str,len){str=str.substring(0,len);const pad=Math.floor((len-str.length)/2);return str.padStart(str.length+pad).padEnd(len);}
+      let currentMsg=0,flipping=false;
+      function showMessage(msgIdx){
+        if(flipping)return; flipping=true;
+        const msg=MESSAGES[msgIdx];
+        const lines=Array.from({length:ROWS},(_,i)=>padCenter(msg[i]||'',COLS));
+        const promises=[];
+        tiles.forEach((row,r)=>row.forEach((t,col)=>{
+          const ch2=lines[r][col].toUpperCase();
+          const target=CHARS.includes(ch2)?ch2:' ';
+          promises.push(flipTile(t,target,(col*30)+(r*20)+(Math.random()*60)));
+        }));
+        Promise.all(promises).then(()=>{flipping=false;});
       }
-
-      // First message after short delay
-      setTimeout(() => showMessage(0), 800);
-
-      // Cycle every 8s
-      setInterval(() => {
-        currentMsg = (currentMsg + 1) % MESSAGES.length;
-        showMessage(currentMsg);
-      }, 8000);
+      setTimeout(()=>showMessage(0),1000);
+      setInterval(()=>{currentMsg=(currentMsg+1)%MESSAGES.length;showMessage(currentMsg);},8000);
     })();
 
     // ── Accordion ──
