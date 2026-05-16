@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -131,11 +131,12 @@
     }
     .video-bg {
       position: absolute;
-      inset: auto 0 0 0;
-      top: 380px;
+      inset: 0;
+      top: 360px;
       width: 100%;
-      height: calc(100% - 380px);
+      height: calc(100% - 360px);
       object-fit: cover;
+      object-position: center top;
       z-index: 0;
       opacity: 0;
       transition: none;
@@ -146,8 +147,9 @@
       z-index: 1;
       background: linear-gradient(to bottom,
         #ffffff 0%,
-        rgba(255,255,255,0.3) 40%,
-        rgba(255,255,255,0.1) 55%,
+        rgba(255,255,255,0.6) 30%,
+        rgba(255,255,255,0.05) 55%,
+        rgba(255,255,255,0.75) 80%,
         #ffffff 100%
       );
       pointer-events: none;
@@ -209,22 +211,22 @@
     .filler { height: 80px; }
 
     /* ── Logo Strip ── */
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
     .logos {
-      padding: 32px 0;
-      overflow-x: auto;
-      overflow-y: hidden;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
+      padding: 28px 0;
+      overflow: hidden;
       position: relative;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
-    .logos::-webkit-scrollbar { display: none; }
     .logos::before, .logos::after {
       content: '';
       position: absolute;
       top: 0; bottom: 0;
-      width: 64px;
+      width: 80px;
       z-index: 2;
       pointer-events: none;
     }
@@ -235,8 +237,9 @@
       align-items: center;
       gap: 16px;
       width: max-content;
-      padding: 0 32px;
+      animation: marquee 22s linear infinite;
     }
+    .logos-track:hover { animation-play-state: paused; }
     .logo-item {
       display: inline-flex;
       align-items: center;
@@ -514,20 +517,25 @@
     <header class="hero">
       <h1 class="animate-fade-rise">Data-driven &amp; AI-native <em>Builder</em></h1>
       <p class="hero-meta animate-fade-rise-delay">Delhi, India &middot; Masters&#8217; Union &#39;27 &middot; CFA L2 Candidate</p>
-      <a href="mailto:yash.dugar@mastersunion.org" class="hero-cta animate-fade-rise-2">Get in touch</a>
     </header>
   </div>
+
   <div class="logos">
-    <div class="container">
-      <div class="logos-track">
-        <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" /></a>
-        <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" /></a>
-        <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" /></a>
-        <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters’ Union" /></a>
-        <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" /></a>
-        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" /></a>
-        <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" /></a>
-      </div>
+    <div class="logos-track">
+      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" /></a>
+      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" /></a>
+      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" /></a>
+      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" /></a>
+      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" /></a>
+      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" /></a>
+      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" /></a>
+      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" /></a>
+      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" /></a>
+      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" /></a>
+      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" /></a>
+      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" /></a>
+      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" /></a>
+      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" /></a>
     </div>
   </div>
 
