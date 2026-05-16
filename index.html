@@ -235,19 +235,19 @@
     .logos-track {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 32px;
       width: max-content;
-      animation: marquee 22s linear infinite;
+      animation: marquee 40s linear infinite;
     }
     .logos-track:hover { animation-play-state: paused; }
     .logo-item {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 10px 20px;
+      padding: 16px 32px;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: var(--r8);
+      border-radius: var(--r12);
       flex-shrink: 0;
       transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
       text-decoration: none;
@@ -255,10 +255,10 @@
     .logo-item:hover {
       border-color: #000000;
       box-shadow: var(--shadow-sm);
-      transform: translateY(-2px);
+      transform: translateY(-4px);
     }
     .logo-item img {
-      height: 30px;
+      height: 60px;
       width: auto;
       object-fit: contain;
     }
