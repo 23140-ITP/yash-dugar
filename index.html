@@ -7,7 +7,7 @@
   <meta name="description" content="Yash Dugar — Data-driven & AI-native builder. Masters' Union '27, CFA L2 Candidate, Delhi, India." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #ffffff;
@@ -471,17 +471,89 @@
       border-bottom: 1px solid var(--border);
       color: var(--text);
     }
-    .belief:last-child { border-bottom: none; }
-    .belief em { color: var(--muted); font-style: italic; }
+    /* ── Beliefs (Paper Cutout Style) ── */
+    #beliefs {
+      background: #f5f3ef;
+      padding: 100px 0;
+      overflow: hidden;
+    }
+    .beliefs-layout {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      padding: 40px 0;
+    }
+    .paper-card {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      padding: 40px;
+      box-shadow: 2px 4px 15px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+    .paper-card:hover {
+      transform: scale(1.02) rotate(0deg) !important;
+      z-index: 10;
+    }
+    
+    /* Torn edge effect using clip-path */
+    .torn-edge {
+      clip-path: polygon(
+        0% 2%, 5% 0%, 10% 3%, 15% 1%, 20% 4%, 25% 1%, 30% 3%, 35% 0%, 40% 2%, 45% 1%, 50% 3%, 55% 1%, 60% 4%, 65% 1%, 70% 3%, 75% 0%, 80% 2%, 85% 1%, 90% 4%, 95% 1%, 100% 2%,
+        100% 98%, 95% 100%, 90% 97%, 85% 99%, 80% 96%, 75% 100%, 70% 97%, 65% 99%, 60% 96%, 55% 100%, 50% 97%, 45% 99%, 40% 96%, 35% 100%, 30% 97%, 25% 99%, 20% 96%, 15% 100%, 10% 97%, 5% 99%, 0% 98%
+      );
+    }
+
+    .paper-lined {
+      background: #fff;
+      background-image: linear-gradient(#e8f1ff 1px, transparent 1px);
+      background-size: 100% 28px;
+      font-family: 'Caveat', cursive;
+      font-size: 28px;
+      line-height: 28px;
+      color: #2c3e50;
+      border-left: 2px solid #ffcfcf;
+      padding-top: 32px;
+    }
+    .paper-grid {
+      background: #fdfdfd;
+      background-image: 
+        linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      color: #333;
+    }
+    .paper-plain {
+      background: #f9f7f2;
+      font-family: 'Instrument Serif', serif;
+      font-size: 32px;
+      font-style: italic;
+      color: #1a1a1a;
+      text-align: center;
+    }
+
+    /* Staggered rotations */
+    .b-1 { transform: rotate(-2deg) translateX(-20px); }
+    .b-2 { transform: rotate(1.5deg) translateX(30px); }
+    .b-3 { transform: rotate(-1deg); }
+    .b-4 { transform: rotate(2deg) translateX(-15px); }
+    .b-5 { transform: rotate(-1.5deg) translateX(25px); }
 
     /* ── Footer ── */
-    footer { padding: 80px 0; text-align: center; border-top: 1px solid var(--border); }
+    footer { padding: 120px 0; text-align: center; border-top: 1px solid var(--border); background: #fff; }
     footer h2 {
       font-family: 'Instrument Serif', Georgia, serif;
       font-size: clamp(34px, 6vw, 53px);
       font-weight: 400;
       letter-spacing: -0.03em;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
     footer .email { font-size: 19px; color: var(--muted); }
     footer .email a { color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
@@ -780,11 +852,13 @@
   <section id="beliefs">
     <div class="container">
       <div class="section-label">Beliefs</div>
-      <div class="belief">1 — Put <em>integrity</em> first.</div>
-      <div class="belief">2 — Take the <em>risk</em>.</div>
-      <div class="belief">3 — Be willing to be <em>misunderstood</em> for innovation.</div>
-      <div class="belief">4 — Choose <em>execution</em> over perfection.</div>
-      <div class="belief">5 — Keep <em>learning, unlearning, and relearning</em>.</div>
+      <div class="beliefs-layout">
+        <div class="paper-card paper-lined torn-edge b-1">Put <em>integrity</em> first.</div>
+        <div class="paper-card paper-grid torn-edge b-2">Take the <em>risk</em>.</div>
+        <div class="paper-card paper-plain torn-edge b-3">Be willing to be <em>misunderstood</em> for innovation.</div>
+        <div class="paper-card paper-lined torn-edge b-4">Choose <em>execution</em> over perfection.</div>
+        <div class="paper-card paper-grid torn-edge b-5">Keep <em>learning, unlearning, and relearning</em>.</div>
+      </div>
     </div>
   </section>
 
