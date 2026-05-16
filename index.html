@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -131,12 +131,12 @@
     }
     .video-bg {
       position: absolute;
-      inset: 0;
-      top: 360px;
+      inset: auto 0 0 0;
+      top: 300px;
       width: 100%;
-      height: calc(100% - 360px);
+      height: calc(100% - 300px);
       object-fit: cover;
-      object-position: center top;
+      object-position: center;
       z-index: 0;
       opacity: 0;
       transition: none;
@@ -147,9 +147,10 @@
       z-index: 1;
       background: linear-gradient(to bottom,
         #ffffff 0%,
-        rgba(255,255,255,0.6) 30%,
-        rgba(255,255,255,0.05) 55%,
-        rgba(255,255,255,0.75) 80%,
+        #ffffff 300px,
+        rgba(255,255,255,0.7) 350px,
+        transparent 50%,
+        transparent 80%,
         #ffffff 100%
       );
       pointer-events: none;
@@ -504,7 +505,6 @@
         <a href="#tool-stack" class="nav-link">Tools</a>
         <a href="#beliefs" class="nav-link">Beliefs</a>
       </div>
-      <a href="mailto:yash.dugar@mastersunion.org" class="btn">Get in touch</a>
     </div>
   </nav>
 
@@ -517,6 +517,7 @@
     <header class="hero">
       <h1 class="animate-fade-rise">Data-driven &amp; AI-native <em>Builder</em></h1>
       <p class="hero-meta animate-fade-rise-delay">Delhi, India &middot; Masters&#8217; Union &#39;27 &middot; CFA L2 Candidate</p>
+      <a href="mailto:yash.dugar@mastersunion.org" class="hero-cta animate-fade-rise-2">Get in touch</a>
     </header>
   </div>
 
