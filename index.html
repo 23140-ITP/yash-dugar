@@ -1375,7 +1375,8 @@
       constructor(element, options = {}) {
         this.element = element;
         this.revealDelayMs = options.revealDelayMs || 25; // Delay between settling letters
-        this.flipDelayMs = options.flipDelayMs || 45;     // Scramble flip frequency
+        this.flipDelayMs = options.flipDelayMs || 90;     // Scramble flip frequency (2x slower: 90ms)
+        this.revealStep = options.revealStep || 0.45;     // Reveal step (2x slower: 0.45 char per frame)
         this.charset = options.charset || "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789!@#$%&?*+-=/";
         this.isRunning = false;
         this.animationFrameId = null;
@@ -1461,8 +1462,8 @@
 
           // 3. Progress Reveal Counter
           if (currentReveal < flatChars.length) {
-            // Increment revealed count gradually
-            currentReveal = Math.min(flatChars.length, currentReveal + 1);
+            // Increment revealed count gradually (2x slower)
+            currentReveal = Math.min(flatChars.length, currentReveal + this.revealStep);
             this.animationFrameId = requestAnimationFrame(tick);
           } else {
             this.complete();
