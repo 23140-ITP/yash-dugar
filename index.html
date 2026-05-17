@@ -877,8 +877,8 @@
 
   <!-- Hero -->
   <header class="hero">
-    <h1 id="hero-title" class="animate-fade-rise">
-      Data-driven &amp; <span class="gradient-text">AI-native</span> <em>Builder</em>
+    <h1 class="animate-fade-rise">
+      <span id="hero-title-text">Data-driven &amp; <span class="gradient-text">AI-native</span> <em>Builder</em></span>
       <span class="inline-card"><span class="dot"></span> Delhi, IN</span>
       <span class="inline-card"><span class="dot"></span> Masters&#8217; Union &#39;27</span>
       <span class="inline-card"><span class="dot"></span> CFA L2 Candidate</span>
@@ -1383,8 +1383,9 @@
         // Parse structural text map
         this.initTextMap();
         
-        // Bind triggers
-        this.element.addEventListener('mouseenter', () => this.trigger());
+        // Bind triggers to the parent h1 so hovering anywhere on the headline triggers it
+        const triggerEl = this.element.closest('h1') || this.element;
+        triggerEl.addEventListener('mouseenter', () => this.trigger());
         
         // Auto-trigger once shortly after load
         setTimeout(() => this.trigger(), 600);
@@ -1483,9 +1484,9 @@
     }
 
     const initHeroEncryption = () => {
-      const heroTitle = document.getElementById('hero-title');
-      if (heroTitle) {
-        new EncryptedTextEngine(heroTitle);
+      const heroTitleText = document.getElementById('hero-title-text');
+      if (heroTitleText) {
+        new EncryptedTextEngine(heroTitleText);
       }
     };
     if (document.readyState === 'loading') {
