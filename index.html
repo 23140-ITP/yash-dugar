@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -637,6 +637,118 @@
     @media (max-width: 480px) {
       .tool-stack-grid { grid-template-columns: 1fr; }
     }
+    /* â”€â”€ Split-Flap Board (High-Fidelity Aceternity) â”€â”€ */
+    #flap-section {
+      background: #0a0a0a;
+      padding: 100px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .flap-board {
+      width: 100%;
+      max-width: 900px;
+      background: #111;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.9), 0 30px 60px rgba(0,0,0,0.7);
+      border: 1px solid #222;
+    }
+    .flap-grid {
+      display: grid;
+      gap: 3px;
+    }
+    .ft {
+      position: relative;
+      border-radius: 3px;
+      border: 2px solid #000;
+      overflow: hidden;
+      aspect-ratio: 3/6;
+      background: #151515;
+    }
+    /* Sliced Character Layers */
+    .ft-top, .ft-bot, .ft-flap, .ft-flap-bot {
+      position: absolute;
+      left: 0; right: 0; top: 0; bottom: 0;
+      overflow: hidden;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-weight: 800;
+      font-size: clamp(16px, 4.5vw, 62px);
+      line-height: 1;
+      text-transform: uppercase;
+      user-select: none;
+      backface-visibility: hidden;
+    }
+    .ft-top, .ft-flap {
+      clip-path: inset(0 0 50% 0);
+      background: #1a1a1a;
+      z-index: 1;
+    }
+    .ft-bot, .ft-flap-bot {
+      clip-path: inset(50% 0 0 0);
+      background: #161616;
+      z-index: 1;
+    }
+    .ft-top::after, .ft-bot::after, .ft-flap::after, .ft-flap-bot::after {
+      content: attr(data-char);
+      width: 100%; height: 100%;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .ft-flap {
+      background: #222;
+      transform-origin: center;
+      transform: rotateX(0deg);
+      z-index: 4;
+    }
+    .ft-flap.dropping {
+      transition: transform 0.15s ease-in;
+      transform: rotateX(-90deg);
+    }
+    .ft-flap-bot {
+      background: #1a1a1a;
+      transform-origin: center;
+      transform: rotateX(90deg);
+      z-index: 5;
+    }
+    .ft-flap-bot.rising {
+      transition: transform 0.15s ease-out;
+      transform: rotateX(0deg);
+    }
+    .ft-split {
+      position: absolute; top: 50%; left: 0; right: 0;
+      height: 1.5px; background: #000; z-index: 10; transform: translateY(-0.75px);
+    }
+    .ft-stripe {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+      background: repeating-linear-gradient(to bottom, #444 0, #444 1px, transparent 1px, transparent 3px);
+      opacity: 0.15; z-index: 6;
+    }
+
+    /* Accents mapping Aceternity colors */
+    .ft.ac-r .ft-top,.ft.ac-r .ft-flap { background:#dc2626; color:#fff; }
+    .ft.ac-r .ft-bot,.ft.ac-r .ft-flap-bot { background:#b91c1c; color:#fff; }
+    .ft.ac-o .ft-top,.ft.ac-o .ft-flap { background:#f97316; color:#fff; }
+    .ft.ac-o .ft-bot,.ft.ac-o .ft-flap-bot { background:#ea580c; color:#fff; }
+    .ft.ac-y .ft-top,.ft.ac-y .ft-flap { background:#facc15; color:#171717; }
+    .ft.ac-y .ft-bot,.ft.ac-y .ft-flap-bot { background:#eab308; color:#171717; }
+    .ft.ac-g .ft-top,.ft.ac-g .ft-flap { background:#16a34a; color:#fff; }
+    .ft.ac-g .ft-bot,.ft.ac-g .ft-flap-bot { background:#15803d; color:#fff; }
+    .ft.ac-b .ft-top,.ft.ac-b .ft-flap { background:#2563eb; color:#fff; }
+    .ft.ac-b .ft-bot,.ft.ac-b .ft-flap-bot { background:#1d4ed8; color:#fff; }
+    .ft.ac-v .ft-top,.ft.ac-v .ft-flap { background:#7c3aed; color:#fff; }
+    .ft.ac-v .ft-bot,.ft.ac-v .ft-flap-bot { background:#6d28d9; color:#fff; }
+    .ft.ac-w .ft-top,.ft.ac-w .ft-flap { background:#fff; color:#171717; }
+    .ft.ac-w .ft-bot,.ft.ac-w .ft-flap-bot { background:#f5f5f5; color:#171717; }
+
+    @media (max-width: 720px) {
+      .flap-board { padding: 8px; border-radius: 8px; }
+      .flap-grid { gap: 1px; }
+      .ft { border-width: 1px; }
+    }
   </style>
   <!-- Meta tags and Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">ðŸš€</text></svg>">
@@ -934,18 +1046,162 @@
         <div class="paper-card paper-grid torn-edge b-5">Keep <em>learning, unlearning, and relearning</em>.</div>
       </div>
     </div>
-  </section>
+    </section>
 
-  
+  <!-- Split-Flap Board -->
+  <section id="flap-section">
+    <div id="flap-board" class="flap-board"></div>
+  </section>
 
   <footer>
     <div class="container">
       <h2>If you’re building something ambitious — let’s talk.</h2>
       <p class="email">yash.dugar@mastersunion.org · <a href="https://linkedin.com/in/yash--dugar">LinkedIn</a></p>
     </div>
-  </footer>
+  </footer>  <script>
+    // â”€â”€ Split-Flap Board (High-Fidelity) â”€â”€
+    (function() {
+      const CHARS = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$()-+&=;:'\"%,./?Â°";
+      const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      const ACCENTS = ['ac-r','ac-o','ac-y','ac-g','ac-b','ac-v','ac-w'];
+      const MESSAGES = [
+        "Jack of all trades, master of some.",
+        "Don't reinvent the wheel, just automate the driver.",
+        "Slow and steady wins the race, but fast and iterative ships the product.",
+        "Where there's a will, there's a workflow to automate it."
+      ];
+      
+      const ROWS = 6;
+      const COLS = 22;
+      const boardEl = document.getElementById('flap-board');
+      if (!boardEl) return;
 
-  <script>
+      const grid = document.createElement('div');
+      grid.className = 'flap-grid';
+      grid.style.gridTemplateColumns = `repeat(${COLS}, 1fr)`;
+      boardEl.appendChild(grid);
+
+      let tiles = [];
+      for(let r=0; r<ROWS; r++) {
+        let row = [];
+        for(let c=0; c<COLS; c++) {
+          const cell = document.createElement('div'); cell.className = 'ft';
+          const top = document.createElement('div'); top.className = 'ft-top'; top.setAttribute('data-char', '\u00A0');
+          const bot = document.createElement('div'); bot.className = 'ft-bot'; bot.setAttribute('data-char', '\u00A0');
+          const flap = document.createElement('div'); flap.className = 'ft-flap'; flap.setAttribute('data-char', '\u00A0');
+          const flapBot = document.createElement('div'); flapBot.className = 'ft-flap-bot'; flapBot.setAttribute('data-char', '\u00A0');
+          const split = document.createElement('div'); split.className = 'ft-split';
+          const stripe = document.createElement('div'); stripe.className = 'ft-stripe';
+          cell.append(top, bot, flap, flapBot, split, stripe);
+          grid.appendChild(cell);
+          row.push({cell, top, bot, flap, flapBot, current: ' '});
+        }
+        tiles.push(row);
+      }
+
+      function ch(c) { return c === ' ' ? '\u00A0' : c.toUpperCase(); }
+
+      function flipTile(t, target, delay) {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            const normalizedTarget = CHARS.includes(target.toUpperCase()) ? target.toUpperCase() : ' ';
+            if(t.current === normalizedTarget) { resolve(); return; }
+
+            const FLIP_MS = 140;
+
+            function triggerFlip() {
+              const nextChar = normalizedTarget;
+              
+              // Flash a random accent color during the transition
+              const useAccent = Math.random() < 0.25;
+              const accent = useAccent ? ACCENTS[Math.floor(Math.random() * ACCENTS.length)] : null;
+              ACCENTS.forEach(a => t.cell.classList.remove(a));
+              if (accent && nextChar !== ' ') t.cell.classList.add(accent);
+
+              // Ensure background matches CURRENT until transition is complete
+              t.top.setAttribute('data-char', ch(t.current));
+              t.bot.setAttribute('data-char', ch(t.current));
+              
+              t.flap.setAttribute('data-char', ch(t.current));
+              t.flapBot.setAttribute('data-char', ch(nextChar));
+
+              // 3D Flip
+              t.flap.classList.remove('dropping'); void t.flap.offsetWidth; t.flap.classList.add('dropping');
+              
+              setTimeout(() => {
+                t.flapBot.classList.remove('rising'); void t.flapBot.offsetWidth; t.flapBot.classList.add('rising');
+              }, FLIP_MS * 0.5);
+
+              // Update state only after landing
+              setTimeout(() => {
+                t.current = nextChar;
+                t.top.setAttribute('data-char', ch(nextChar));
+                t.bot.setAttribute('data-char', ch(nextChar));
+                t.flap.setAttribute('data-char', ch(nextChar));
+                t.flapBot.setAttribute('data-char', ch(nextChar));
+                t.flap.classList.remove('dropping');
+                t.flapBot.classList.remove('rising');
+                ACCENTS.forEach(a => t.cell.classList.remove(a)); // Clear color on landing
+                resolve();
+              }, FLIP_MS + 50);
+            }
+            triggerFlip();
+          }, delay);
+        });
+      }
+
+      function wrapText(text, maxCols) {
+        const words = text.split(/[\s]+/);
+        let lines = [];
+        let currentLine = "";
+        for (let word of words) {
+          if (!currentLine) { currentLine = word; }
+          else if (currentLine.length + 1 + word.length <= maxCols) { currentLine += " " + word; }
+          else { lines.push(currentLine); currentLine = word; }
+        }
+        if (currentLine) lines.push(currentLine);
+        return lines;
+      }
+
+      function getWrappedLines(text) {
+        const paras = text.split('\n');
+        let finalLines = [];
+        for (let p of paras) {
+          if (p.trim() === '') finalLines.push('');
+          else finalLines.push(...wrapText(p, COLS));
+        }
+        return finalLines;
+      }
+
+      let currentMsg = 0;
+      let flipping = false;
+
+      function showMessage(msgIdx) {
+        if(flipping) return;
+        flipping = true;
+        const msgLines = getWrappedLines(MESSAGES[msgIdx]);
+        const startRow = Math.max(0, Math.floor((ROWS - msgLines.length) / 2));
+        const promises = [];
+        tiles.forEach((row, r) => {
+          const lineIdx = r - startRow;
+          const lineStr = (lineIdx >= 0 && lineIdx < msgLines.length) ? msgLines[lineIdx] : '';
+          const startCol = Math.max(0, Math.floor((COLS - lineStr.length) / 2));
+          row.forEach((t, c) => {
+            const charIdx = c - startCol;
+            const targetChar = (charIdx >= 0 && charIdx < lineStr.length) ? lineStr[charIdx] : ' ';
+            promises.push(flipTile(t, targetChar, (c * 20) + (r * 10) + (Math.random() * 30)));
+          });
+        });
+        Promise.all(promises).then(() => { flipping = false; });
+      }
+
+      setTimeout(() => showMessage(0), 1000);
+      setInterval(() => {
+        currentMsg = (currentMsg + 1) % MESSAGES.length;
+        showMessage(currentMsg);
+      }, 8000);
+    })();
+
                 
 
     // -- Accordion --
