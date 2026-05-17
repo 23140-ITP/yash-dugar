@@ -45,7 +45,7 @@
       padding: 0 24px;
     }
 
-    /* ── Animations ── */
+    /* -- Animations -- */
     @keyframes fade-rise {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -54,7 +54,7 @@
     .animate-fade-rise-delay { animation: fade-rise 0.8s 0.2s ease-out both; }
     .animate-fade-rise-2     { animation: fade-rise 0.8s 0.4s ease-out both; }
 
-    /* ── Nav ── */
+    /* -- Nav -- */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -121,7 +121,7 @@
       box-shadow: 0 4px 16px rgba(0,0,0,0.18);
     }
 
-    /* ── Hero Content ── */
+    /* -- Hero Content -- */
     .hero {
       position: relative;
       z-index: 10;
@@ -149,7 +149,7 @@
       color: var(--muted);
       font-style: italic;
     }
-    /* ── Inline Headline Elements ── */
+    /* -- Inline Headline Elements -- */
     .inline-img {
       height: 1.1em;
       width: auto;
@@ -218,7 +218,7 @@
     }
     .filler { height: 80px; }
 
-    /* ── Logo Strip ── */
+    /* -- Logo Strip -- */
     @keyframes marquee {
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
@@ -267,12 +267,9 @@
       opacity: 1;
       transition: all 0.3s ease;
     }
-    .logo-item:hover img {
-      
-      opacity: 1;
-    }
+    .logo-item:hover img { opacity: 1; }
 
-    /* ── Sections ── */
+    /* -- Sections -- */
     section {
       padding: 64px 0;
       scroll-margin-top: 80px;
@@ -286,7 +283,7 @@
       margin-bottom: 28px;
     }
 
-    /* ── Chapter cards (Experience) ── */
+    /* -- Chapter cards (Experience) -- */
     .chapter {
       background: var(--card);
       border: 1px solid var(--border);
@@ -351,7 +348,7 @@
       border-radius: 50%;
     }
 
-    /* ── Education ── */
+    /* -- Education -- */
     .edu-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
     .edu-card {
       background: var(--card);
@@ -376,7 +373,7 @@
       letter-spacing: 0.02em;
     }
 
-    /* ── Wins ── */
+    /* -- Wins -- */
     .wins-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
     .wins-list li {
       background: var(--card);
@@ -391,7 +388,7 @@
     .wins-list li span.win-title { font-weight: 600; color: var(--text); }
     .wins-list li span.win-detail { color: var(--muted); }
 
-    /* ── Skills ── */
+    /* -- Skills -- */
     .skills-layout { display: flex; flex-direction: column; gap: 32px; }
     .skill-category-label {
       font-size: 13px;
@@ -437,7 +434,7 @@
     }
     .pill-domain:hover { border-color: #000000; transform: translateY(-2px); }
 
-    /* ── Tool Stack ── */
+    /* -- Tool Stack -- */
     .tool-stack-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -454,16 +451,19 @@
     .tool-pills { display: flex; flex-wrap: wrap; gap: 24px; }
     .pill-tool {
       display: inline-flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 0;
       background: transparent;
       border: none;
       transition: all 0.2s;
-      cursor: default;
+      cursor: pointer;
+      text-decoration: none;
+      gap: 8px;
     }
     .pill-tool img {
-      height: 60px;
+      height: 50px;
       width: auto;
       object-fit: contain;
       opacity: 0.9;
@@ -476,8 +476,17 @@
       opacity: 1;
       transform: scale(1.05);
     }
+    .tool-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .pill-tool:hover .tool-name {
+      color: #000;
+    }
 
-    /* ── Beliefs ── */
+    /* -- Beliefs -- */
     .belief {
       font-family: 'Instrument Serif', Georgia, serif;
       font-size: clamp(22px, 4.2vw, 36px);
@@ -488,7 +497,7 @@
       border-bottom: 1px solid var(--border);
       color: var(--text);
     }
-    /* ── Beliefs (Artistic Collage Style) ── */
+    /* -- Beliefs (Artistic Collage Style) -- */
     #beliefs {
       background: #f5f3ef;
       padding: 120px 0;
@@ -603,7 +612,7 @@
       .paper-card:nth-child(even) { transform: rotate(-2deg) !important; }
     }
 
-    /* ── Footer ── */
+    /* -- Footer -- */
     footer { padding: 120px 0; text-align: center; border-top: 1px solid var(--border); background: #fff; }
     footer h2 {
       font-family: 'Instrument Serif', Georgia, serif;
@@ -618,7 +627,7 @@
     footer .email { font-size: 19px; color: var(--muted); }
     footer .email a { color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
-    /* ── Responsive ── */
+    /* -- Responsive -- */
     @media (max-width: 720px) {
       .nav-links { display: none; }
       .filler { height: 80px; }
@@ -628,14 +637,13 @@
     @media (max-width: 480px) {
       .tool-stack-grid { grid-template-columns: 1fr; }
     }
-
-            
-    @media (max-width: 720px) {
-    @media (max-width: 720px) {
-      
-      .ft { border-width: 1px; }
-    }
   </style>
+  <!-- Meta tags and Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">ðŸš€</text></svg>">
+  <meta property="og:title" content="Yash Dugar - Data-driven & AI-native Builder" />
+  <meta property="og:description" content="Yash Dugar â€” Data-driven & AI-native builder. Masters' Union '27, CFA L2 Candidate, Delhi, India." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
 </head>
 <body>
 
@@ -668,20 +676,20 @@
 
   <div class="logos">
     <div class="logos-track">
-      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" /></a>
-      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" /></a>
-      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" /></a>
-      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" /></a>
-      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" /></a>
-      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" /></a>
-      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" /></a>
-      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" /></a>
-      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" /></a>
-      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" /></a>
-      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" /></a>
-      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" /></a>
-      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" /></a>
-      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" /></a>
+      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" loading="lazy" /></a>
+      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" loading="lazy" /></a>
+      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" loading="lazy" /></a>
+      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" loading="lazy" /></a>
+      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" loading="lazy" /></a>
+      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" loading="lazy" /></a>
+      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" loading="lazy" /></a>
+      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" loading="lazy" /></a>
+      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" loading="lazy" /></a>
+      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" loading="lazy" /></a>
+      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" loading="lazy" /></a>
+      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" loading="lazy" /></a>
+      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" loading="lazy" /></a>
+      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" loading="lazy" /></a>
     </div>
   </div>
 
@@ -842,7 +850,7 @@
             <span class="pill-tech">Business Intelligence</span>
             <span class="pill-tech">Workflow Automation</span>
             <span class="pill-tech">Web Scraping</span>
-            <span class="pill-tech"><img src="https://cdn.simpleicons.org/python/white" alt=""/> Python</span>
+            <span class="pill-tech"><img src="https://cdn.simpleicons.org/python/white" alt="Python" /> Python</span>
             <span class="pill-tech">AI Video &amp; Image Generation</span>
             <span class="pill-tech">AI Music Generation</span>
           </div>
@@ -872,42 +880,42 @@
         <div>
           <div class="tool-cluster-label">AI &amp; Automation</div>
           <div class="tool-pills">
-            <span class="pill-tool"><img src="./logos/n8n_logo.jpg" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/google_ai_studio_logo.jpg" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/google_antigravity_logo.jpg" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/gemini_logo.jpg" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/perplexity_ai_logo.jpg" alt=""/></span>
-            </div>
+            <a href="https://n8n.io/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/n8n_logo.jpg" alt="n8n" loading="lazy" /><span class="tool-name">n8n</span></a>
+            <a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/google_ai_studio_logo.jpg" alt="AI Studio" loading="lazy" /><span class="tool-name">AI Studio</span></a>
+            <a href="https://deepmind.google/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/google_antigravity_logo.jpg" alt="Antigravity" loading="lazy" /><span class="tool-name">Antigravity</span></a>
+            <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/gemini_logo.jpg" alt="Gemini" loading="lazy" /><span class="tool-name">Gemini</span></a>
+            <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" loading="lazy" /><span class="tool-name">Perplexity</span></a>
+          </div>
         </div>
 
         <div>
           <div class="tool-cluster-label">Data</div>
           <div class="tool-pills">
-            <span class="pill-tool"><img src="./logos/excel-4d54f0a88a.png" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/powerbi_logo.jpg" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/tableau_software_logo.jpg" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/data_studio_logo.png" alt=""/></span>
+            <a href="https://www.microsoft.com/en-us/microsoft-365/excel" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/excel-4d54f0a88a.png" alt="Excel" loading="lazy" /><span class="tool-name">Excel</span></a>
+            <a href="https://powerbi.microsoft.com/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/powerbi_logo.jpg" alt="Power BI" loading="lazy" /><span class="tool-name">Power BI</span></a>
+            <a href="https://www.tableau.com/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/tableau_software_logo.jpg" alt="Tableau" loading="lazy" /><span class="tool-name">Tableau</span></a>
+            <a href="https://lookerstudio.google.com/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/data_studio_logo.png" alt="Looker Studio" loading="lazy" /><span class="tool-name">Looker Studio</span></a>
           </div>
         </div>
 
         <div>
           <div class="tool-cluster-label">Productivity</div>
           <div class="tool-pills">
-            <span class="pill-tool"><img src="./logos/notionhq_logo.jpg" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/notebooklm-logo.jpg" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/wisprflow_logo.jpg" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/comet-logo.jpg" alt=""/></span>
+            <a href="https://www.notion.so/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/notionhq_logo.jpg" alt="Notion" loading="lazy" /><span class="tool-name">Notion</span></a>
+            <a href="https://notebooklm.google/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/notebooklm-logo.jpg" alt="NotebookLM" loading="lazy" /><span class="tool-name">NotebookLM</span></a>
+            <a href="https://www.wispr.ai/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/wisprflow_logo.jpg" alt="Wispr Flow" loading="lazy" /><span class="tool-name">Wispr Flow</span></a>
+            <a href="https://www.comet.com/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/comet-logo.jpg" alt="Comet" loading="lazy" /><span class="tool-name">Comet</span></a>
           </div>
         </div>
 
         <div>
           <div class="tool-cluster-label">Creative AI</div>
           <div class="tool-pills">
-            <span class="pill-tool"><img src="./logos/higgsfield_logo.jpg" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/sunomusic_logo.jpg" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/framer_logo.jpg" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/gamma_app_logo.jpg" alt=""/></span>
-            <span class="pill-tool"><img src="./logos/powerpoint-293be30303.png" alt=""/></span>
+            <a href="https://higgsfield.ai/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/higgsfield_logo.jpg" alt="Higgsfield" loading="lazy" /><span class="tool-name">Higgsfield</span></a>
+            <a href="https://suno.com/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/sunomusic_logo.jpg" alt="Suno" loading="lazy" /><span class="tool-name">Suno</span></a>
+            <a href="https://www.framer.com/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/framer_logo.jpg" alt="Framer" loading="lazy" /><span class="tool-name">Framer</span></a>
+            <a href="https://gamma.app/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/gamma_app_logo.jpg" alt="Gamma" loading="lazy" /><span class="tool-name">Gamma</span></a>
+            <a href="https://www.microsoft.com/en-us/microsoft-365/powerpoint" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/powerpoint-293be30303.png" alt="PowerPoint" loading="lazy" /><span class="tool-name">PowerPoint</span></a>
           </div>
         </div>
 
@@ -940,14 +948,14 @@
   <script>
                 
 
-    // ── Accordion ──
+    // -- Accordion --
     function toggleChapter(el) {
       const isActive = el.classList.contains('active');
       document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
       if (!isActive) el.classList.add('active');
     }
 
-    // ── Scroll Spy ──
+    // -- Scroll Spy --
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
     function setActiveNav() {
