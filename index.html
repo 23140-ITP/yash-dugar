@@ -877,7 +877,7 @@
 
   <!-- Hero -->
   <header class="hero">
-    <h1 class="animate-fade-rise">
+    <h1 id="hero-title" class="animate-fade-rise">
       Data-driven &amp; <span class="gradient-text">AI-native</span> <em>Builder</em>
       <span class="inline-card"><span class="dot"></span> Delhi, IN</span>
       <span class="inline-card"><span class="dot"></span> Masters&#8217; Union &#39;27</span>
@@ -1369,8 +1369,130 @@
         showMessage(currentMsg);
       }, 8000);
     })();
+    
+    // -- High-Fidelity Aceternity UI Encrypted Text Engine --
+    class EncryptedTextEngine {
+      constructor(element, options = {}) {
+        this.element = element;
+        this.revealDelayMs = options.revealDelayMs || 25; // Delay between settling letters
+        this.flipDelayMs = options.flipDelayMs || 45;     // Scramble flip frequency
+        this.charset = options.charset || "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789!@#$%&?*+-=/";
+        this.isRunning = false;
+        this.animationFrameId = null;
+        
+        // Parse structural text map
+        this.initTextMap();
+        
+        // Bind triggers
+        this.element.addEventListener('mouseenter', () => this.trigger());
+        
+        // Auto-trigger once shortly after load
+        setTimeout(() => this.trigger(), 600);
+      }
 
-                
+      initTextMap() {
+        this.textMap = [];
+        const traverse = (node) => {
+          if (node.nodeType === Node.TEXT_NODE) {
+            const textVal = node.nodeValue;
+            if (textVal.trim().length > 0) {
+              this.textMap.push({
+                node: node,
+                original: textVal
+              });
+            }
+          } else {
+            node.childNodes.forEach(traverse);
+          }
+        };
+        traverse(this.element);
+      }
+
+      trigger() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+        
+        // 1. Build a unified list of character indices across all text nodes
+        const flatChars = [];
+        this.textMap.forEach((entry, nodeIdx) => {
+          for (let offset = 0; offset < entry.original.length; offset++) {
+            flatChars.push({
+              nodeIdx: nodeIdx,
+              offset: offset,
+              char: entry.original[offset]
+            });
+          }
+        });
+
+        let currentReveal = 0;
+        let lastFlipTime = 0;
+
+        const tick = (now) => {
+          if (!this.isRunning) return;
+
+          // 2. Perform Scramble Flips
+          if (now - lastFlipTime >= this.flipDelayMs) {
+            lastFlipTime = now;
+            
+            // Update all text nodes with state
+            this.textMap.forEach((entry, nodeIdx) => {
+              let newStr = "";
+              for (let offset = 0; offset < entry.original.length; offset++) {
+                // Find global index of this specific character
+                const globalIdx = flatChars.findIndex(
+                  fc => fc.nodeIdx === nodeIdx && fc.offset === offset
+                );
+
+                if (globalIdx < currentReveal) {
+                  // Already decrypted
+                  newStr += entry.original[offset];
+                } else if (entry.original[offset] === " ") {
+                  // Preserve spaces to prevent layout shifting
+                  newStr += " ";
+                } else {
+                  // Scramble with random character
+                  newStr += this.charset[Math.floor(Math.random() * this.charset.length)];
+                }
+              }
+              entry.node.nodeValue = newStr;
+            });
+          }
+
+          // 3. Progress Reveal Counter
+          if (currentReveal < flatChars.length) {
+            // Increment revealed count gradually
+            currentReveal = Math.min(flatChars.length, currentReveal + 1);
+            this.animationFrameId = requestAnimationFrame(tick);
+          } else {
+            this.complete();
+          }
+        };
+
+        this.animationFrameId = requestAnimationFrame(tick);
+      }
+
+      complete() {
+        this.isRunning = false;
+        if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+        
+        // Reset all nodes to original values strictly
+        this.textMap.forEach(entry => {
+          entry.node.nodeValue = entry.original;
+        });
+      }
+    }
+
+    const initHeroEncryption = () => {
+      const heroTitle = document.getElementById('hero-title');
+      if (heroTitle) {
+        new EncryptedTextEngine(heroTitle);
+      }
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHeroEncryption);
+    } else {
+      initHeroEncryption();
+    }
 
     // -- Accordion --
     function toggleChapter(el) {
