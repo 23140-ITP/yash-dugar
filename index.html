@@ -165,6 +165,13 @@
       -webkit-text-fill-color: transparent;
       padding-right: 4px;
     }
+    .inline-card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
     .inline-card {
       display: inline-flex;
       align-items: center;
@@ -176,7 +183,6 @@
       border-radius: 100px;
       font-size: 0.35em;
       vertical-align: middle;
-      margin-left: 12px;
       font-family: 'Inter', sans-serif;
       font-weight: 500;
       color: #000;
@@ -920,10 +926,12 @@
   <!-- Hero -->
   <header class="hero">
     <h1 class="animate-fade-rise">
-      <span id="hero-title-text">Data-driven &amp; <span class="gradient-text">AI-native</span> <em>Builder</em></span>
-      <span class="inline-card"><span class="dot"></span> Delhi, IN</span>
-      <span class="inline-card"><span class="dot"></span> Masters&#8217; Union &#39;27</span>
-      <span class="inline-card"><span class="dot"></span> CFA L2 Candidate</span>
+      <span id="hero-title-text" style="display: block;">Data-driven &amp; <span class="gradient-text">AI-native</span> <em>Builder   </em></span>
+      <span class="inline-card-container">
+        <span class="inline-card"><span class="dot"></span> Delhi, IN</span>
+        <span class="inline-card"><span class="dot"></span> Masters&#8217; Union &#39;27</span>
+        <span class="inline-card"><span class="dot"></span> CFA L2 Candidate</span>
+      </span>
     </h1>
   </header>
 
@@ -1478,7 +1486,7 @@
       }
 
       getPaddedPlaceholder(targetLen) {
-        let paddedPlaceholder = "What’s behind how I build?";
+        let paddedPlaceholder = "What’s behind how I build systems?";
         while (paddedPlaceholder.length < targetLen) {
           paddedPlaceholder += " ";
         }
