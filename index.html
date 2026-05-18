@@ -1476,41 +1476,53 @@
           }
         });
 
+        // 2. Pre-generate a static scrambled set of characters for all non-space characters
+        const staticScrambled = flatChars.map(fc => {
+          if (fc.char === " ") return " ";
+          return this.charset[Math.floor(Math.random() * this.charset.length)];
+        });
+
         let currentReveal = 0;
         let lastFlipTime = 0;
 
         const tick = (now) => {
           if (!this.isRunning) return;
 
-          // 2. Perform Scramble Flips
+          // 3. Perform Scramble Flips
           if (now - lastFlipTime >= this.flipDelayMs) {
             lastFlipTime = now;
             
             // Update all text nodes with state
             this.textMap.forEach((entry, nodeIdx) => {
               let newStr = "";
+              const activeIdx = Math.floor(currentReveal);
+
               for (let offset = 0; offset < entry.original.length; offset++) {
                 // Find global index of this specific character
                 const globalIdx = flatChars.findIndex(
                   fc => fc.nodeIdx === nodeIdx && fc.offset === offset
                 );
 
-                if (globalIdx < currentReveal) {
-                  // Already decrypted
+                if (globalIdx < activeIdx) {
+                  // Already decrypted -> original character
                   newStr += entry.original[offset];
-                } else if (entry.original[offset] === " ") {
-                  // Preserve spaces to prevent layout shifting
-                  newStr += " ";
+                } else if (globalIdx === activeIdx) {
+                  // Current target character -> actively flipping
+                  if (entry.original[offset] === " ") {
+                    newStr += " ";
+                  } else {
+                    newStr += this.charset[Math.floor(Math.random() * this.charset.length)];
+                  }
                 } else {
-                  // Scramble with random character
-                  newStr += this.charset[Math.floor(Math.random() * this.charset.length)];
+                  // Future character -> stays constant as initial scrambled character
+                  newStr += staticScrambled[globalIdx];
                 }
               }
               entry.node.nodeValue = newStr;
             });
           }
 
-          // 3. Progress Reveal Counter
+          // 4. Progress Reveal Counter
           if (currentReveal < flatChars.length) {
             // Increment revealed count gradually (letter by letter, slow)
             currentReveal = Math.min(flatChars.length, currentReveal + this.revealStep);
