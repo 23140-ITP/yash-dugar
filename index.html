@@ -1416,7 +1416,7 @@
         this.element = element;
         this.revealDelayMs = options.revealDelayMs || 25; // Delay between settling letters
         this.flipDelayMs = options.flipDelayMs || 70;     // Visually dynamic scramble flips (70ms)
-        this.revealStep = options.revealStep || 0.07;     // Reveal step (highly deliberate, slow progress: 0.07 char per frame)
+        this.revealStep = options.revealStep || 0.05;     // Reveal step (highly deliberate, slow progress: 0.05 char per frame)
         this.charset = options.charset || "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789!@#$%&?*+-=/";
         this.isRunning = false;
         this.animationFrameId = null;
@@ -1424,11 +1424,7 @@
         // Parse structural text map
         this.initTextMap();
         
-        // Bind triggers to the parent h1 so hovering anywhere on the headline triggers it
-        const triggerEl = this.element.closest('h1') || this.element;
-        triggerEl.addEventListener('mouseenter', () => this.trigger());
-        
-        // Auto-trigger once shortly after load
+        // Auto-trigger exactly once shortly after load (no hover triggers per user request)
         setTimeout(() => this.trigger(), 600);
       }
 
@@ -1468,15 +1464,9 @@
 
         let currentReveal = 0;
         let lastFlipTime = 0;
-        let startTime = null;
-        const initialScrambleDuration = 1000; // 1-second of active full sentence scramble before decrypting begins
 
         const tick = (now) => {
           if (!this.isRunning) return;
-          if (!startTime) startTime = now;
-
-          const elapsed = now - startTime;
-          const isDecrypting = elapsed >= initialScrambleDuration;
 
           // 2. Perform Scramble Flips
           if (now - lastFlipTime >= this.flipDelayMs) {
@@ -1491,7 +1481,7 @@
                   fc => fc.nodeIdx === nodeIdx && fc.offset === offset
                 );
 
-                if (isDecrypting && globalIdx < currentReveal) {
+                if (globalIdx < currentReveal) {
                   // Already decrypted
                   newStr += entry.original[offset];
                 } else if (entry.original[offset] === " ") {
@@ -1507,11 +1497,8 @@
           }
 
           // 3. Progress Reveal Counter
-          if (!isDecrypting) {
-            // Full scramble phase
-            this.animationFrameId = requestAnimationFrame(tick);
-          } else if (currentReveal < flatChars.length) {
-            // Increment revealed count gradually
+          if (currentReveal < flatChars.length) {
+            // Increment revealed count gradually (letter by letter, slow)
             currentReveal = Math.min(flatChars.length, currentReveal + this.revealStep);
             this.animationFrameId = requestAnimationFrame(tick);
           } else {
