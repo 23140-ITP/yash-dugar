@@ -1429,14 +1429,17 @@
       constructor(element, options = {}) {
         this.element = element;
         this.revealDelayMs = options.revealDelayMs || 25; // Delay between settling letters
-        this.flipDelayMs = options.flipDelayMs || 35;     // Visually dynamic scramble flips (35ms for 2x faster feel)
-        this.revealStep = options.revealStep || 0.10;     // Reveal step (2x speed upgrade: 0.10 char per frame)
+        this.flipDelayMs = options.flipDelayMs || 24;     // Visually dynamic scramble flips (24ms for 50% faster feel)
+        this.revealStep = options.revealStep || 0.15;     // Reveal step (1.5x speed upgrade: 0.15 char per frame)
         this.charset = options.charset || "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789!@#$%&?*+-=/";
         this.isRunning = false;
         this.animationFrameId = null;
         
         // Parse structural text map
         this.initTextMap();
+        
+        // Render initial placeholder state right away so it is visible immediately on load
+        this.renderPlaceholderState();
         
         // Auto-trigger exactly once shortly after load (no hover triggers per user request)
         setTimeout(() => this.trigger(), 600);
@@ -1460,11 +1463,7 @@
         traverse(this.element);
       }
 
-      trigger() {
-        if (this.isRunning) return;
-        this.isRunning = true;
-        
-        // 1. Build a unified list of character indices across all text nodes
+      getFlatChars() {
         const flatChars = [];
         this.textMap.forEach((entry, nodeIdx) => {
           for (let offset = 0; offset < entry.original.length; offset++) {
@@ -1475,12 +1474,39 @@
             });
           }
         });
+        return flatChars;
+      }
 
-        // 2. Pre-generate a static scrambled set of characters for all non-space characters
-        const staticScrambled = flatChars.map(fc => {
-          if (fc.char === " ") return " ";
-          return this.charset[Math.floor(Math.random() * this.charset.length)];
+      getPaddedPlaceholder(targetLen) {
+        let paddedPlaceholder = "What’s behind how I build?";
+        while (paddedPlaceholder.length < targetLen) {
+          paddedPlaceholder += " ";
+        }
+        return paddedPlaceholder;
+      }
+
+      renderPlaceholderState() {
+        const flatChars = this.getFlatChars();
+        const paddedPlaceholder = this.getPaddedPlaceholder(flatChars.length);
+
+        this.textMap.forEach((entry, nodeIdx) => {
+          let newStr = "";
+          for (let offset = 0; offset < entry.original.length; offset++) {
+            const globalIdx = flatChars.findIndex(
+              fc => fc.nodeIdx === nodeIdx && fc.offset === offset
+            );
+            newStr += paddedPlaceholder[globalIdx];
+          }
+          entry.node.nodeValue = newStr;
         });
+      }
+
+      trigger() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+        
+        const flatChars = this.getFlatChars();
+        const paddedPlaceholder = this.getPaddedPlaceholder(flatChars.length);
 
         let currentReveal = 0;
         let lastFlipTime = 0;
@@ -1504,18 +1530,18 @@
                 );
 
                 if (globalIdx < activeIdx) {
-                  // Already decrypted -> original character
+                  // Already decrypted -> original headline character
                   newStr += entry.original[offset];
                 } else if (globalIdx === activeIdx) {
-                  // Current target character -> actively flipping
+                  // Transition frontier -> actively scrambling
                   if (entry.original[offset] === " ") {
                     newStr += " ";
                   } else {
                     newStr += this.charset[Math.floor(Math.random() * this.charset.length)];
                   }
                 } else {
-                  // Future character -> stays constant as initial scrambled character
-                  newStr += staticScrambled[globalIdx];
+                  // Future character -> stays constant as initial placeholder character
+                  newStr += paddedPlaceholder[globalIdx];
                 }
               }
               entry.node.nodeValue = newStr;
