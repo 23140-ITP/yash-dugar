@@ -309,6 +309,34 @@
       line-height: 1.4;
     }
     .chapter-num i { font-family: 'Instrument Serif', Georgia, serif; font-size: 26px; line-height: 1.2; }
+    .chapter-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--r8);
+      border: 1.5px solid var(--border);
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+    }
+    .chapter-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 3px;
+      transition: transform 0.3s ease;
+    }
+    .chapter:hover .chapter-logo {
+      border-color: #000000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transform: translateY(-1px);
+    }
+    .chapter:hover .chapter-logo img {
+      transform: scale(1.06);
+    }
     .chapter.active .chapter-num,
     .chapter.active .chapter-num i { color: #000000; }
     .chapter h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
@@ -912,6 +940,9 @@
         <div class="chapter-head">
           <div class="chapter-left">
             <div class="chapter-num"><i>I</i><br/>CHAPTER</div>
+            <div class="chapter-logo">
+              <img src="./logos/madverse_music_logo.jpg" alt="Madverse Music Group Logo" loading="lazy" />
+            </div>
             <div>
               <h2>Founder’s Office Intern</h2>
               <p class="chapter-org">Madverse Music Group · Winter ’26</p>
@@ -936,6 +967,9 @@
         <div class="chapter-head">
           <div class="chapter-left">
             <div class="chapter-num"><i>II</i><br/>CHAPTER</div>
+            <div class="chapter-logo">
+              <img src="./logos/veriseek_logo.jpg" alt="Veriseek Education Logo" loading="lazy" />
+            </div>
             <div>
               <h2>Founder’s Office Intern</h2>
               <p class="chapter-org">Veriseek Education · Summer ’25</p>
@@ -959,6 +993,9 @@
         <div class="chapter-head">
           <div class="chapter-left">
             <div class="chapter-num"><i>III</i><br/>CHAPTER</div>
+            <div class="chapter-logo">
+              <img src="./logos/youseai_logo.jpg" alt="Youse AI Logo" loading="lazy" />
+            </div>
             <div>
               <h2>Founder’s Office GTM Intern</h2>
               <p class="chapter-org">Youse AI · Winter ’25</p>
@@ -981,6 +1018,9 @@
         <div class="chapter-head">
           <div class="chapter-left">
             <div class="chapter-num"><i>IV</i><br/>CHAPTER</div>
+            <div class="chapter-logo">
+              <img src="./logos/veriseek_logo.jpg" alt="Veriseek Education Logo" loading="lazy" />
+            </div>
             <div>
               <h2>Founder’s Office Intern</h2>
               <p class="chapter-org">Veriseek Education · Summer ’24</p>
@@ -1375,8 +1415,8 @@
       constructor(element, options = {}) {
         this.element = element;
         this.revealDelayMs = options.revealDelayMs || 25; // Delay between settling letters
-        this.flipDelayMs = options.flipDelayMs || 90;     // Scramble flip frequency (2x slower: 90ms)
-        this.revealStep = options.revealStep || 0.45;     // Reveal step (2x slower: 0.45 char per frame)
+        this.flipDelayMs = options.flipDelayMs || 70;     // Visually dynamic scramble flips (70ms)
+        this.revealStep = options.revealStep || 0.07;     // Reveal step (highly deliberate, slow progress: 0.07 char per frame)
         this.charset = options.charset || "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789!@#$%&?*+-=/";
         this.isRunning = false;
         this.animationFrameId = null;
@@ -1428,9 +1468,15 @@
 
         let currentReveal = 0;
         let lastFlipTime = 0;
+        let startTime = null;
+        const initialScrambleDuration = 1000; // 1-second of active full sentence scramble before decrypting begins
 
         const tick = (now) => {
           if (!this.isRunning) return;
+          if (!startTime) startTime = now;
+
+          const elapsed = now - startTime;
+          const isDecrypting = elapsed >= initialScrambleDuration;
 
           // 2. Perform Scramble Flips
           if (now - lastFlipTime >= this.flipDelayMs) {
@@ -1445,7 +1491,7 @@
                   fc => fc.nodeIdx === nodeIdx && fc.offset === offset
                 );
 
-                if (globalIdx < currentReveal) {
+                if (isDecrypting && globalIdx < currentReveal) {
                   // Already decrypted
                   newStr += entry.original[offset];
                 } else if (entry.original[offset] === " ") {
@@ -1461,8 +1507,11 @@
           }
 
           // 3. Progress Reveal Counter
-          if (currentReveal < flatChars.length) {
-            // Increment revealed count gradually (2x slower)
+          if (!isDecrypting) {
+            // Full scramble phase
+            this.animationFrameId = requestAnimationFrame(tick);
+          } else if (currentReveal < flatChars.length) {
+            // Increment revealed count gradually
             currentReveal = Math.min(flatChars.length, currentReveal + this.revealStep);
             this.animationFrameId = requestAnimationFrame(tick);
           } else {
