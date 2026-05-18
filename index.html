@@ -1429,8 +1429,8 @@
       constructor(element, options = {}) {
         this.element = element;
         this.revealDelayMs = options.revealDelayMs || 25; // Delay between settling letters
-        this.flipDelayMs = options.flipDelayMs || 70;     // Visually dynamic scramble flips (70ms)
-        this.revealStep = options.revealStep || 0.05;     // Reveal step (highly deliberate, slow progress: 0.05 char per frame)
+        this.flipDelayMs = options.flipDelayMs || 35;     // Visually dynamic scramble flips (35ms for 2x faster feel)
+        this.revealStep = options.revealStep || 0.10;     // Reveal step (2x speed upgrade: 0.10 char per frame)
         this.charset = options.charset || "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789!@#$%&?*+-=/";
         this.isRunning = false;
         this.animationFrameId = null;
