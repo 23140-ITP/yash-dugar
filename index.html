@@ -248,26 +248,40 @@
     .logos-track:hover { animation-play-state: paused; }
     .logo-item {
       display: inline-flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 0 40px;
+      padding: 0 28px;
       flex-shrink: 0;
       transition: opacity 0.2s, transform 0.2s;
       text-decoration: none;
+      gap: 8px;
     }
     .logo-item:hover {
-      opacity: 0.6;
+      opacity: 1;
       transform: translateY(-2px);
     }
     .logo-item img {
-      height: 60px;
+      height: 48px;
       width: auto;
       object-fit: contain;
       filter: none;
-      opacity: 1;
+      opacity: 0.9;
       transition: all 0.3s ease;
     }
-    .logo-item:hover img { opacity: 1; }
+    .logo-item:hover img {
+      opacity: 1;
+      transform: scale(1.04);
+    }
+    .org-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .logo-item:hover .org-name {
+      color: #000;
+    }
 
     /* -- Sections -- */
     section {
@@ -915,20 +929,20 @@
 
   <div class="logos">
     <div class="logos-track">
-      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" loading="lazy" /></a>
-      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" loading="lazy" /></a>
-      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" loading="lazy" /></a>
-      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" loading="lazy" /></a>
-      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" loading="lazy" /></a>
-      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" loading="lazy" /></a>
-      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" loading="lazy" /></a>
-      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" loading="lazy" /></a>
-      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" loading="lazy" /></a>
-      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" loading="lazy" /></a>
-      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" loading="lazy" /></a>
-      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" loading="lazy" /></a>
-      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" loading="lazy" /></a>
-      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" loading="lazy" /></a>
+      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" loading="lazy" /><span class="org-name">Madverse</span></a>
+      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" loading="lazy" /><span class="org-name">Veriseek</span></a>
+      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" loading="lazy" /><span class="org-name">Youse AI</span></a>
+      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" loading="lazy" /><span class="org-name">Masters' Union</span></a>
+      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" loading="lazy" /><span class="org-name">Perplexity</span></a>
+      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" loading="lazy" /><span class="org-name">Google</span></a>
+      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" loading="lazy" /><span class="org-name">CFA Institute</span></a>
+      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" loading="lazy" /><span class="org-name">Madverse</span></a>
+      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" loading="lazy" /><span class="org-name">Veriseek</span></a>
+      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" loading="lazy" /><span class="org-name">Youse AI</span></a>
+      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" loading="lazy" /><span class="org-name">Masters' Union</span></a>
+      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" loading="lazy" /><span class="org-name">Perplexity</span></a>
+      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" loading="lazy" /><span class="org-name">Google</span></a>
+      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" loading="lazy" /><span class="org-name">CFA Institute</span></a>
     </div>
   </div>
 
