@@ -556,129 +556,33 @@
     }
 
     /* -- Beliefs -- */
-    .belief {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: clamp(22px, 4.2vw, 36px);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      line-height: 1.25;
-      padding: 28px 0;
-      border-bottom: 1px solid var(--border);
-      color: var(--text);
-    }
-    /* -- Beliefs (Artistic Collage Style) -- */
     #beliefs {
       background: #f5f3ef;
-      padding: 120px 0;
+      padding: 100px 0;
       overflow: hidden;
     }
-    .beliefs-layout {
-      position: relative;
-      height: 550px; /* Fixed height for absolute collage */
+    .beliefs-image-container {
       max-width: 900px;
       margin: 0 auto;
-      padding: 40px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      filter: drop-shadow(0 15px 35px rgba(0,0,0,0.12));
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      transition: transform 0.3s ease, filter 0.3s ease;
     }
-        .paper-card {
-      position: absolute;
-      padding: 20px 30px;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      z-index: 1;
-      width: fit-content;
-      max-width: 350px;
-      min-width: 260px;
-      filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.12));
-      cursor: pointer;
+    .beliefs-image-container:hover {
+      transform: translateY(-4px);
+      filter: drop-shadow(0 20px 45px rgba(0,0,0,0.18));
     }
-    .paper-card:hover {
-      transform: scale(1.05) rotate(0deg) !important;
-      z-index: 20;
-      filter: drop-shadow(15px 25px 35px rgba(0,0,0,0.15));
-    }
-    
-    /* Washi Tape Effect */
-    .paper-card::after {
-      content: '';
-      position: absolute;
-      top: -18px;
-      left: 50%;
-      transform: translateX(-50%) rotate(-2deg);
-      width: 110px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(2px);
-      box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
-      z-index: 5;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-
-    /* Complex, irregular torn edges */
-    .torn-edge {
-      clip-path: polygon(
-        0% 5%, 3% 2%, 8% 6%, 12% 1%, 18% 5%, 22% 0%, 28% 4%, 35% 1%, 42% 5%, 50% 2%, 58% 6%, 65% 1%, 72% 4%, 80% 0%, 88% 5%, 94% 2%, 100% 5%,
-        98% 15%, 100% 25%, 97% 35%, 100% 45%, 98% 55%, 100% 65%, 97% 75%, 100% 85%, 98% 95%,
-        100% 98%, 94% 96%, 88% 100%, 80% 95%, 72% 99%, 65% 94%, 58% 98%, 50% 95%, 42% 99%, 35% 94%, 28% 98%, 22% 95%, 18% 100%, 12% 96%, 8% 99%, 3% 95%, 0% 98%,
-        2% 85%, 0% 75%, 3% 65%, 0% 55%, 2% 45%, 0% 35%, 3% 25%, 0% 15%
-      );
-    }
-
-    .paper-lined {
-      background: #fdfdfb;
-      background-image: 
-        linear-gradient(rgba(232, 241, 255, 0.6) 1.5px, transparent 1.5px);
-      background-size: 100% 34px;
-      font-family: 'Gochi Hand', cursive;
-      font-size: 26px;
-      line-height: 34px;
-      color: #34495e;
-      border-left: 3px solid rgba(255, 120, 120, 0.4);
-      padding-top: 25px;
-    }
-    .paper-grid {
-      background: #f8f8f6;
-      background-image: 
-        linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px);
-      background-size: 24px 24px;
-      font-family: 'Special Elite', cursive;
-      font-size: 18px;
-      line-height: 1.5;
-      color: #222;
-      padding-top: 25px;
-    }
-    .paper-plain {
-      background: #fcf9f2;
-      font-family: 'Instrument Serif', serif;
-      font-size: 30px;
-      font-style: italic;
-      color: #111;
-      text-align: center;
-      line-height: 1.3;
-    }
-
-    /* Collage Positioning - Tighter & Overlapping */
-    .b-1 { top: 20px; left: 18%; transform: rotate(-3deg); z-index: 1; }
-    .b-2 { top: 40px; right: 20%; transform: rotate(5deg); width: 280px; z-index: 2; }
-    .b-3 { top: 150px; left: 24%; transform: rotate(-1deg); z-index: 5; width: 380px; }
-    .b-4 { top: 280px; left: 10%; transform: rotate(4deg); z-index: 3; }
-    .b-5 { top: 340px; right: 12%; transform: rotate(-5deg); width: 300px; z-index: 4; }
-
-    @media (max-width: 900px) {
-      .beliefs-layout {
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 50px;
-        padding: 20px;
-      }
-      .paper-card {
-        position: static !important;
-        transform: rotate(2deg) !important;
-        width: 100% !important;
-        max-width: 450px;
-      }
-      .paper-card:nth-child(even) { transform: rotate(-2deg) !important; }
+    .beliefs-board-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
     }
 
     /* -- Footer -- */
@@ -1193,15 +1097,11 @@
   <section id="beliefs">
     <div class="container">
       <div class="section-label">Beliefs</div>
-      <div class="beliefs-layout">
-        <div class="paper-card paper-lined torn-edge b-1">Put <em>integrity</em> first.</div>
-        <div class="paper-card paper-grid torn-edge b-2">Take the <em>risk</em>.</div>
-        <div class="paper-card paper-plain torn-edge b-3">Be willing to be <em>misunderstood</em> for innovation.</div>
-        <div class="paper-card paper-lined torn-edge b-4">Choose <em>execution</em> over perfection.</div>
-        <div class="paper-card paper-grid torn-edge b-5">Keep <em>learning, unlearning, and relearning</em>.</div>
+      <div class="beliefs-image-container">
+        <img src="./beliefs.jpg" alt="Core Beliefs of Yash Dugar - Put integrity first. Take the risk. Choose execution over perfection. Be willing to be misunderstood for innovation. Keep learning, unlearning, and relearning." class="beliefs-board-img" loading="lazy" />
       </div>
     </div>
-    </section>
+  </section>
 
   <!-- Split-Flap Board -->
   <section id="flap-section">
