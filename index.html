@@ -396,25 +396,61 @@
     .chapter.active .chapter-toggle { color: #000000; }
     .chapter-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
     .chapter.active .chapter-body {
-      max-height: 800px;
+      max-height: 1200px; /* Increased to accommodate stacked grid cards safely */
       margin-top: 20px;
       padding-top: 20px;
       border-top: 1px solid var(--border);
     }
-    .chapter-body ul { list-style: none; }
+    
+    /* Dynamic Grid Layout for Cards */
+    .chapter-body ul {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 columns in a row (default for 3, 5, 6 items) */
+      gap: 16px;
+      padding: 0;
+    }
+    
+    /* 4-item grid override (for Youse AI chapter, fits exactly 2x2 grid for balance) */
+    .chapter:nth-of-type(3) .chapter-body ul {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Beautiful achievement cards replacing standard bullets */
     .chapter-body li {
-      font-size: 17px;
+      font-size: 15px;
       color: var(--text);
-      padding: 6px 0 6px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r8);
+      padding: 16px 20px;
+      line-height: 1.5;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
       position: relative;
+      cursor: pointer;
+    }
+    .chapter-body li:hover {
+      border-color: #000000;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xs);
+      background: #ffffff;
     }
     .chapter-body li::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 13px;
-      width: 4px; height: 4px;
-      background: var(--border);
-      border-radius: 50%;
+      display: none; /* Removed the default bullet point dot */
+    }
+    
+    /* Responsive overrides for grid columns */
+    @media (max-width: 860px) {
+      .chapter-body ul {
+        grid-template-columns: repeat(2, 1fr) !important; /* 2 columns on tablets */
+      }
+    }
+    @media (max-width: 580px) {
+      .chapter-body ul {
+        grid-template-columns: 1fr !important; /* Single column on mobile phones */
+      }
     }
 
     /* -- Education Timeline (Option 1) -- */
