@@ -417,29 +417,240 @@
       border-radius: 50%;
     }
 
-    /* -- Education -- */
-    .edu-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-    .edu-card {
+    /* -- Education Timeline (Option 1) -- */
+    .edu-timeline {
+      position: relative;
+      max-width: 860px;
+      margin: 40px auto 0;
+      padding: 20px 0;
+    }
+    /* The Central Vertical Thread */
+    .edu-timeline-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: var(--border);
+      transform: translateX(-50%);
+      transition: background 0.5s ease;
+      z-index: 1;
+    }
+    .edu-timeline:hover .edu-timeline-line {
+      background: linear-gradient(to bottom, #4f46e5, #7c3aed, #db2777);
+    }
+    
+    /* Alternating items */
+    .edu-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 48px;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+    .edu-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* Content card and Year side column widths */
+    .edu-content {
+      width: 45%;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: var(--r8);
-      padding: 20px;
-      transition: border-color 0.2s, transform 0.2s;
+      border-radius: var(--r12);
+      padding: 24px;
+      transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      cursor: pointer;
     }
-    .edu-card:hover { border-color: #000; transform: translateY(-1px); }
-    .edu-card h3 { font-size: 19px; font-weight: 600; margin-bottom: 4px; }
-    .edu-card .meta { font-size: 16px; color: var(--muted); }
+    .edu-content:hover {
+      border-color: #000000;
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-sm);
+    }
+    .edu-content h3 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 24px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .edu-sub {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+    .edu-details {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0,0,0,0.03);
+      padding: 4px 10px;
+      border-radius: var(--r4);
+    }
+    
+    /* Year Side Column */
+    .edu-year-side {
+      width: 45%;
+      display: flex;
+      align-items: center;
+    }
+    .edu-item.odd .edu-year-side {
+      justify-content: flex-start;
+      padding-left: 24px;
+    }
+    .edu-item.even .edu-year-side {
+      justify-content: flex-end;
+      padding-right: 24px;
+    }
+    .edu-year-pill {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 100px;
+      transition: all 0.3s ease;
+    }
+    .edu-item:hover .edu-year-pill {
+      border-color: #7c3aed;
+      color: #7c3aed;
+      box-shadow: 0 0 12px rgba(124, 58, 237, 0.15);
+    }
+    
+    /* Node Container and Dot */
+    .edu-node-container {
+      width: 10%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .edu-node {
+      width: 14px;
+      height: 14px;
+      background: var(--text);
+      border-radius: 50%;
+      border: 4px solid var(--bg);
+      box-shadow: 0 0 0 1px var(--border);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 5;
+    }
+    .edu-item:hover .edu-node {
+      background: #7c3aed;
+      transform: scale(1.2);
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2), 0 0 0 1px #7c3aed;
+    }
+    
+    /* Structural Alternating layout grid alignment */
+    .edu-item.odd .edu-content { order: 1; }
+    .edu-item.odd .edu-node-container { order: 2; }
+    .edu-item.odd .edu-year-side { order: 3; }
+    
+    .edu-item.even .edu-year-side { order: 1; }
+    .edu-item.even .edu-node-container { order: 2; }
+    .edu-item.even .edu-content { order: 3; }
+    
+    /* Achievement seal at the end */
+    .edu-achievement-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      margin-top: 32px;
+      z-index: 3;
+    }
+    .edu-achievement-node {
+      width: 32px;
+      height: 32px;
+      background: #ffffff;
+      border: 2px solid #eab308;
+      color: #eab308;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      font-weight: bold;
+      box-shadow: 0 0 12px rgba(234, 179, 8, 0.2);
+      margin-bottom: 12px;
+      z-index: 5;
+      background-image: radial-gradient(circle, #fffef9 0%, #fff6d6 100%);
+    }
     .edu-chip {
       display: inline-block;
       font-size: 14px;
-      color: var(--muted);
+      color: var(--text);
       background: var(--card);
       border: 1px solid var(--border);
-      padding: 5px 12px;
+      padding: 8px 20px;
       border-radius: 999px;
-      margin-top: 16px;
       font-weight: 600;
       letter-spacing: 0.02em;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .edu-chip:hover {
+      border-color: #eab308;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(234, 179, 8, 0.12);
+    }
+    
+    /* Responsive timeline rules */
+    @media (max-width: 767px) {
+      .edu-timeline-line {
+        left: 20px;
+        transform: none;
+      }
+      .edu-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 48px;
+        margin-bottom: 36px;
+      }
+      .edu-content {
+        width: 100%;
+        order: 2 !important;
+      }
+      .edu-year-side {
+        width: 100%;
+        order: 1 !important;
+        justify-content: flex-start !important;
+        padding: 0 0 8px 0 !important;
+      }
+      .edu-node-container {
+        position: absolute;
+        left: 0;
+        top: 6px;
+        width: 40px;
+        height: 20px;
+        order: 0 !important;
+        justify-content: center;
+      }
+      .edu-item.even .edu-content {
+        order: 2 !important;
+      }
+      .edu-achievement-container {
+        align-items: flex-start;
+        padding-left: 48px;
+      }
+      .edu-achievement-node {
+        position: absolute;
+        left: 4px;
+        top: 4px;
+        margin-bottom: 0;
+      }
     }
 
     /* -- Wins -- */
@@ -986,22 +1197,61 @@
   <section id="education">
     <div class="container">
       <div class="section-label">Education</div>
-      <div class="edu-grid">
-        <div class="edu-card">
-          <h3>Masters’ Union</h3>
-          <p class="meta">Undergraduate · Technology &amp; Business Management · 2023 – 2027</p>
-          <p class="meta">#2 Dean’s List · CFA L2 Candidate</p>
+      
+      <div class="edu-timeline">
+        <div class="edu-timeline-line"></div>
+        
+        <!-- Item 1 -->
+        <div class="edu-item odd">
+          <div class="edu-content">
+            <h3>Masters’ Union</h3>
+            <p class="edu-sub">Undergraduate · Technology &amp; Business Management</p>
+            <span class="edu-details">#2 Dean’s List · CFA L2 Candidate</span>
+          </div>
+          <div class="edu-node-container">
+            <div class="edu-node"></div>
+          </div>
+          <div class="edu-year-side">
+            <span class="edu-year-pill">2023 – 2027</span>
+          </div>
         </div>
-        <div class="edu-card">
-          <h3>Kirori Mal College, DU</h3>
-          <p class="meta">Undergraduate · UG Certificate in Commerce · 2022 – 2023</p>
+
+        <!-- Item 2 -->
+        <div class="edu-item even">
+          <div class="edu-year-side">
+            <span class="edu-year-pill">2022 – 2023</span>
+          </div>
+          <div class="edu-node-container">
+            <div class="edu-node"></div>
+          </div>
+          <div class="edu-content">
+            <h3>Kirori Mal College, DU</h3>
+            <p class="edu-sub">Undergraduate · UG Certificate in Commerce</p>
+          </div>
         </div>
-        <div class="edu-card">
-          <h3>Ralli International School</h3>
-          <p class="meta">High School · Class 12 · 99.4% · Acharya Tulsi Gold Medal · 2019 – 2022</p>
+
+        <!-- Item 3 -->
+        <div class="edu-item odd">
+          <div class="edu-content">
+            <h3>Ralli International School</h3>
+            <p class="edu-sub">High School · Class 12 · 99.4%</p>
+            <span class="edu-details">Acharya Tulsi Gold Medal</span>
+          </div>
+          <div class="edu-node-container">
+            <div class="edu-node"></div>
+          </div>
+          <div class="edu-year-side">
+            <span class="edu-year-pill">2019 – 2022</span>
+          </div>
         </div>
       </div>
-      <div class="edu-chip">CUET 2022 — AIR 1 in English &amp; Business Studies</div>
+      
+      <!-- Center Gold Achievement Seal at the end -->
+      <div class="edu-achievement-container">
+        <div class="edu-achievement-node">★</div>
+        <div class="edu-chip">CUET 2022 — AIR 1 in English &amp; Business Studies</div>
+      </div>
+      
     </div>
   </section>
 
