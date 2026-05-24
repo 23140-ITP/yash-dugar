@@ -122,10 +122,22 @@
     }
     .nav-link:hover { color: #000000; }
     .nav-link.active { color: #000000; font-weight: 600; }
+    /* -- CSS Rotating Border Gradient Accent (Aceternity UI Style for Light Theme) -- */
+    @property --border-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes rotate-border {
+      0% { --border-angle: 0deg; }
+      100% { --border-angle: 360deg; }
+    }
+
     nav a.btn {
-      background: #000000;
-      color: #ffffff;
-      border: none;
+      position: relative;
+      background: #000000 !important;
+      color: #ffffff !important;
       padding: 10px 24px;
       border-radius: 999px;
       font-family: 'Inter', sans-serif;
@@ -134,12 +146,66 @@
       cursor: pointer;
       text-decoration: none;
       white-space: nowrap;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
       display: inline-block;
+      overflow: visible;
+      border: none !important;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      isolation: isolate;
     }
+
+    nav a.btn::before {
+      content: '';
+      position: absolute;
+      inset: -1.5px;
+      border-radius: 999px;
+      background: conic-gradient(
+        from var(--border-angle),
+        transparent 20%,
+        rgba(0, 0, 0, 0.15) 50%,
+        transparent 80%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      animation: rotate-border 4s linear infinite;
+      opacity: 0.8;
+      transition: background 0.4s ease, opacity 0.4s ease;
+      z-index: 2;
+    }
+
+    nav a.btn:hover::before {
+      animation-duration: 2s;
+      background: conic-gradient(
+        from var(--border-angle),
+        transparent 10%,
+        #7c3aed 40%,
+        #db2777 60%,
+        transparent 90%
+      );
+      opacity: 1;
+    }
+
+    nav a.btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #4f46e5, #7c3aed, #db2777);
+      filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    nav a.btn:hover::after {
+      opacity: 0.35;
+    }
+
     nav a.btn:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.15);
     }
 
     /* -- Hero Content -- */
