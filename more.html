@@ -353,24 +353,63 @@
   </footer>
 
   <script>
-    // -- Scroll Spy --
+    // -- High-Performance Scroll Spy (rAF throttled & cached offsets) --
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
-    function setActiveNav() {
-      const scrollY = window.scrollY + 120;
-      let currentId = '';
-      sections.forEach(section => {
+    let cachedSections = [];
+
+    // Cache layout offsets on page load and window resize (removes layout thrashing on scroll)
+    function cacheSectionBoundaries() {
+      cachedSections = Array.from(sections).map(section => {
         const top = section.offsetTop;
-        const height = section.offsetHeight;
-        if (scrollY >= top && scrollY < top + height) currentId = section.getAttribute('id');
-      });
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + currentId) link.classList.add('active');
+        return {
+          id: section.getAttribute('id'),
+          top: top,
+          bottom: top + section.offsetHeight
+        };
       });
     }
-    window.addEventListener('scroll', setActiveNav);
-    window.addEventListener('load', setActiveNav);
+
+    let isScrollTickActive = false;
+    function setActiveNav() {
+      if (!isScrollTickActive) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY + 120;
+          let currentId = '';
+          
+          // Fast array search in memory (no DOM queries)
+          for (let i = 0; i < cachedSections.length; i++) {
+            const section = cachedSections[i];
+            if (scrollY >= section.top && scrollY < section.bottom) {
+              currentId = section.id;
+              break;
+            }
+          }
+          
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+          });
+          
+          isScrollTickActive = false;
+        });
+        isScrollTickActive = true;
+      }
+    }
+
+    // Event Bindings
+    window.addEventListener('scroll', setActiveNav, { passive: true });
+    window.addEventListener('resize', cacheSectionBoundaries);
+    
+    // Bulletproof initial loading sequence to cache boundaries
+    if (document.readyState === 'complete') {
+      cacheSectionBoundaries();
+      setActiveNav();
+    } else {
+      window.addEventListener('load', () => {
+        cacheSectionBoundaries();
+        setActiveNav();
+      });
+    }
   </script>
 </body>
 </html>
