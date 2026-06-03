@@ -1140,11 +1140,7 @@
       position: relative;
       overflow: hidden;
       background-color: var(--bg);
-    }
-
-    header.hero > *, section > * {
-      position: relative;
-      z-index: 2;
+      isolation: isolate; /* Establishes stacking context for z-index: -1 background pseudo-elements */
     }
 
     header.hero::before, section::before {
@@ -1155,17 +1151,21 @@
       background-position: center;
       background-repeat: no-repeat;
       pointer-events: none;
-      z-index: 1;
+      z-index: -1; /* Placed behind content but above parent background-color */
     }
 
-    header.hero::before,
+    header.hero::before {
+      opacity: 0.18;
+      mix-blend-mode: multiply;
+    }
+
     section:not(#flap-section)::before {
-      opacity: 0.055;
+      opacity: 0.15;
       mix-blend-mode: multiply;
     }
 
     #flap-section::before {
-      opacity: 0.12;
+      opacity: 0.25;
       mix-blend-mode: screen;
     }
 
