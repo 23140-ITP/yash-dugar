@@ -231,6 +231,9 @@
       color: #000000;
       max-width: 960px;
       margin: 0 auto;
+      text-shadow: 0 0 35px rgba(255, 255, 255, 0.95), 
+                   0 0 20px rgba(255, 255, 255, 0.90),
+                   0 0 10px rgba(255, 255, 255, 0.80);
     }
     .hero h1 em {
       color: var(--muted);
@@ -249,12 +252,21 @@
       scroll-margin-top: 80px;
     }
     .section-label {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 6px 16px;
+      border-radius: 999px;
       font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--muted);
+      color: #000000;
       font-weight: 600;
       margin-bottom: 28px;
+      box-shadow: var(--shadow-xs);
     }
 
     /* -- Wins -- */
