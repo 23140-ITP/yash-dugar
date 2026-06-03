@@ -287,10 +287,41 @@
     footer .email { font-size: 19px; color: var(--muted); }
     footer .email a { color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
-    /* -- Responsive -- */
     @media (max-width: 720px) {
       .nav-links { display: none; }
     }
+
+    /* ── Pixelated Cloud Section Backgrounds ── */
+    header.hero, section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    header.hero > *, section > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    header.hero::before, section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    header.hero::before,
+    section::before {
+      opacity: 0.055;
+      mix-blend-mode: multiply;
+    }
+
+    header.hero::before { background-image: url('assets/cloud-bg-7.jpg'); }
+    #wins::before { background-image: url('assets/cloud-bg-4.jpg'); }
+    #campus-leadership::before { background-image: url('assets/cloud-bg-1.jpg'); }
   </style>
   <!-- Favicon and End of Head -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">

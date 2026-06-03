@@ -1134,6 +1134,47 @@
       .ft { border-width: 1px; }
       .ft-hinge-left, .ft-hinge-right, .ft-pivot-rod { display: none; }
     }
+
+    /* ── Pixelated Cloud Section Backgrounds ── */
+    header.hero, section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    header.hero > *, section > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    header.hero::before, section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    header.hero::before,
+    section:not(#flap-section)::before {
+      opacity: 0.055;
+      mix-blend-mode: multiply;
+    }
+
+    #flap-section::before {
+      opacity: 0.12;
+      mix-blend-mode: screen;
+    }
+
+    header.hero::before { background-image: url('assets/cloud-bg-7.jpg'); }
+    #experience::before { background-image: url('assets/cloud-bg-5.jpg'); }
+    #education::before { background-image: url('assets/cloud-bg-6.jpg'); }
+    #skills::before { background-image: url('assets/cloud-bg-2.jpg'); }
+    #tool-stack::before { background-image: url('assets/cloud-bg-8.jpg'); }
+    #beliefs::before { background-image: url('assets/cloud-bg-9.jpg'); }
+    #flap-section::before { background-image: url('assets/cloud-bg-3.jpg'); }
   </style>
   <!-- Favicon and End of Head -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">

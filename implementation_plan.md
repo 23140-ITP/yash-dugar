@@ -1,122 +1,116 @@
-# Implementation Plan: Scroll Performance Optimization (60+ FPS Scrolling)
+# Implementation Plan: Pixelated Cloud Section Backgrounds
 
-Your website is currently experiencing lag and stuttering during scroll. We have analyzed the code and found a significant performance bottleneck that stalls the browser's rendering engine.
+We will integrate retro pixel art cloud asset backgrounds into each header and section of your portfolio website to create a visually interesting, unified, and premium aesthetic.
 
 ---
 
-## 1. Root Cause Analysis (Why the Site is Lagging)
+## 1. Proposed Background Asset Mapping
+Based on the CraftPix/Dribbble asset pack you provided, we will map a unique pixel art sky background to each section of your website.
 
-### 1.1 The Layout Thrashing Bottleneck
-In both `index.html` and `more.html`, you have a scroll handler named `setActiveNav()` bound directly to the window's `scroll` event.
+### 1.1 Home Page (`index.html`)
+| Section | Element ID / Selector | Asset Source | Theme / Mood |
+| :--- | :--- | :--- | :--- |
+| **Hero Entrance** | `header.hero` | Image 7 (Sunrise/Dawn) | Warm, optimistic, and welcoming entrance. |
+| **Experience** | `#experience` | Image 5 (Purple Evening Sky) | Professional yet creative/retro. |
+| **Education** | `#education` | Image 6 (Sunset Blue-Pink) | Dynamic, multi-layered color transition. |
+| **Skills** | `#skills` | Image 2 (Sunset Orange-Purple) | Vibrant and colorful highlighting capabilities. |
+| **Tool Stack** | `#tool-stack` | Image 8 (Clear Day Sky) | Clean, technical, and light-themed. |
+| **Beliefs** | `#beliefs` | Image 9 (Cloudy Day Sky) | Optimistic daytime clouds. |
+| **Split-Flap Board** | `#flap-section` | Image 3 (Starry Night Sky) | Retro dark mode sky that matches the dark panel. |
 
-Inside this handler, JavaScript continuously reads the DOM properties `.offsetTop` and `.offsetHeight` for every single section on the page:
+### 1.2 Wins & Campus Page (`more.html`)
+| Section | Element ID / Selector | Asset Source | Theme / Mood |
+| :--- | :--- | :--- | :--- |
+| **Hero Entrance** | `header.hero` | Image 7 (Sunrise/Dawn) | Unified header design. |
+| **Wins & Highlights** | `#wins` | Image 4 (Pink Sunset) | Celebratory pink tones. |
+| **Campus Leadership** | `#campus-leadership` | Image 1 (Classic Blue Sky) | Energetic and active daytime sky. |
 
-```javascript
-function setActiveNav() {
-  const scrollY = window.scrollY + 120;
-  let currentId = '';
-  sections.forEach(section => {
-    const top = section.offsetTop;        // <-- FORCES SYNCHRONOUS LAYOUT
-    const height = section.offsetHeight;  // <-- FORCES SYNCHRONOUS LAYOUT
-    if (scrollY >= top && scrollY < top + height) currentId = section.getAttribute('id');
-  });
-  // ...
+---
+
+## 2. Technical Implementation Details
+To prevent these colorful pixel art images from distracting from the text or failing accessibility/contrast audits, we will use a pseudo-element layer technique.
+
+### 2.1 CSS Styling Strategy
+We will absolute-position a `::before` pseudo-element inside each section and headers. 
+
+```css
+/* Styling containers to allow background overlay without breaking readability */
+header.hero, section {
+  position: relative;
+  overflow: hidden;
 }
+
+/* Ensure all content sits on top of the background layers */
+header.hero > *, section > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Base background pseudo-element configuration */
+header.hero::before, section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Default light theme behavior (extremely subtle mix) */
+header.hero::before,
+section:not(#flap-section)::before {
+  opacity: 0.055; /* Low opacity to keep text perfectly readable */
+  mix-blend-mode: multiply; /* Blends nicely with white and off-white background colors */
+}
+
+/* Special dark theme section behavior (split-flap) */
+#flap-section::before {
+  opacity: 0.12; /* Starry night sky needs to stand out against the black background */
+  mix-blend-mode: screen; /* Screens out dark tones to show only stars and highlights */
+}
+
+/* Mapping background image assets */
+header.hero::before { background-image: url('assets/cloud-bg-7.jpg'); }
+#experience::before { background-image: url('assets/cloud-bg-5.jpg'); }
+#education::before { background-image: url('assets/cloud-bg-6.jpg'); }
+#skills::before { background-image: url('assets/cloud-bg-2.jpg'); }
+#tool-stack::before { background-image: url('assets/cloud-bg-8.jpg'); }
+#beliefs::before { background-image: url('assets/cloud-bg-9.jpg'); }
+#flap-section::before { background-image: url('assets/cloud-bg-3.jpg'); }
+
+#wins::before { background-image: url('assets/cloud-bg-4.jpg'); }
+#campus-leadership::before { background-image: url('assets/cloud-bg-1.jpg'); }
 ```
 
-### 1.2 How This Destroys Scroll Performance
-1. **Layout Thrashing**: Every time the user scrolls even a single pixel, the scroll event fires. Accessing properties like `offsetTop` and `offsetHeight` forces the browser to immediately pause execution, flush its style/layout queue, and compute the positions of all sections on the page synchronously.
-2. **High Frequency**: Scroll events fire up to 120 times per second on high-refresh-rate displays. Doing a synchronous DOM calculation on every single tick stalls the browser's main thread, causing severe dropped frames (jank) and lag.
-3. **No Throttling**: The scroll handler is not throttled, meaning the browser tries to run the heavy loop on every scroll event rather than aligning it with the screen's refresh cycle.
+---
+
+## 3. Step-by-Step Execution Plan
+
+### 3.1 Step 1: Fetch and Save Assets
+We will execute a PowerShell script to fetch the high-resolution JPG previews of the cloud backgrounds from the CraftPix CDN, renaming them to local files:
+* Image 1 $\rightarrow$ `assets/cloud-bg-1.jpg`
+* Image 2 $\rightarrow$ `assets/cloud-bg-2.jpg`
+* Image 3 $\rightarrow$ `assets/cloud-bg-3.jpg`
+* Image 4 $\rightarrow$ `assets/cloud-bg-4.jpg`
+* Image 5 $\rightarrow$ `assets/cloud-bg-5.jpg`
+* Image 6 $\rightarrow$ `assets/cloud-bg-6.jpg`
+* Image 7 $\rightarrow$ `assets/cloud-bg-7.jpg`
+* Image 8 $\rightarrow$ `assets/cloud-bg-8.jpg`
+* Image 9 $\rightarrow$ `assets/cloud-bg-9.jpg`
+
+### 3.2 Step 2: Inject CSS Rules
+Inject the styling rules into both [index.html](file:///C:/Users/yashd/.gemini/antigravity/scratch/yash-dugar/index.html) and [more.html](file:///C:/Users/yashd/.gemini/antigravity/scratch/yash-dugar/more.html). No content structure needs to change.
+
+### 3.3 Step 3: Synchronize Code & Workspace
+Sync files across all duplicate directories on your system (`antigravity`, `antigravity-ide`, `antigravity-backup`) and commit changes to Git.
 
 ---
 
-## 2. Proposed Changes & Technical Approach
+## 4. Verification & Testing Plan
 
-We will replace the high-overhead scroll handler with a high-performance, industry-standard modern implementation that runs at **60+ FPS**:
-
-### 2.1 Solution 1: Boundary & Layout Caching
-Since your page elements do not change height during natural scrolling, we do not need to query the DOM for `offsetTop` and `offsetHeight` during active scroll.
-* We will query and cache all section top/bottom coordinates into a simple, high-speed in-memory JavaScript array **only once** on page load, and update them **only on window resize**.
-* During scroll, reading from a pre-calculated numeric array takes less than a microsecond and causes **zero** layout thrashing.
-
-### 2.2 Solution 2: `requestAnimationFrame` Throttling
-We will throttle the scroll listener using `requestAnimationFrame` (rAF). This guarantees that the scroll spy logic runs **at most once per screen animation frame**, aligning perfectly with the GPU compositor thread and saving huge amounts of CPU cycles.
-
----
-
-## 3. Detailed File Modifications
-
-### `[MODIFY]` [index.html](file:///C:/Users/yashd/.gemini/antigravity/scratch/yash-dugar/index.html)
-We will replace the scroll spy code with the following high-performance throttled/cached scroll handler:
-
-```javascript
-    // -- High-Performance Scroll Spy (rAF throttled & cached offsets) --
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    let cachedSections = [];
-
-    // Cache layout offsets on page load and window resize (removes layout thrashing on scroll)
-    function cacheSectionBoundaries() {
-      cachedSections = Array.from(sections).map(section => {
-        const top = section.offsetTop;
-        return {
-          id: section.getAttribute('id'),
-          top: top,
-          bottom: top + section.offsetHeight
-        };
-      });
-    }
-
-    let isScrollTickActive = false;
-    function setActiveNav() {
-      if (!isScrollTickActive) {
-        window.requestAnimationFrame(() => {
-          const scrollY = window.scrollY + 120;
-          let currentId = '';
-          
-          // Fast array search in memory (no DOM queries)
-          for (let i = 0; i < cachedSections.length; i++) {
-            const section = cachedSections[i];
-            if (scrollY >= section.top && scrollY < section.bottom) {
-              currentId = section.id;
-              break;
-            }
-          }
-          
-          navLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
-          });
-          
-          isScrollTickActive = false;
-        });
-        isScrollTickActive = true;
-      }
-    }
-
-    // Event Bindings
-    window.addEventListener('scroll', setActiveNav, { passive: true });
-    window.addEventListener('resize', cacheSectionBoundaries);
-    window.addEventListener('load', () => {
-      cacheSectionBoundaries();
-      setActiveNav();
-    });
-    
-    // Proactive initial caching
-    cacheSectionBoundaries();
-```
-
-### `[MODIFY]` [more.html](file:///C:/Users/yashd/.gemini/antigravity/scratch/yash-dugar/more.html)
-We will replace the scroll spy code in the subpage with the identical performant cached offset implementation.
-
----
-
-## 4. Verification Plan
-
-### 4.1 Visual Verification
-* Scroll rapidly on both pages to verify that the navigation links switch classes seamlessly with **zero dropped frames or visual lag**.
-* Ensure that the scroll spy remains perfectly accurate when resizing the browser window.
-
-### 4.2 Code Analysis
-* Verify that no layout-forcing properties (`offsetTop`, `offsetHeight`, `getBoundingClientRect`) are accessed in the active scrolling thread.
-* Verify that event listeners use the `{ passive: true }` option to improve standard mobile scroll smoothness.
+### 4.1 Visual and Contrast Checks
+* **Contrast Audits**: Check that white-background sections with light text (e.g. titles or description texts) remain well above a 4.5:1 ratio against the subtle cloud layers.
+* **Layout Shifts**: Verify that loading local background images doesn't cause content jumps or lag.
+* **Responsiveness**: Ensure the cover background scales properly without distortion on mobile, tablet, and wide desktop screens.
