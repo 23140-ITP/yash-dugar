@@ -231,9 +231,6 @@
       color: #000000;
       max-width: 960px;
       margin: 0 auto;
-      text-shadow: 0 0 35px rgba(255, 255, 255, 0.95), 
-                   0 0 20px rgba(255, 255, 255, 0.90),
-                   0 0 10px rgba(255, 255, 255, 0.80);
     }
     .hero h1 em {
       color: var(--muted);
@@ -252,21 +249,12 @@
       scroll-margin-top: 80px;
     }
     .section-label {
-      display: inline-flex;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(0, 0, 0, 0.06);
-      padding: 6px 16px;
-      border-radius: 999px;
       font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: #000000;
+      color: var(--muted);
       font-weight: 600;
       margin-bottom: 28px;
-      box-shadow: var(--shadow-xs);
     }
 
     /* -- Wins -- */
@@ -304,14 +292,13 @@
     }
 
     /* ── Pixelated Cloud Section Backgrounds ── */
-    header.hero, section {
+    header.hero {
       position: relative;
       overflow: hidden;
-      background-color: var(--bg);
       isolation: isolate; /* Establishes stacking context for z-index: -1 background pseudo-elements */
     }
 
-    header.hero::before, section::before {
+    header.hero::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -320,21 +307,10 @@
       background-repeat: no-repeat;
       pointer-events: none;
       z-index: -1; /* Placed behind content but above parent background-color */
-    }
-
-    header.hero::before {
-      opacity: 0.9;
+      opacity: 0.15;
       mix-blend-mode: multiply;
+      background-image: url('assets/cloud-bg-7.jpg');
     }
-
-    section::before {
-      opacity: 0.9;
-      mix-blend-mode: multiply;
-    }
-
-    header.hero::before { background-image: url('assets/cloud-bg-7.jpg'); }
-    #wins::before { background-image: url('assets/cloud-bg-4.jpg'); }
-    #campus-leadership::before { background-image: url('assets/cloud-bg-1.jpg'); }
   </style>
   <!-- Favicon and End of Head -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">

@@ -1,103 +1,63 @@
-# Implementation Plan: UI/UX & Legibility Fixes (90% Opacity Clouds)
+# Implementation Plan: Option B - Focused Top & Bottom Accents
 
-We have conducted a thorough browser audit using the `browser` subagent to analyze how the website renders with the pixel art cloud backgrounds set to **90% opacity** (`opacity: 0.9`). 
-
-At 90% opacity, the vibrant sky textures dominate the canvas, making several critical text labels (styled in muted grey `#6F6F6F`) completely unreadable and creating visual noise.
+We will implement **Option B** to restore a clean, premium, and readable aesthetic to your website while keeping the pixel art cloud accents in focused, high-impact areas.
 
 ---
 
-## 1. Proposed Changes
-To preserve the 90% opacity of the clouds as requested, we must insulate and protect the floating text elements using **glassmorphism** (semi-transparent white backings with backdrop blur) and increase text contrast.
+## 1. Proposed Background Mapping
+We will apply the cloud backgrounds only to the entrance and exit sections of the website. All intermediate body sections will be reverted to their clean, native backgrounds.
 
-### 1.1 Glassmorphic Section Badges
-We will style the section labels (`.section-label`, `.skill-category-label`, `.tool-cluster-label`) as elegant glassmorphic pills with solid black text. This keeps them highly legible and adds a modern premium feel.
+### 1.1 Main Page (`index.html`)
+| Section / Selector | Background Status | Target Image | Opacity & Blending |
+| :--- | :--- | :--- | :--- |
+| **Hero Header** (`header.hero`) | **Active** | `assets/cloud-bg-7.jpg` (Dawn) | `opacity: 0.15` (15% opacity, multiply) |
+| **Experience** (`#experience`) | *None* (Reverted to white) | None | - |
+| **Education** (`#education`) | *None* (Reverted to white) | None | - |
+| **Skills** (`#skills`) | *None* (Reverted to white) | None | - |
+| **Tool Stack** (`#tool-stack`) | *None* (Reverted to white) | None | - |
+| **Beliefs** (`#beliefs`) | *None* (Reverted to beige `#f5f3ef`) | None | - |
+| **Split-Flap Board** (`#flap-section`)| **Active** | `assets/cloud-bg-3.jpg` (Night) | `opacity: 0.25` (25% opacity, screen) |
 
-```css
-.section-label {
-  display: inline-flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  padding: 6px 16px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: #000000 !important; /* Forces high-contrast black */
-  box-shadow: var(--shadow-xs);
-  margin-bottom: 28px;
-}
-```
-
-### 1.2 Glassmorphic Cards for the Tool Stack (`#tool-stack`)
-Instead of floating transparent icons directly on top of the bright sunset background, we will transform the tool items into beautiful glassmorphic buttons. This prevents dark logos (like Perplexity and Comet) and muted grey labels from disappearing.
-
-```css
-.pill-tool {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--border);
-  border-radius: var(--r8);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  text-decoration: none;
-  gap: 8px;
-  min-width: 90px;
-  box-shadow: var(--shadow-xs);
-}
-
-.pill-tool:hover {
-  background: #ffffff;
-  transform: translateY(-4px);
-  border-color: #000000;
-  box-shadow: var(--shadow-sm);
-}
-
-.tool-name {
-  font-size: 13px;
-  font-weight: 600;
-  color: #000000 !important;
-}
-```
-
-### 1.3 Hero Title Backlight
-We will add a soft white backlight glow to the hero title headings to wash out the high-contrast pixels directly behind the text, improving legibility:
-
-```css
-.hero h1 {
-  text-shadow: 0 0 35px rgba(255, 255, 255, 0.95), 
-               0 0 20px rgba(255, 255, 255, 0.90),
-               0 0 10px rgba(255, 255, 255, 0.80);
-}
-```
-
-### 1.4 Beliefs Section Blend Fix
-* We will change the background blend mode on all light sections from `multiply` to `normal` so the images render in their crisp, original colors without creating muddy/brown tones on top of beige sections like `#beliefs`.
-* Change the background color of `#beliefs` from beige (`#f5f3ef`) to white (`#ffffff`) to keep the page background clean and unified.
+### 1.2 Wins & Campus Page (`more.html`)
+| Section / Selector | Background Status | Target Image | Opacity & Blending |
+| :--- | :--- | :--- | :--- |
+| **Hero Header** (`header.hero`) | **Active** | `assets/cloud-bg-7.jpg` (Dawn) | `opacity: 0.15` (15% opacity, multiply) |
+| **Wins & Highlights** (`#wins`) | *None* (Reverted to white) | None | - |
+| **Campus Leadership** (`#campus-leadership`) | *None* (Reverted to white) | None | - |
 
 ---
 
-## 2. Step-by-Step Execution Plan
+## 2. Technical Reversion & Clean Up
+We will remove the visual clutter (border boxes, white backing cards, shadows, and extra paddings) introduced during the high-opacity implementation, returning the body content to its clean, spacious layouts.
 
-### 2.1 Step 1: Update CSS in index.html
-Apply the glassmorphic badges, card layouts for tool pills, hero text backlights, and blend mode changes inside the style tags of [index.html](file:///C:/Users/yashd/.gemini/antigravity/scratch/yash-dugar/index.html).
-
-### 2.2 Step 2: Update CSS in more.html
-Apply the same glassmorphic section badges and header titles changes inside the style tags of [more.html](file:///C:/Users/yashd/.gemini/antigravity/scratch/yash-dugar/more.html).
-
-### 2.3 Step 3: Synchronize Workspaces & Git push
-Sync updated HTML files across all three directories (primary, backup, IDE) and push the commit to GitHub `origin/main`.
+### 2.1 CSS Layout Adjustments
+1. **Section Labels**: Revert `.section-label`, `.skill-category-label`, and `.tool-cluster-label` to their original borderless text style (removing backgrounds, borders, shadow, blur, and resetting the color to `#6F6F6F` / `var(--muted)`).
+2. **Tool Stack Grid & Cards**:
+   * Restore `.pill-tool` under `#tool-stack` to a borderless, transparent button layout (removing background, borders, blur, padding, and resetting the logo dimensions).
+   * Maintain the optimized **2-column layout** on desktop for `.tool-stack-grid` because it keeps the categories balanced and compact.
+3. **Hero Headings**: Remove the text-shadow backlight glow from `.hero h1` since the 15% opacity sunrise background is extremely light and will not conflict with black text readability.
+4. **Section Background Colors**:
+   * Set body background and default sections background-color to `transparent` (so they inherit the body's white color).
+   * Revert `#beliefs` background to its original warm beige color (`#f5f3ef`).
 
 ---
 
-## 3. Verification Plan
-* Re-invoke the `browser` subagent to take new viewport and page screenshots to confirm the legibility improvements.
-* Verify that text-to-background contrast ratio meets WCAG 2.1 AA requirements.
+## 3. Step-by-Step Execution Plan
+
+### 3.1 Step 1: Update CSS in index.html
+* Modify the background styles block to target only `header.hero` and `#flap-section` pseudo-elements.
+* Revert `.section-label`, `.skill-category-label`, and `.tool-cluster-label` rules to their original layout.
+* Revert `.pill-tool` and `#beliefs` styling rules.
+* Keep the text scramble engine placeholder as `"How I build data & AI systems"`.
+
+### 3.2 Step 2: Update CSS in more.html
+* Modify background styles block to target only `header.hero` pseudo-element.
+* Revert `.section-label` rules.
+
+### 3.3 Step 3: Synchronize Workspaces & Git Commit
+Sync updated HTML files across primary, IDE, and backup directories and push the commit to GitHub `origin/main`.
+
+---
+
+## 4. Verification Plan
+* Re-invoke the `browser` subagent to capture updated viewport and page screenshots to verify that the body sections are clean and the hero/flap accents blend perfectly.
