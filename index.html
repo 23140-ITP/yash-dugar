@@ -231,6 +231,9 @@
       color: #000000;
       max-width: 960px;
       margin: 0 auto;
+      text-shadow: 0 0 35px rgba(255, 255, 255, 0.95), 
+                   0 0 20px rgba(255, 255, 255, 0.90),
+                   0 0 10px rgba(255, 255, 255, 0.80);
     }
     .hero h1 em {
       color: var(--muted);
@@ -897,7 +900,7 @@
     }
 
     /* -- Footer -- */
-    footer { padding: 120px 0; text-align: center; border-top: 1px solid var(--border); background: #fff; }
+    footer { padding: 120px 0; text-align: center; border-top: 1px solid #222; background: #0a0a0a; color: #ffffff; }
     footer h2 {
       font-family: 'Instrument Serif', Georgia, serif;
       font-size: clamp(34px, 6vw, 53px);
@@ -907,9 +910,10 @@
       max-width: 700px;
       margin-left: auto;
       margin-right: auto;
+      color: #ffffff;
     }
-    footer .email { font-size: 19px; color: var(--muted); }
-    footer .email a { color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+    footer .email { font-size: 19px; color: #a3a3a3; }
+    footer .email a { color: #ffffff; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
     /* -- Responsive -- */
     @media (max-width: 720px) {
@@ -1134,13 +1138,13 @@
     }
 
     /* ── Pixelated Cloud Section Backgrounds ── */
-    header.hero, #flap-section {
+    header.hero, footer {
       position: relative;
       overflow: hidden;
       isolation: isolate; /* Establishes stacking context for z-index: -1 background pseudo-elements */
     }
 
-    header.hero::before, #flap-section::before {
+    header.hero::before, footer::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -1152,12 +1156,12 @@
     }
 
     header.hero::before {
-      opacity: 0.15;
+      opacity: 0.9;
       mix-blend-mode: multiply;
-      background-image: url('assets/cloud-bg-7.jpg');
+      background-image: url('assets/cloud-bg-8.jpg');
     }
 
-    #flap-section::before {
+    footer::before {
       opacity: 0.25;
       mix-blend-mode: screen;
       background-image: url('assets/cloud-bg-3.jpg');
