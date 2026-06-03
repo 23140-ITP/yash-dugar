@@ -271,7 +271,7 @@
       border: 1px solid rgba(0,0,0,0.05);
       padding: 6px 16px;
       border-radius: 100px;
-      font-size: 0.35em;
+      font-size: 14px;
       vertical-align: middle;
       font-family: 'Inter', sans-serif;
       font-weight: 500;
@@ -836,11 +836,10 @@
     }
     .pill-domain:hover { border-color: #000000; transform: translateY(-2px); }
 
-    /* -- Tool Stack -- */
     .tool-stack-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
     }
     .tool-cluster-label {
       display: inline-flex;
@@ -1238,12 +1237,12 @@
   <header class="hero">
     <h1 class="animate-fade-rise">
       <span id="hero-title-text" style="display: block;">Data-driven &amp; <span class="gradient-text">AI-native  </span><em> Builder </em></span>
-      <span class="inline-card-container">
-        <span class="inline-card"><span class="dot"></span> Delhi, IN</span>
-        <span class="inline-card"><span class="dot"></span> Masters&#8217; Union &#39;27</span>
-        <span class="inline-card"><span class="dot"></span> CFA L2 Candidate</span>
-      </span>
     </h1>
+    <div class="inline-card-container animate-fade-rise-delay">
+      <span class="inline-card"><span class="dot"></span> Delhi, IN</span>
+      <span class="inline-card"><span class="dot"></span> Masters&#8217; Union &#39;27</span>
+      <span class="inline-card"><span class="dot"></span> CFA L2 Candidate</span>
+    </div>
   </header>
 
   <div class="logos">
@@ -1812,7 +1811,7 @@
       }
 
       getPaddedPlaceholder(targetLen) {
-        let paddedPlaceholder = "What’s behind how I build systems?";
+        let paddedPlaceholder = "How I build data & AI systems";
         while (paddedPlaceholder.length < targetLen) {
           paddedPlaceholder += " ";
         }
