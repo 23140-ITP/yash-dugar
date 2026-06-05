@@ -919,6 +919,11 @@
 
     /* -- Responsive -- */
     @media (max-width: 720px) {
+      nav .nav-inner { padding: 12px 16px; gap: 12px; }
+      nav .logo { font-size: 1.6rem; }
+      nav .logo a { gap: 8px !important; }
+      nav .logo a img { width: 36px !important; height: 36px !important; }
+      nav a.btn { padding: 8px 16px; font-size: 0.95rem; }
       .nav-links { display: none; }
       .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 16px 24px; border-bottom: 1px solid var(--border); gap: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
       .hamburger { display: flex; }
