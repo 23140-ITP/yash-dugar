@@ -258,14 +258,7 @@
       -webkit-text-fill-color: transparent;
       padding-right: 4px;
     }
-    .signature-text {
-      font-family: 'Gochi Hand', cursive, sans-serif;
-      font-weight: 400;
-      font-size: 1.15em;
-      display: inline-block;
-      transform: rotate(-1.5deg) translateY(-1px);
-      letter-spacing: -0.01em;
-    }
+
     .inline-card-container {
       display: flex;
       flex-wrap: wrap;
@@ -1854,7 +1847,7 @@
 
       generateHTML() {
         let html = "";
-        let currentGroupType = ""; // "", "gradient", "em", "signature"
+        let currentGroupType = ""; // "", "gradient", "em"
         
         for (let i = 0; i < this.flatChars.length; i++) {
           const fc = this.flatChars[i];
@@ -1873,7 +1866,7 @@
             }
           } else {
             if (i >= 20 && i <= 24) {
-              groupType = "signature";
+              groupType = "gradient";
             }
           }
           
@@ -1882,16 +1875,12 @@
               html += "</span>";
             } else if (currentGroupType === "em") {
               html += "</em>";
-            } else if (currentGroupType === "signature") {
-              html += "</span>";
             }
             
             if (groupType === "gradient") {
               html += '<span class="gradient-text">';
             } else if (groupType === "em") {
               html += "<em>";
-            } else if (groupType === "signature") {
-              html += '<span class="signature-text gradient-text">';
             }
             currentGroupType = groupType;
           }
@@ -1903,8 +1892,6 @@
           html += "</span>";
         } else if (currentGroupType === "em") {
           html += "</em>";
-        } else if (currentGroupType === "signature") {
-          html += "</span>";
         }
         
         return html;
