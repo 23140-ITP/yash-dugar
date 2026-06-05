@@ -258,6 +258,14 @@
       -webkit-text-fill-color: transparent;
       padding-right: 4px;
     }
+    .signature-text {
+      font-family: 'Gochi Hand', cursive, sans-serif;
+      font-weight: 400;
+      font-size: 1.15em;
+      display: inline-block;
+      transform: rotate(-1.5deg) translateY(-1px);
+      letter-spacing: -0.01em;
+    }
     .inline-card-container {
       display: flex;
       flex-wrap: wrap;
@@ -1816,141 +1824,134 @@
     class EncryptedTextEngine {
       constructor(element, options = {}) {
         this.element = element;
-        this.revealDelayMs = options.revealDelayMs || 25; // Delay between settling letters
-        this.flipDelayMs = options.flipDelayMs || 24;     // Visually dynamic scramble flips (24ms for 50% faster feel)
-        this.revealStep = options.revealStep || 0.15;     // Reveal step (1.5x speed upgrade: 0.15 char per frame)
+        this.revealDelayMs = options.revealDelayMs || 25;
+        this.flipDelayMs = options.flipDelayMs || 24;
+        this.revealStep = options.revealStep || 0.15;
         this.charset = options.charset || "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789!@#$%&?*+-=/";
         this.isRunning = false;
         this.animationFrameId = null;
+
+        this.originalText = "Data-driven & AI-native Builder   ";
+        this.placeholderText = "What’s behind how I build systems?";
         
-        // Parse structural text map
-        this.initTextMap();
-        
-        // Render initial placeholder state right away so it is visible immediately on load
-        this.renderPlaceholderState();
-        
-        // Auto-trigger exactly once shortly after load (no hover triggers per user request)
+        // Character states
+        this.flatChars = [];
+        for (let i = 0; i < this.originalText.length; i++) {
+          this.flatChars.push({
+            original: this.originalText[i],
+            placeholder: this.placeholderText[i],
+            currentChar: this.placeholderText[i],
+            isRevealed: false
+          });
+        }
+
+        // Render initial placeholder state right away
+        this.render();
+
+        // Auto-trigger exactly once shortly after load
         setTimeout(() => this.trigger(), 600);
       }
 
-      initTextMap() {
-        this.textMap = [];
-        const traverse = (node) => {
-          if (node.nodeType === Node.TEXT_NODE) {
-            const textVal = node.nodeValue;
-            if (textVal.trim().length > 0) {
-              this.textMap.push({
-                node: node,
-                original: textVal
-              });
+      generateHTML() {
+        let html = "";
+        let currentGroupType = ""; // "", "gradient", "em", "signature"
+        
+        for (let i = 0; i < this.flatChars.length; i++) {
+          const fc = this.flatChars[i];
+          let char = fc.currentChar;
+          
+          if (char === "&") char = "&amp;";
+          else if (char === "<") char = "&lt;";
+          else if (char === ">") char = "&gt;";
+          
+          let groupType = "";
+          if (fc.isRevealed) {
+            if (i >= 14 && i <= 22) {
+              groupType = "gradient";
+            } else if (i >= 24 && i <= 33) {
+              groupType = "em";
             }
           } else {
-            node.childNodes.forEach(traverse);
+            if (i >= 20 && i <= 24) {
+              groupType = "signature";
+            }
           }
-        };
-        traverse(this.element);
-      }
-
-      getFlatChars() {
-        const flatChars = [];
-        this.textMap.forEach((entry, nodeIdx) => {
-          for (let offset = 0; offset < entry.original.length; offset++) {
-            flatChars.push({
-              nodeIdx: nodeIdx,
-              offset: offset,
-              char: entry.original[offset]
-            });
+          
+          if (groupType !== currentGroupType) {
+            if (currentGroupType === "gradient") {
+              html += "</span>";
+            } else if (currentGroupType === "em") {
+              html += "</em>";
+            } else if (currentGroupType === "signature") {
+              html += "</span>";
+            }
+            
+            if (groupType === "gradient") {
+              html += '<span class="gradient-text">';
+            } else if (groupType === "em") {
+              html += "<em>";
+            } else if (groupType === "signature") {
+              html += '<span class="signature-text gradient-text">';
+            }
+            currentGroupType = groupType;
           }
-        });
-        return flatChars;
-      }
-
-      // Pre-compute a lookup map of (nodeIdx, offset) → globalIdx for O(1) access
-      buildIndexMap(flatChars) {
-        const map = new Map();
-        flatChars.forEach((fc, globalIdx) => {
-          map.set(`${fc.nodeIdx}:${fc.offset}`, globalIdx);
-        });
-        return map;
-      }
-
-      getGlobalIdx(indexMap, nodeIdx, offset) {
-        return indexMap.get(`${nodeIdx}:${offset}`);
-      }
-
-      getPaddedPlaceholder(targetLen) {
-        let paddedPlaceholder = "What’s behind how I build systems?";
-        while (paddedPlaceholder.length < targetLen) {
-          paddedPlaceholder += " ";
+          
+          html += char;
         }
-        return paddedPlaceholder;
+        
+        if (currentGroupType === "gradient") {
+          html += "</span>";
+        } else if (currentGroupType === "em") {
+          html += "</em>";
+        } else if (currentGroupType === "signature") {
+          html += "</span>";
+        }
+        
+        return html;
       }
 
-      renderPlaceholderState() {
-        const flatChars = this.getFlatChars();
-        const indexMap = this.buildIndexMap(flatChars);
-        const paddedPlaceholder = this.getPaddedPlaceholder(flatChars.length);
-
-        this.textMap.forEach((entry, nodeIdx) => {
-          let newStr = "";
-          for (let offset = 0; offset < entry.original.length; offset++) {
-            const globalIdx = this.getGlobalIdx(indexMap, nodeIdx, offset);
-            newStr += paddedPlaceholder[globalIdx];
-          }
-          entry.node.nodeValue = newStr;
-        });
+      render() {
+        this.element.innerHTML = this.generateHTML();
       }
 
       trigger() {
         if (this.isRunning) return;
         this.isRunning = true;
         
-        const flatChars = this.getFlatChars();
-        const indexMap = this.buildIndexMap(flatChars);
-        const paddedPlaceholder = this.getPaddedPlaceholder(flatChars.length);
-
         let currentReveal = 0;
         let lastFlipTime = 0;
 
         const tick = (now) => {
           if (!this.isRunning) return;
 
-          // 3. Perform Scramble Flips
+          // 1. Perform Scramble Flips
           if (now - lastFlipTime >= this.flipDelayMs) {
             lastFlipTime = now;
             
-            // Update all text nodes with state
-            this.textMap.forEach((entry, nodeIdx) => {
-              let newStr = "";
-              const activeIdx = Math.floor(currentReveal);
-
-              for (let offset = 0; offset < entry.original.length; offset++) {
-                // O(1) lookup via pre-computed index map
-                const globalIdx = this.getGlobalIdx(indexMap, nodeIdx, offset);
-
-                if (globalIdx < activeIdx) {
-                  // Already decrypted -> original headline character
-                  newStr += entry.original[offset];
-                } else if (globalIdx === activeIdx) {
-                  // Transition frontier -> actively scrambling
-                  if (entry.original[offset] === " ") {
-                    newStr += " ";
-                  } else {
-                    newStr += this.charset[Math.floor(Math.random() * this.charset.length)];
-                  }
+            const activeIdx = Math.floor(currentReveal);
+            for (let i = 0; i < this.flatChars.length; i++) {
+              const fc = this.flatChars[i];
+              if (i < activeIdx) {
+                fc.isRevealed = true;
+                fc.currentChar = fc.original;
+              } else if (i === activeIdx) {
+                fc.isRevealed = false;
+                if (fc.original === " ") {
+                  fc.currentChar = " ";
                 } else {
-                  // Future character -> stays constant as initial placeholder character
-                  newStr += paddedPlaceholder[globalIdx];
+                  fc.currentChar = this.charset[Math.floor(Math.random() * this.charset.length)];
                 }
+              } else {
+                fc.isRevealed = false;
+                fc.currentChar = fc.placeholder;
               }
-              entry.node.nodeValue = newStr;
-            });
+            }
+            this.render();
           }
 
-          // 4. Progress Reveal Counter
-          if (currentReveal < flatChars.length) {
-            // Increment revealed count gradually (letter by letter, slow)
-            currentReveal = Math.min(flatChars.length, currentReveal + this.revealStep);
+          // 2. Progress Reveal Counter
+          if (currentReveal < this.flatChars.length) {
+            currentReveal = Math.min(this.flatChars.length, currentReveal + this.revealStep);
             this.animationFrameId = requestAnimationFrame(tick);
           } else {
             this.complete();
@@ -1964,10 +1965,12 @@
         this.isRunning = false;
         if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
         
-        // Reset all nodes to original values strictly
-        this.textMap.forEach(entry => {
-          entry.node.nodeValue = entry.original;
+        // Reset directly to final HTML structure strictly
+        this.flatChars.forEach(fc => {
+          fc.isRevealed = true;
+          fc.currentChar = fc.original;
         });
+        this.render();
       }
     }
 
