@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-v4.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-v4.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-v4.png">
+  <link rel="manifest" href="/site.webmanifest?v=4">
+  <link rel="shortcut icon" href="/favicon-v4.ico">
   <!-- Standard SEO -->
   <title>Yash Dugar - Data-driven & AI-native Builder</title>
   <meta name="description" content="Portfolio of Yash Dugar - Masters' Union '27, CFA L2 Candidate, Delhi, India. Building systems with data and AI." />
@@ -28,7 +34,7 @@
   <meta name="twitter:image" content="https://yashdugar.com/og-image.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Gochi+Hand&family=Special+Elite&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Gochi+Hand&family=Special+Elite&family=JetBrains+Mono:wght@800&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #ffffff;
@@ -914,6 +920,8 @@
     /* -- Responsive -- */
     @media (max-width: 720px) {
       .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 16px 24px; border-bottom: 1px solid var(--border); gap: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+      .hamburger { display: flex; }
       .filler { height: 80px; }
       .tool-stack-grid { grid-template-columns: repeat(2, 1fr); }
       .chapter-head { flex-direction: column; align-items: flex-start; }
@@ -959,7 +967,7 @@
       border-radius: 4px;
       border: 2px solid #000;
       overflow: hidden;
-      aspect-ratio: 3/6;
+      aspect-ratio: 1/2;
       background: #151515;
       box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     }
@@ -1097,34 +1105,34 @@
       transform: translateY(-50%);
     }
 
-    /* Base Tile Custom Accents */
-    .ft.ac-r { background: #dc2626 !important; }
-    .ft.ac-r .ft-top, .ft.ac-r .ft-bot, .ft.ac-r .ft-flap, .ft.ac-r .ft-flap-bot { background: #dc2626 !important; color: #fff !important; }
-    .ft.ac-r .ft-top::after, .ft.ac-r .ft-bot::after, .ft.ac-r .ft-flap::after, .ft.ac-r .ft-flap-bot::after { content: "" !important; }
+    /* Base Tile Custom Accents (using .flap-board for specificity instead of !important) */
+    .flap-board .ft.ac-r { background: #dc2626; }
+    .flap-board .ft.ac-r .ft-top, .flap-board .ft.ac-r .ft-bot, .flap-board .ft.ac-r .ft-flap, .flap-board .ft.ac-r .ft-flap-bot { background: #dc2626; color: #fff; }
+    .flap-board .ft.ac-r .ft-top::after, .flap-board .ft.ac-r .ft-bot::after, .flap-board .ft.ac-r .ft-flap::after, .flap-board .ft.ac-r .ft-flap-bot::after { content: ""; }
 
-    .ft.ac-o { background: #ea580c !important; }
-    .ft.ac-o .ft-top, .ft.ac-o .ft-bot, .ft.ac-o .ft-flap, .ft.ac-o .ft-flap-bot { background: #ea580c !important; color: #fff !important; }
-    .ft.ac-o .ft-top::after, .ft.ac-o .ft-bot::after, .ft.ac-o .ft-flap::after, .ft.ac-o .ft-flap-bot::after { content: "" !important; }
+    .flap-board .ft.ac-o { background: #ea580c; }
+    .flap-board .ft.ac-o .ft-top, .flap-board .ft.ac-o .ft-bot, .flap-board .ft.ac-o .ft-flap, .flap-board .ft.ac-o .ft-flap-bot { background: #ea580c; color: #fff; }
+    .flap-board .ft.ac-o .ft-top::after, .flap-board .ft.ac-o .ft-bot::after, .flap-board .ft.ac-o .ft-flap::after, .flap-board .ft.ac-o .ft-flap-bot::after { content: ""; }
 
-    .ft.ac-y { background: #eab308 !important; }
-    .ft.ac-y .ft-top, .ft.ac-y .ft-bot, .ft.ac-y .ft-flap, .ft.ac-y .ft-flap-bot { background: #eab308 !important; color: #171717 !important; }
-    .ft.ac-y .ft-top::after, .ft.ac-y .ft-bot::after, .ft.ac-y .ft-flap::after, .ft.ac-y .ft-flap-bot::after { content: "" !important; }
+    .flap-board .ft.ac-y { background: #eab308; }
+    .flap-board .ft.ac-y .ft-top, .flap-board .ft.ac-y .ft-bot, .flap-board .ft.ac-y .ft-flap, .flap-board .ft.ac-y .ft-flap-bot { background: #eab308; color: #171717; }
+    .flap-board .ft.ac-y .ft-top::after, .flap-board .ft.ac-y .ft-bot::after, .flap-board .ft.ac-y .ft-flap::after, .flap-board .ft.ac-y .ft-flap-bot::after { content: ""; }
 
-    .ft.ac-g { background: #16a34a !important; }
-    .ft.ac-g .ft-top, .ft.ac-g .ft-bot, .ft.ac-g .ft-flap, .ft.ac-g .ft-flap-bot { background: #16a34a !important; color: #fff !important; }
-    .ft.ac-g .ft-top::after, .ft.ac-g .ft-bot::after, .ft.ac-g .ft-flap::after, .ft.ac-g .ft-flap-bot::after { content: "" !important; }
+    .flap-board .ft.ac-g { background: #16a34a; }
+    .flap-board .ft.ac-g .ft-top, .flap-board .ft.ac-g .ft-bot, .flap-board .ft.ac-g .ft-flap, .flap-board .ft.ac-g .ft-flap-bot { background: #16a34a; color: #fff; }
+    .flap-board .ft.ac-g .ft-top::after, .flap-board .ft.ac-g .ft-bot::after, .flap-board .ft.ac-g .ft-flap::after, .flap-board .ft.ac-g .ft-flap-bot::after { content: ""; }
 
-    .ft.ac-b { background: #2563eb !important; }
-    .ft.ac-b .ft-top, .ft.ac-b .ft-bot, .ft.ac-b .ft-flap, .ft.ac-b .ft-flap-bot { background: #2563eb !important; color: #fff !important; }
-    .ft.ac-b .ft-top::after, .ft.ac-b .ft-bot::after, .ft.ac-b .ft-flap::after, .ft.ac-b .ft-flap-bot::after { content: "" !important; }
+    .flap-board .ft.ac-b { background: #2563eb; }
+    .flap-board .ft.ac-b .ft-top, .flap-board .ft.ac-b .ft-bot, .flap-board .ft.ac-b .ft-flap, .flap-board .ft.ac-b .ft-flap-bot { background: #2563eb; color: #fff; }
+    .flap-board .ft.ac-b .ft-top::after, .flap-board .ft.ac-b .ft-bot::after, .flap-board .ft.ac-b .ft-flap::after, .flap-board .ft.ac-b .ft-flap-bot::after { content: ""; }
 
-    .ft.ac-v { background: #7c3aed !important; }
-    .ft.ac-v .ft-top, .ft.ac-v .ft-bot, .ft.ac-v .ft-flap, .ft.ac-v .ft-flap-bot { background: #7c3aed !important; color: #fff !important; }
-    .ft.ac-v .ft-top::after, .ft.ac-v .ft-bot::after, .ft.ac-v .ft-flap::after, .ft.ac-v .ft-flap-bot::after { content: "" !important; }
+    .flap-board .ft.ac-v { background: #7c3aed; }
+    .flap-board .ft.ac-v .ft-top, .flap-board .ft.ac-v .ft-bot, .flap-board .ft.ac-v .ft-flap, .flap-board .ft.ac-v .ft-flap-bot { background: #7c3aed; color: #fff; }
+    .flap-board .ft.ac-v .ft-top::after, .flap-board .ft.ac-v .ft-bot::after, .flap-board .ft.ac-v .ft-flap::after, .flap-board .ft.ac-v .ft-flap-bot::after { content: ""; }
 
-    .ft.ac-w { background: #f5f5f5 !important; }
-    .ft.ac-w .ft-top, .ft.ac-w .ft-bot, .ft.ac-w .ft-flap, .ft.ac-w .ft-flap-bot { background: #f5f5f5 !important; color: #171717 !important; }
-    .ft.ac-w .ft-top::after, .ft.ac-w .ft-bot::after, .ft.ac-w .ft-flap::after, .ft.ac-w .ft-flap-bot::after { content: "" !important; }
+    .flap-board .ft.ac-w { background: #f5f5f5; }
+    .flap-board .ft.ac-w .ft-top, .flap-board .ft.ac-w .ft-bot, .flap-board .ft.ac-w .ft-flap, .flap-board .ft.ac-w .ft-flap-bot { background: #f5f5f5; color: #171717; }
+    .flap-board .ft.ac-w .ft-top::after, .flap-board .ft.ac-w .ft-bot::after, .flap-board .ft.ac-w .ft-flap::after, .flap-board .ft.ac-w .ft-flap-bot::after { content: ""; }
 
     @media (max-width: 720px) {
       .flap-board { padding: 12px; border-radius: 10px; }
@@ -1132,18 +1140,64 @@
       .ft { border-width: 1px; }
       .ft-hinge-left, .ft-hinge-right, .ft-pivot-rod { display: none; }
     }
+    /* -- Skip Link -- */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 16px;
+      background: #000;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 4px;
+      z-index: 200;
+      font-size: 14px;
+      transition: top 0.2s;
+      text-decoration: none;
+    }
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    /* -- Hamburger Menu -- */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      z-index: 101;
+    }
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: #000;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 
   </style>
-  <!-- Favicon and End of Head -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
 </head>
 <body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
 
   <!-- Navigation -->
   <nav>
     <div class="nav-inner">
-      <div class="logo">Yash Dugar</div>
+      <div class="logo"><a href="#">Yash Dugar</a></div>
+      <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
       <div class="nav-links">
         <a href="#experience" class="nav-link">Experience</a>
         <a href="#education" class="nav-link">Education</a>
@@ -1157,17 +1211,19 @@
     </div>
   </nav>
 
+  <main id="main-content">
+
   <!-- Hero -->
-  <header class="hero">
+  <section class="hero">
     <h1 class="animate-fade-rise">
-      <span id="hero-title-text" style="display: block;">Data-driven &amp; <span class="gradient-text">AI-native  </span><em> Builder </em></span>
+      <span id="hero-title-text" style="display: block;">Data-driven &amp; <span class="gradient-text">AI-native</span> <em>Builder</em></span>
     </h1>
     <div class="inline-card-container animate-fade-rise-delay">
       <span class="inline-card"><span class="dot"></span> Delhi, IN</span>
       <span class="inline-card"><span class="dot"></span> Masters&#8217; Union &#39;27</span>
       <span class="inline-card"><span class="dot"></span> CFA L2 Candidate</span>
     </div>
-  </header>
+  </section>
 
   <div class="logos">
     <div class="logos-track">
@@ -1463,10 +1519,12 @@
     <div id="flap-board" class="flap-board"></div>
   </section>
 
+  </main>
+
   <footer>
     <div class="container">
       <h2>If you’re building something ambitious — let’s talk.</h2>
-      <p class="email">yash.dugar@mastersunion.org · <a href="https://linkedin.com/in/yash--dugar">LinkedIn</a></p>
+      <p class="email">yash.dugar@mastersunion.org · <a href="https://linkedin.com/in/yash--dugar" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
     </div>
   </footer>  <script>
     // ── Split-Flap Board (High-Fidelity) ──
@@ -1654,6 +1712,8 @@
 
       let currentMsg = 0;
       let flipping = false;
+      let flapIntervalId = null;
+      let flapInitialTimeout = null;
 
       function showMessage(msgIdx) {
         if(flipping) return;
@@ -1674,11 +1734,33 @@
         Promise.all(promises).then(() => { flipping = false; });
       }
 
-      setTimeout(() => showMessage(0), 1000);
-      setInterval(() => {
-        currentMsg = (currentMsg + 1) % MESSAGES.length;
-        showMessage(currentMsg);
-      }, 8000);
+      function startFlapCycle() {
+        if (flapIntervalId) return;
+        flapInitialTimeout = setTimeout(() => showMessage(currentMsg), 1000);
+        flapIntervalId = setInterval(() => {
+          currentMsg = (currentMsg + 1) % MESSAGES.length;
+          showMessage(currentMsg);
+        }, 8000);
+      }
+
+      function stopFlapCycle() {
+        if (flapInitialTimeout) { clearTimeout(flapInitialTimeout); flapInitialTimeout = null; }
+        if (flapIntervalId) { clearInterval(flapIntervalId); flapIntervalId = null; }
+      }
+
+      // Use IntersectionObserver to only run the flap animation when visible
+      const flapSection = document.getElementById('flap-section');
+      if (flapSection && 'IntersectionObserver' in window) {
+        const flapObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) { startFlapCycle(); }
+            else { stopFlapCycle(); }
+          });
+        }, { threshold: 0.1 });
+        flapObserver.observe(flapSection);
+      } else {
+        startFlapCycle();
+      }
     })();
     
     // -- High-Fidelity Aceternity UI Encrypted Text Engine --
@@ -1734,6 +1816,19 @@
         return flatChars;
       }
 
+      // Pre-compute a lookup map of (nodeIdx, offset) → globalIdx for O(1) access
+      buildIndexMap(flatChars) {
+        const map = new Map();
+        flatChars.forEach((fc, globalIdx) => {
+          map.set(`${fc.nodeIdx}:${fc.offset}`, globalIdx);
+        });
+        return map;
+      }
+
+      getGlobalIdx(indexMap, nodeIdx, offset) {
+        return indexMap.get(`${nodeIdx}:${offset}`);
+      }
+
       getPaddedPlaceholder(targetLen) {
         let paddedPlaceholder = "What’s behind how I build systems?";
         while (paddedPlaceholder.length < targetLen) {
@@ -1744,14 +1839,13 @@
 
       renderPlaceholderState() {
         const flatChars = this.getFlatChars();
+        const indexMap = this.buildIndexMap(flatChars);
         const paddedPlaceholder = this.getPaddedPlaceholder(flatChars.length);
 
         this.textMap.forEach((entry, nodeIdx) => {
           let newStr = "";
           for (let offset = 0; offset < entry.original.length; offset++) {
-            const globalIdx = flatChars.findIndex(
-              fc => fc.nodeIdx === nodeIdx && fc.offset === offset
-            );
+            const globalIdx = this.getGlobalIdx(indexMap, nodeIdx, offset);
             newStr += paddedPlaceholder[globalIdx];
           }
           entry.node.nodeValue = newStr;
@@ -1763,6 +1857,7 @@
         this.isRunning = true;
         
         const flatChars = this.getFlatChars();
+        const indexMap = this.buildIndexMap(flatChars);
         const paddedPlaceholder = this.getPaddedPlaceholder(flatChars.length);
 
         let currentReveal = 0;
@@ -1781,10 +1876,8 @@
               const activeIdx = Math.floor(currentReveal);
 
               for (let offset = 0; offset < entry.original.length; offset++) {
-                // Find global index of this specific character
-                const globalIdx = flatChars.findIndex(
-                  fc => fc.nodeIdx === nodeIdx && fc.offset === offset
-                );
+                // O(1) lookup via pre-computed index map
+                const globalIdx = this.getGlobalIdx(indexMap, nodeIdx, offset);
 
                 if (globalIdx < activeIdx) {
                   // Already decrypted -> original headline character
@@ -1841,11 +1934,51 @@
       initHeroEncryption();
     }
 
-    // -- Accordion --
+    // -- Accordion (keyboard accessible) --
     function toggleChapter(el) {
       const isActive = el.classList.contains('active');
-      document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
-      if (!isActive) el.classList.add('active');
+      document.querySelectorAll('.chapter').forEach(c => {
+        c.classList.remove('active');
+        const head = c.querySelector('.chapter-head');
+        if (head) head.setAttribute('aria-expanded', 'false');
+      });
+      if (!isActive) {
+        el.classList.add('active');
+        const head = el.querySelector('.chapter-head');
+        if (head) head.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    // Add keyboard accessibility to chapter accordion heads
+    document.querySelectorAll('.chapter-head').forEach(head => {
+      head.setAttribute('role', 'button');
+      head.setAttribute('tabindex', '0');
+      head.setAttribute('aria-expanded', 'false');
+      head.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleChapter(head.closest('.chapter'));
+        }
+      });
+    });
+
+    // -- Hamburger Menu Toggle --
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navLinksContainer = document.querySelector('.nav-links');
+    if (hamburgerBtn && navLinksContainer) {
+      hamburgerBtn.addEventListener('click', () => {
+        const isOpen = navLinksContainer.classList.toggle('open');
+        hamburgerBtn.classList.toggle('open', isOpen);
+        hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+      // Close menu when a nav link is clicked
+      navLinksContainer.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          navLinksContainer.classList.remove('open');
+          hamburgerBtn.classList.remove('open');
+          hamburgerBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
     }
 
     // -- High-Performance Scroll Spy (rAF throttled & cached offsets) --
@@ -1882,7 +2015,9 @@
           }
           
           navLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+            const href = link.getAttribute('href');
+            const hash = href.includes('#') ? href.substring(href.indexOf('#')) : href;
+            link.classList.toggle('active', hash === '#' + currentId);
           });
           
           isScrollTickActive = false;
