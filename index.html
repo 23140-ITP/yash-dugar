@@ -220,12 +220,18 @@
       box-shadow: 0 6px 20px rgba(124, 58, 237, 0.15);
     }
 
-    /* -- Hero Content -- */
+    /* -- Hero Area (Hero + Logos Wrapper) -- */
+    .hero-area {
+      position: relative;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('./assets/hero-bg.jpg') no-repeat center center;
+      background-size: cover;
+      padding-bottom: 40px;
+    }
     .hero {
       position: relative;
       z-index: 10;
       padding-top: 180px;
-      padding-bottom: 120px;
+      padding-bottom: 48px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -233,8 +239,6 @@
       text-align: center;
       padding-left: 24px;
       padding-right: 24px;
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('./assets/hero-bg.jpg') no-repeat center center;
-      background-size: cover;
     }
     .hero h1 {
       font-family: 'Instrument Serif', Georgia, serif;
@@ -333,20 +337,23 @@
       100% { transform: translateX(-50%); }
     }
     .logos {
-      padding: 28px 0;
+      padding: 20px 0;
       overflow: hidden;
       position: relative;
+      background: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(20px) saturate(190%);
+      -webkit-backdrop-filter: blur(20px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 999px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      max-width: 860px;
+      margin: 0 auto;
+      width: calc(100% - 48px);
+      z-index: 10;
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     }
-    .logos::before, .logos::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 80px;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .logos::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
-    .logos::after  { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
     .logos-track {
       display: flex;
       align-items: center;
@@ -1293,34 +1300,37 @@
 
   <main id="main-content">
 
-  <!-- Hero -->
-  <section class="hero">
-    <h1 class="animate-fade-rise">
-      <span id="hero-title-text" style="display: block;">Data-driven &amp; <span class="gradient-text">AI-native</span> <em>Builder   </em></span>
-    </h1>
-    <div class="inline-card-container animate-fade-rise-delay">
-      <span class="inline-card"><span class="dot"></span> Delhi, IN</span>
-      <span class="inline-card"><span class="dot"></span> Masters&#8217; Union &#39;27</span>
-      <span class="inline-card"><span class="dot"></span> CFA L2 Candidate</span>
-    </div>
-  </section>
+  <!-- Hero Area -->
+  <div class="hero-area">
+    <!-- Hero -->
+    <section class="hero">
+      <h1 class="animate-fade-rise">
+        <span id="hero-title-text" style="display: block;">Data-driven &amp; <span class="gradient-text">AI-native</span> <em>Builder   </em></span>
+      </h1>
+      <div class="inline-card-container animate-fade-rise-delay">
+        <span class="inline-card"><span class="dot"></span> Delhi, IN</span>
+        <span class="inline-card"><span class="dot"></span> Masters&#8217; Union &#39;27</span>
+        <span class="inline-card"><span class="dot"></span> CFA L2 Candidate</span>
+      </div>
+    </section>
 
-  <div class="logos">
-    <div class="logos-track">
-      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" loading="lazy" /><span class="org-name">Madverse</span></a>
-      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" loading="lazy" /><span class="org-name">Veriseek</span></a>
-      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" loading="lazy" /><span class="org-name">Youse AI</span></a>
-      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" loading="lazy" /><span class="org-name">Masters' Union</span></a>
-      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" loading="lazy" /><span class="org-name">Perplexity</span></a>
-      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" loading="lazy" /><span class="org-name">Google</span></a>
-      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" loading="lazy" /><span class="org-name">CFA Institute</span></a>
-      <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" loading="lazy" /><span class="org-name">Madverse</span></a>
-      <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" loading="lazy" /><span class="org-name">Veriseek</span></a>
-      <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" loading="lazy" /><span class="org-name">Youse AI</span></a>
-      <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" loading="lazy" /><span class="org-name">Masters' Union</span></a>
-      <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" loading="lazy" /><span class="org-name">Perplexity</span></a>
-      <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" loading="lazy" /><span class="org-name">Google</span></a>
-      <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" loading="lazy" /><span class="org-name">CFA Institute</span></a>
+    <div class="logos">
+      <div class="logos-track">
+        <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" loading="lazy" /><span class="org-name">Madverse</span></a>
+        <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" loading="lazy" /><span class="org-name">Veriseek</span></a>
+        <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" loading="lazy" /><span class="org-name">Youse AI</span></a>
+        <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" loading="lazy" /><span class="org-name">Masters' Union</span></a>
+        <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" loading="lazy" /><span class="org-name">Perplexity</span></a>
+        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" loading="lazy" /><span class="org-name">Google</span></a>
+        <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" loading="lazy" /><span class="org-name">CFA Institute</span></a>
+        <a href="https://www.madverse.co" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/madverse_music_logo.jpg" alt="Madverse" loading="lazy" /><span class="org-name">Madverse</span></a>
+        <a href="https://www.veriseekeducation.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/veriseek_logo.jpg" alt="Veriseek" loading="lazy" /><span class="org-name">Veriseek</span></a>
+        <a href="https://www.youseai.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/youseai_logo.jpg" alt="Youse AI" loading="lazy" /><span class="org-name">Youse AI</span></a>
+        <a href="https://mastersunion.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/mastersunion_logo.jpg" alt="Masters' Union" loading="lazy" /><span class="org-name">Masters' Union</span></a>
+        <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" loading="lazy" /><span class="org-name">Perplexity</span></a>
+        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/google_logo.jpg" alt="Google" loading="lazy" /><span class="org-name">Google</span></a>
+        <a href="https://www.cfainstitute.org" target="_blank" rel="noopener noreferrer" class="logo-item"><img src="./logos/cfainstitute_logo.jpg" alt="CFA Institute" loading="lazy" /><span class="org-name">CFA Institute</span></a>
+      </div>
     </div>
   </div>
 
