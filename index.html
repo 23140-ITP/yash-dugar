@@ -582,47 +582,29 @@
     /* Content card and Year side column widths */
     .edu-content {
       width: 45%;
-      background: rgba(255, 255, 255, 0.45);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.5);
+      background: rgba(15, 17, 23, 0.75); /* Dark liquid glass */
+      backdrop-filter: blur(25px) saturate(190%);
+      -webkit-backdrop-filter: blur(25px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: var(--r12);
       padding: 24px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       cursor: pointer;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.5);
-      overflow: hidden; /* Prevent spotlight glow bleed */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      overflow: hidden; /* Prevent canvas bleed */
     }
     .edu-content:hover {
-      border-color: #000000;
-      background: rgba(255, 255, 255, 0.60);
+      border-color: rgba(124, 58, 237, 0.6); /* Soft glowing violet border on hover */
+      background: rgba(15, 17, 23, 0.9);
       transform: translateY(-4px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      box-shadow: 0 12px 40px rgba(124, 58, 237, 0.15),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
     .edu-content h3, .edu-content p, .edu-content span {
       position: relative;
-      z-index: 2; /* Keep card details above spotlight */
-    }
-    .edu-card-spotlight {
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: 1;
-      /* Violet glow + developer dot matrix matrix */
-      background: radial-gradient(150px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(124, 58, 237, 0.18), transparent 80%),
-                  radial-gradient(rgba(124, 58, 237, 0.35) 1.2px, transparent 1.2px);
-      background-size: 100% 100%, 12px 12px;
-      -webkit-mask-image: radial-gradient(150px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), black, transparent 80%);
-      mask-image: radial-gradient(150px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), black, transparent 80%);
-    }
-    .edu-content:hover .edu-card-spotlight {
-      opacity: 1;
+      z-index: 2; /* Keep card details above canvas */
     }
     .edu-content h3 {
       font-family: 'Instrument Serif', Georgia, serif;
@@ -630,24 +612,37 @@
       font-weight: 400;
       letter-spacing: -0.02em;
       margin-bottom: 6px;
-      color: var(--text);
+      color: #ffffff; /* White title */
     }
     .edu-sub {
       font-size: 15px;
-      color: var(--muted);
+      color: rgba(255, 255, 255, 0.65); /* Light gray sub-text */
       margin-bottom: 12px;
       font-weight: 500;
     }
     .edu-details {
       font-size: 14px;
-      color: var(--text);
+      color: #ffffff;
       font-weight: 600;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(0,0,0,0.03);
+      background: rgba(255, 255, 255, 0.08); /* Transparent dark detail pill */
       padding: 4px 10px;
       border-radius: var(--r4);
+    }
+    .edu-card-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 1;
+    }
+    .edu-content:hover .edu-card-canvas {
+      opacity: 1;
     }
     
     /* Year Side Column */
@@ -1487,7 +1482,7 @@
         <!-- Item 1 -->
         <div class="edu-item odd">
           <div class="edu-content">
-            <div class="edu-card-spotlight"></div>
+            <canvas class="edu-card-canvas"></canvas>
             <h3>Masters’ Union</h3>
             <p class="edu-sub">Undergraduate · Technology &amp; Business Management</p>
             <span class="edu-details">#2 Dean’s List · CFA L2 Candidate</span>
@@ -1509,7 +1504,7 @@
             <div class="edu-node"></div>
           </div>
           <div class="edu-content">
-            <div class="edu-card-spotlight"></div>
+            <canvas class="edu-card-canvas"></canvas>
             <h3>Kirori Mal College, DU</h3>
             <p class="edu-sub">Undergraduate · UG Certificate in Commerce</p>
           </div>
@@ -1518,7 +1513,7 @@
         <!-- Item 3 -->
         <div class="edu-item odd">
           <div class="edu-content">
-            <div class="edu-card-spotlight"></div>
+            <canvas class="edu-card-canvas"></canvas>
             <h3>Ralli International School</h3>
             <p class="edu-sub">High School · Class 12 · 99.4%</p>
             <span class="edu-details">Acharya Tulsi Gold Medal</span>
@@ -2158,15 +2153,139 @@
       });
     }
 
-    // -- Education Card Mouse-tracking Spotlight Reveal --
+    // -- Education Card Canvas Spotlight Reveal (Aceternity CanvasRevealEffect) --
+    class SpotlightCanvas {
+      constructor(card) {
+        this.card = card;
+        this.canvas = card.querySelector('.edu-card-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.isHovering = false;
+        this.mouseX = 0;
+        this.mouseY = 0;
+        this.animationFrameId = null;
+        this.gridSpacing = 4;
+        this.dotSize = 3;
+        this.radius = 180;
+        this.cells = [];
+        this.time = 0;
+
+        this.init();
+      }
+
+      init() {
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+
+        this.card.addEventListener('mouseenter', () => {
+          this.isHovering = true;
+          this.startAnimation();
+        });
+
+        this.card.addEventListener('mouseleave', () => {
+          this.isHovering = false;
+          this.stopAnimation();
+        });
+
+        this.card.addEventListener('mousemove', (e) => {
+          const rect = this.card.getBoundingClientRect();
+          const dpr = window.devicePixelRatio || 1;
+          this.mouseX = (e.clientX - rect.left) * dpr;
+          this.mouseY = (e.clientY - rect.top) * dpr;
+        });
+      }
+
+      resize() {
+        const rect = this.card.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        this.canvas.width = rect.width * dpr;
+        this.canvas.height = rect.height * dpr;
+        
+        // Match CSS visual size
+        this.canvas.style.width = rect.width + 'px';
+        this.canvas.style.height = rect.height + 'px';
+
+        const cols = Math.ceil(this.canvas.width / this.gridSpacing);
+        const rows = Math.ceil(this.canvas.height / this.gridSpacing);
+
+        // Pre-allocate colors and phases to optimize performance
+        this.cells = [];
+        for (let c = 0; c < cols; c++) {
+          this.cells[c] = [];
+          for (let r = 0; r < rows; r++) {
+            // Colors: [59, 130, 246] (blue) and [139, 92, 246] (violet)
+            const isBlue = Math.random() > 0.45; // ~55% blue, 45% violet
+            this.cells[c][r] = {
+              color: isBlue ? 'rgb(59, 130, 246)' : 'rgb(139, 92, 246)',
+              phase: Math.random() * Math.PI * 2,
+              speed: 0.12 + Math.random() * 0.12
+            };
+          }
+        }
+      }
+
+      startAnimation() {
+        if (this.animationFrameId) return;
+        const tick = () => {
+          if (!this.isHovering) return;
+          this.render();
+          this.time += 0.5;
+          this.animationFrameId = requestAnimationFrame(tick);
+        };
+        this.animationFrameId = requestAnimationFrame(tick);
+      }
+
+      stopAnimation() {
+        if (this.animationFrameId) {
+          cancelAnimationFrame(this.animationFrameId);
+          this.animationFrameId = null;
+        }
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      }
+
+      render() {
+        const ctx = this.ctx;
+        const width = this.canvas.width;
+        const height = this.canvas.height;
+
+        ctx.clearRect(0, 0, width, height);
+
+        const cols = Math.ceil(width / this.gridSpacing);
+        const rows = Math.ceil(height / this.gridSpacing);
+        const dprRadius = this.radius * (window.devicePixelRatio || 1);
+
+        // Bounding box lookup optimization (only iterate over cells inside the spotlight diameter)
+        const startCol = Math.max(0, Math.floor((this.mouseX - dprRadius) / this.gridSpacing));
+        const endCol = Math.min(cols, Math.ceil((this.mouseX + dprRadius) / this.gridSpacing));
+        const startRow = Math.max(0, Math.floor((this.mouseY - dprRadius) / this.gridSpacing));
+        const endRow = Math.min(rows, Math.ceil((this.mouseY + dprRadius) / this.gridSpacing));
+
+        for (let c = startCol; c < endCol; c++) {
+          for (let r = startRow; r < endRow; r++) {
+            const cell = this.cells[c] ? this.cells[c][r] : null;
+            if (!cell) continue;
+
+            const x = c * this.gridSpacing + this.gridSpacing / 2;
+            const y = r * this.gridSpacing + this.gridSpacing / 2;
+
+            const dist = Math.hypot(x - this.mouseX, y - this.mouseY);
+            if (dist < dprRadius) {
+              // Smooth quadratic falloff
+              const spotlight = (1 - dist / dprRadius) ** 2.2;
+
+              // Shifting noise opacity
+              const pulse = 0.2 + 0.8 * Math.sin(this.time * cell.speed + cell.phase);
+              
+              ctx.fillStyle = cell.color;
+              ctx.globalAlpha = spotlight * pulse;
+              ctx.fillRect(c * this.gridSpacing, r * this.gridSpacing, this.dotSize, this.dotSize);
+            }
+          }
+        }
+      }
+    }
+
     document.querySelectorAll('.edu-content').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-      });
+      new SpotlightCanvas(card);
     });
   </script>
 </body>
