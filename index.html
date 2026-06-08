@@ -236,6 +236,21 @@
       background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('./assets/hero-bg.jpg') no-repeat center center;
       background-size: cover;
     }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 180px;
+      background: linear-gradient(to bottom, rgba(243, 240, 255, 0), #f3f0ff);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hero h1, .hero .inline-card-container {
+      position: relative;
+      z-index: 2;
+    }
     .hero h1 {
       font-family: 'Instrument Serif', Georgia, serif;
       font-size: clamp(36px, 6vw, 76px);
@@ -945,11 +960,26 @@
 
     /* -- Footer -- */
     footer {
+      position: relative;
       padding: 120px 0;
       text-align: center;
-      border-top: 1px solid var(--border);
       background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('./assets/footer-bg.png') no-repeat center center;
       background-size: cover;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, #fffdf9, rgba(255, 253, 249, 0));
+      pointer-events: none;
+      z-index: 1;
+    }
+    footer .container {
+      position: relative;
+      z-index: 2;
     }
     footer h2 {
       font-family: 'Instrument Serif', Georgia, serif;
