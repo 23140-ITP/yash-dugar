@@ -597,7 +597,6 @@
     }
     .edu-content:hover {
       border-color: rgba(124, 58, 237, 0.6); /* Soft glowing violet border on hover */
-      background: rgba(15, 17, 23, 0.9);
       transform: translateY(-4px);
       box-shadow: 0 12px 40px rgba(124, 58, 237, 0.15),
                   inset 0 1px 0 rgba(255, 255, 255, 0.15);
@@ -2177,6 +2176,7 @@
         window.addEventListener('resize', () => this.resize());
 
         this.card.addEventListener('mouseenter', () => {
+          this.resize(); // Recalculate sizes on hover to catch fonts/reflow shifts
           this.isHovering = true;
           this.startAnimation();
         });
