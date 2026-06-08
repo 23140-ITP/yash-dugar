@@ -593,6 +593,7 @@
       cursor: pointer;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02),
                   inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      overflow: hidden; /* Prevent spotlight glow bleed */
     }
     .edu-content:hover {
       border-color: #000000;
@@ -600,6 +601,28 @@
       transform: translateY(-4px);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06),
                   inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+    .edu-content h3, .edu-content p, .edu-content span {
+      position: relative;
+      z-index: 2; /* Keep card details above spotlight */
+    }
+    .edu-card-spotlight {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 1;
+      /* Violet glow + developer dot matrix matrix */
+      background: radial-gradient(150px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(124, 58, 237, 0.18), transparent 80%),
+                  radial-gradient(rgba(124, 58, 237, 0.35) 1.2px, transparent 1.2px);
+      background-size: 100% 100%, 12px 12px;
+      -webkit-mask-image: radial-gradient(150px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), black, transparent 80%);
+      mask-image: radial-gradient(150px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), black, transparent 80%);
+    }
+    .edu-content:hover .edu-card-spotlight {
+      opacity: 1;
     }
     .edu-content h3 {
       font-family: 'Instrument Serif', Georgia, serif;
@@ -1464,6 +1487,7 @@
         <!-- Item 1 -->
         <div class="edu-item odd">
           <div class="edu-content">
+            <div class="edu-card-spotlight"></div>
             <h3>Masters’ Union</h3>
             <p class="edu-sub">Undergraduate · Technology &amp; Business Management</p>
             <span class="edu-details">#2 Dean’s List · CFA L2 Candidate</span>
@@ -1485,6 +1509,7 @@
             <div class="edu-node"></div>
           </div>
           <div class="edu-content">
+            <div class="edu-card-spotlight"></div>
             <h3>Kirori Mal College, DU</h3>
             <p class="edu-sub">Undergraduate · UG Certificate in Commerce</p>
           </div>
@@ -1493,6 +1518,7 @@
         <!-- Item 3 -->
         <div class="edu-item odd">
           <div class="edu-content">
+            <div class="edu-card-spotlight"></div>
             <h3>Ralli International School</h3>
             <p class="edu-sub">High School · Class 12 · 99.4%</p>
             <span class="edu-details">Acharya Tulsi Gold Medal</span>
@@ -2131,6 +2157,17 @@
         setActiveNav();
       });
     }
+
+    // -- Education Card Mouse-tracking Spotlight Reveal --
+    document.querySelectorAll('.edu-content').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
   </script>
 </body>
 </html>
