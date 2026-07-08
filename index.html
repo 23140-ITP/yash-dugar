@@ -368,7 +368,8 @@
       width: max-content;
       animation: marquee 40s linear infinite;
     }
-    .logos-track:hover { animation-play-state: paused; }
+    .logos-track:hover,
+    .logos-track:focus-within { animation-play-state: paused; }
     .logo-item {
       display: inline-flex;
       flex-direction: column;
@@ -1301,18 +1302,22 @@
       display: none;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
       gap: 5px;
-      width: 28px;
-      height: 28px;
+      width: 44px;
+      height: 44px;
       cursor: pointer;
-      background: none;
-      border: none;
+      background: rgba(255, 255, 255, 0.42);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 999px;
       padding: 0;
       z-index: 101;
+      flex-shrink: 0;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
     }
     .hamburger span {
       display: block;
-      width: 100%;
+      width: 18px;
       height: 2px;
       background: #000;
       border-radius: 2px;
@@ -1322,6 +1327,25 @@
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+    @media (max-width: 720px) {
+      .hamburger { display: flex; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+      .logos-track {
+        animation: none !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: auto;
+      }
+      .logos { overflow: visible; }
+    }
 
   </style>
 </head>
@@ -1921,6 +1945,10 @@
         this.animationFrameId = null;
 
         this.originalText = "Data-driven & AI-native Builder   ";
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          this.element.innerHTML = 'Data-driven &amp; <span class="gradient-text">AI-native</span> <em>Builder</em>';
+          return;
+        }
         this.placeholderText = "What’s behind how I build systems?";
         
         // Character states
