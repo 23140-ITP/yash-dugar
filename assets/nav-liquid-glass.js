@@ -14,16 +14,23 @@
   let highlightFrame = 0;
   let toneFrame = 0;
   let watchdog = 0;
+  let snapshotRecoveryTimer = 0;
 
   function setStatus(element, status, reason) {
     element.dataset.liquidStatus = status;
-    if (reason) element.dataset.liquidReason = reason;
+    if (reason) {
+      element.dataset.liquidReason = reason;
+    } else {
+      delete element.dataset.liquidReason;
+    }
   }
 
   function useFallback(reason) {
     nav.classList.remove('liquid-glass-ready');
     setStatus(nav, 'fallback', reason);
     document.documentElement.dataset.liquidEngine = 'css';
+    const rendererCanvas = window.__liquidGLRenderer__?.canvas;
+    if (rendererCanvas) rendererCanvas.style.opacity = '0';
   }
 
   function hasWebGL() {
@@ -118,8 +125,23 @@
     toneFrame = requestAnimationFrame(updateMaterialTone);
   }
 
+  function recoverInitialSnapshot(attempt = 0) {
+    if (nav.dataset.liquidStatus === 'ready' || attempt >= 40) return;
+
+    const renderer = window.__liquidGLRenderer__;
+    if (!renderer || renderer._capturing) {
+      snapshotRecoveryTimer = window.setTimeout(() => {
+        recoverInitialSnapshot(attempt + 1);
+      }, 250);
+      return;
+    }
+
+    renderer.captureSnapshot();
+  }
+
   function markNavReady() {
     clearTimeout(watchdog);
+    clearTimeout(snapshotRecoveryTimer);
     nav.classList.add('liquid-glass-ready');
     setStatus(nav, 'ready');
     document.documentElement.dataset.liquidEngine = 'webgl';
@@ -180,7 +202,7 @@
     setStatus(nav, 'loading');
     watchdog = window.setTimeout(() => {
       if (nav.dataset.liquidStatus !== 'ready') useFallback('initialization-timeout');
-    }, 8000);
+    }, 15000);
 
     try {
       navInstance = window.liquidGL({
@@ -198,6 +220,7 @@
         magnify: 1.004,
         on: { init: markNavReady }
       });
+      snapshotRecoveryTimer = window.setTimeout(recoverInitialSnapshot, 350);
 
       if (menu) {
         new MutationObserver(() => {
