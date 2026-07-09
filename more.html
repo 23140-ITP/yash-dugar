@@ -83,6 +83,10 @@
 
     /* -- Nav -- */
     nav {
+      --glass-x: 16%;
+      --glass-y: 10%;
+      --glass-tint: 0.08;
+      --glass-hover-tint: 0.12;
       position: fixed;
       top: 16px; left: 50%;
       transform: translateX(-50%);
@@ -100,7 +104,8 @@
                   inset 0 -1px 0 rgba(255, 255, 255, 0.18);
       transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                   box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                  border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                  border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  scale 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     nav:hover,
     nav:focus-within {
@@ -110,6 +115,36 @@
                   0 2px 10px rgba(31, 36, 58, 0.07),
                   inset 0 1px 0 rgba(255, 255, 255, 0.96),
                   inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+    }
+    nav[data-liquid-tone="clear"] {
+      --glass-tint: 0.025;
+      --glass-hover-tint: 0.05;
+    }
+    nav[data-liquid-tone="regular"] {
+      --glass-tint: 0.11;
+      --glass-hover-tint: 0.15;
+    }
+    nav[data-liquid-tone="contrast"] {
+      --glass-tint: 0.42;
+      --glass-hover-tint: 0.46;
+    }
+    nav.liquid-glass-ready {
+      background: rgba(255, 255, 255, var(--glass-tint));
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border-color: rgba(255, 255, 255, 0.58);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76),
+                  inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+    }
+    nav.liquid-glass-ready:hover,
+    nav.liquid-glass-ready:focus-within {
+      background: rgba(255, 255, 255, var(--glass-hover-tint));
+      border-color: rgba(255, 255, 255, 0.78);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                  inset 0 -1px 0 rgba(255, 255, 255, 0.16);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      nav:hover { scale: 1.002; }
     }
     nav .nav-inner {
       display: flex;
@@ -439,6 +474,17 @@
         box-shadow: 0 28px 76px rgba(31, 36, 58, 0.25),
                     inset 0 1px 0 rgba(255, 255, 255, 0.96),
                     inset 0 -1px 0 rgba(255, 255, 255, 0.24);
+        transform-origin: calc(100% - 24px) top;
+        animation: liquid-menu-open 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        will-change: transform, opacity;
+      }
+      .nav-links.open.liquid-menu-ready {
+        background: rgba(255, 255, 255, 0.055);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-color: rgba(255, 255, 255, 0.62);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78),
+                    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
       }
       .nav-links.open .nav-items {
         display: flex;
@@ -468,6 +514,10 @@
       nav.menu-open { overflow: visible; }
       body.menu-open { overflow: hidden; }
       .hamburger { display: flex; }
+    }
+    @keyframes liquid-menu-open {
+      from { opacity: 0; transform: translateY(-10px) scale(0.94, 0.78); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
     @media (max-width: 720px) {
       nav .nav-inner { padding: 12px 16px; gap: 12px; }
@@ -578,7 +628,7 @@
       }
     }
 
-    /* -- Liquid Glass Tile -- */
+    /* -- Liquid Glass navigation with CSS fallback -- */
     .hamburger {
       position: relative;
       overflow: hidden;
@@ -591,8 +641,15 @@
       isolation: isolate;
     }
 
-    nav::before,
-    .nav-links.open::before,
+    .nav-liquid-lens,
+    .menu-liquid-lens {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      z-index: auto;
+    }
+
     .hamburger::before {
       content: '';
       display: block;
@@ -602,23 +659,10 @@
       pointer-events: none;
       z-index: 0;
       opacity: 0.78;
-    }
-
-    .hamburger::before {
       backdrop-filter: blur(10px) brightness(1.08) saturate(1.35);
       -webkit-backdrop-filter: blur(10px) brightness(1.08) saturate(1.35);
     }
 
-    nav::before,
-    .nav-links.open::before {
-      backdrop-filter: blur(12px) saturate(1.45) brightness(1.05);
-      -webkit-backdrop-filter: blur(12px) saturate(1.45) brightness(1.05);
-      backdrop-filter: var(--liquid-filter, url(#liquid-glass-tile)) blur(0.35px) contrast(1.16) brightness(1.06) saturate(1.28);
-      -webkit-backdrop-filter: var(--liquid-filter, url(#liquid-glass-tile)) blur(0.35px) contrast(1.16) brightness(1.06) saturate(1.28);
-    }
-
-    nav::after,
-    .nav-links.open::after,
     .hamburger::after {
       content: '';
       position: absolute;
@@ -633,71 +677,73 @@
         0 10px 30px rgba(76, 62, 132, 0.08);
     }
 
-    nav > *,
-    .nav-links.open > *,
-    .hamburger > * {
-      position: relative;
+    nav::after,
+    .nav-links.open::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
       z-index: 1;
+      transition: opacity 0.3s ease, background 0.3s ease;
     }
 
-    nav::before {
-      opacity: 0.96;
+    nav .nav-inner,
+    .nav-links.open > :not(.menu-liquid-lens),
+    .hamburger > * {
+      position: relative;
+      z-index: 2;
     }
 
     nav::after {
       background:
-        radial-gradient(circle at var(--glass-x, 16%) var(--glass-y, 10%), rgba(255,255,255,0.68), transparent 24%),
-        radial-gradient(circle at 84% 110%, rgba(255,255,255,0.22), transparent 30%),
-        linear-gradient(135deg, rgba(255,255,255,0.24), rgba(255,255,255,0.025) 44%, rgba(255,255,255,0.16));
+        radial-gradient(circle at var(--glass-x) var(--glass-y), rgba(255,255,255,0.42), transparent 22%),
+        linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.015) 42%, rgba(255,255,255,0.08));
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.96),
-        inset 1px 0 0 rgba(255,255,255,0.42),
-        inset -1px 0 0 rgba(255,255,255,0.2),
-        inset 0 -1px 0 rgba(255,255,255,0.24);
+        inset 0 1px 0 rgba(255,255,255,0.86),
+        inset 1px 0 0 rgba(255,255,255,0.28),
+        inset -1px 0 0 rgba(255,255,255,0.12),
+        inset 0 -1px 0 rgba(255,255,255,0.16);
+      opacity: 0.74;
     }
 
-    .nav-links.open::before {
-      backdrop-filter: blur(20px) saturate(1.6) brightness(1.06);
-      -webkit-backdrop-filter: blur(20px) saturate(1.6) brightness(1.06);
-      backdrop-filter: var(--liquid-filter, url(#liquid-glass-tile)) blur(0.45px) contrast(1.16) brightness(1.07) saturate(1.35);
-      -webkit-backdrop-filter: var(--liquid-filter, url(#liquid-glass-tile)) blur(0.45px) contrast(1.16) brightness(1.07) saturate(1.35);
-      opacity: 0.94;
+    nav.liquid-glass-ready::after {
+      opacity: 0.48;
     }
 
     .nav-links.open::after {
       background:
-        radial-gradient(circle at var(--glass-x, 12%) var(--glass-y, 4%), rgba(255,255,255,0.86), transparent 30%),
-        radial-gradient(circle at 92% 100%, rgba(255,255,255,0.34), transparent 36%),
-        linear-gradient(145deg, rgba(255,255,255,0.4), rgba(255,255,255,0.08) 46%, rgba(255,255,255,0.26));
+        radial-gradient(circle at 88% 4%, rgba(255,255,255,0.58), transparent 28%),
+        linear-gradient(145deg, rgba(255,255,255,0.18), rgba(255,255,255,0.02) 46%, rgba(255,255,255,0.1));
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,1),
-        inset 1px 0 0 rgba(255,255,255,0.52),
-        inset -1px 0 0 rgba(255,255,255,0.3),
-        inset 0 -1px 0 rgba(255,255,255,0.3);
+        inset 0 1px 0 rgba(255,255,255,0.9),
+        inset 1px 0 0 rgba(255,255,255,0.3),
+        inset -1px 0 0 rgba(255,255,255,0.14),
+        inset 0 -1px 0 rgba(255,255,255,0.16);
+      opacity: 0.76;
+    }
+
+    .nav-links.open.liquid-menu-ready::after {
+      opacity: 0.42;
     }
 
     @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-      nav,
-      .nav-links.open {
+      nav:not(.liquid-glass-ready),
+      .nav-links.open:not(.liquid-menu-ready) {
         background: rgba(255, 255, 255, 0.94);
       }
     }
   </style>
-  <script src="./assets/vendor/shuding-liquid-glass-nav.js" defer></script>
+  <script src="./assets/vendor/html2canvas.min.js" defer></script>
+  <script src="./assets/vendor/liquidGL.js" defer></script>
+  <script src="./assets/nav-liquid-glass.js" defer></script>
 </head>
 <body>
-<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden">
-  <defs>
-    <filter id="liquid-glass-tile" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="7" result="dispMap" />
-      <feDisplacementMap in="SourceGraphic" in2="dispMap" scale="-28" xChannelSelector="R" yChannelSelector="G" />
-    </filter>
-  </defs>
-</svg>
 <a href="#main-content" class="skip-link">Skip to content</a>
 
   <!-- Navigation -->
-  <nav data-liquid-glass data-liquid-strength="23">
+  <nav data-liquid-nav data-liquid-status="loading" data-liquid-tone="clear" data-liquid-ignore>
+    <div class="nav-liquid-lens" aria-hidden="true"></div>
     <div class="nav-inner">
       <div class="logo">
         <a href="index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
@@ -708,7 +754,8 @@
       <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav-links">
         <span></span><span></span><span></span>
       </button>
-      <div class="nav-links" id="primary-nav-links" data-liquid-glass data-liquid-strength="18">
+      <div class="nav-links" id="primary-nav-links" data-liquid-status="idle">
+        <div class="menu-liquid-lens" aria-hidden="true"></div>
         <div class="nav-items">
           <a href="index.html#experience" class="nav-link">Experience</a>
           <a href="index.html#education" class="nav-link">Education</a>
