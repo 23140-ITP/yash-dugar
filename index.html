@@ -212,7 +212,7 @@
 
     nav a.btn {
       position: relative;
-      background: #000000 !important;
+      background: rgba(10, 10, 14, 0.68) !important;
       color: #ffffff !important;
       padding: 10px 24px;
       border-radius: 999px;
@@ -223,8 +223,12 @@
       text-decoration: none;
       white-space: nowrap;
       display: inline-block;
-      overflow: visible;
-      border: none !important;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.32) !important;
+      backdrop-filter: blur(10px) brightness(0.82) saturate(1.4);
+      -webkit-backdrop-filter: blur(10px) brightness(0.82) saturate(1.4);
+      backdrop-filter: blur(10px) url(#navbar-liquid-glass) brightness(0.82) saturate(1.4);
+      -webkit-backdrop-filter: blur(10px) url(#navbar-liquid-glass) brightness(0.82) saturate(1.4);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       isolation: isolate;
     }
@@ -1511,6 +1515,8 @@
       opacity: 0.78;
       backdrop-filter: blur(10px) brightness(1.08) saturate(1.35);
       -webkit-backdrop-filter: blur(10px) brightness(1.08) saturate(1.35);
+      backdrop-filter: blur(10px) url(#navbar-liquid-glass) brightness(1.08) saturate(1.35);
+      -webkit-backdrop-filter: blur(10px) url(#navbar-liquid-glass) brightness(1.08) saturate(1.35);
     }
 
     .inline-card::after,
