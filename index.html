@@ -49,7 +49,7 @@
       --r12: 12px;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 112px; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -1077,7 +1077,7 @@
         top: calc(100% + 10px);
         left: 0;
         right: 0;
-        background: linear-gradient(155deg, rgba(255, 255, 255, 0.66), rgba(244, 248, 255, 0.54) 54%, rgba(255, 255, 255, 0.62));
+        background: rgba(255, 255, 255, 0.96);
         backdrop-filter: blur(24px) saturate(190%) brightness(1.06);
         -webkit-backdrop-filter: blur(24px) saturate(190%) brightness(1.06);
         padding: 12px;
@@ -1138,6 +1138,7 @@
       nav .logo a { gap: 8px !important; }
       nav .logo a img { width: 36px !important; height: 36px !important; }
       nav a.btn { padding: 8px 16px; font-size: 0.95rem; }
+      .hero { padding-top: 140px; padding-bottom: 160px; }
       .chapter-head {
         position: relative;
         display: flex;
@@ -1578,9 +1579,6 @@
     }
 
   </style>
-  <script src="./assets/vendor/html2canvas.min.js" defer></script>
-  <script src="./assets/vendor/liquidGL.js" defer></script>
-  <script src="./assets/nav-liquid-glass.js" defer></script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to content</a>
@@ -1649,7 +1647,7 @@
 
   <section id="experience">
     <div class="container">
-      <div class="section-label">Experience</div>
+      <h2 class="section-label">Experience</h2>
 
       <div class="chapter" onclick="toggleChapter(this)">
         <div class="chapter-head">
@@ -1757,7 +1755,7 @@
 
   <section id="education">
     <div class="container">
-      <div class="section-label">Education</div>
+      <h2 class="section-label">Education</h2>
       
       <div class="edu-timeline">
         <div class="edu-timeline-line"></div>
@@ -1823,7 +1821,7 @@
   <!-- Skills -->
   <section id="skills">
     <div class="container">
-      <div class="section-label">Skills</div>
+      <h2 class="section-label">Skills</h2>
       <div class="skills-layout">
 
         <div>
@@ -1862,7 +1860,7 @@
   <!-- Tool Stack -->
   <section id="tool-stack">
     <div class="container">
-      <div class="section-label">Tool Stack</div>
+      <h2 class="section-label">Tool Stack</h2>
       <div class="tool-stack-grid">
 
         <div>
@@ -1913,7 +1911,7 @@
 
   <section id="beliefs">
     <div class="container">
-      <div class="section-label">Beliefs</div>
+      <h2 class="section-label">Beliefs</h2>
       <div class="beliefs-image-container">
         <img src="./beliefs.jpg" alt="Core Beliefs of Yash Dugar - Put integrity first. Take the risk. Choose execution over perfection. Be willing to be misunderstood for innovation. Keep learning, unlearning, and relearning." class="beliefs-board-img" loading="lazy" />
       </div>
@@ -2349,7 +2347,12 @@
     }
 
     // Add keyboard accessibility to chapter accordion heads
-    document.querySelectorAll('.chapter-head').forEach(head => {
+    document.querySelectorAll('.chapter-head').forEach((head, index) => {
+      const body = head.nextElementSibling;
+      if (body) {
+        body.id = `chapter-panel-${index + 1}`;
+        head.setAttribute('aria-controls', body.id);
+      }
       head.setAttribute('role', 'button');
       head.setAttribute('tabindex', '0');
       head.setAttribute('aria-expanded', 'false');

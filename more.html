@@ -49,7 +49,7 @@
       --r12: 12px;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 112px; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -464,7 +464,7 @@
         top: calc(100% + 10px);
         left: 0;
         right: 0;
-        background: linear-gradient(155deg, rgba(255, 255, 255, 0.66), rgba(244, 248, 255, 0.54) 54%, rgba(255, 255, 255, 0.62));
+        background: rgba(255, 255, 255, 0.96);
         backdrop-filter: blur(24px) saturate(190%) brightness(1.06);
         -webkit-backdrop-filter: blur(24px) saturate(190%) brightness(1.06);
         padding: 12px;
@@ -734,9 +734,6 @@
       }
     }
   </style>
-  <script src="./assets/vendor/html2canvas.min.js" defer></script>
-  <script src="./assets/vendor/liquidGL.js" defer></script>
-  <script src="./assets/nav-liquid-glass.js" defer></script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to content</a>
@@ -780,7 +777,7 @@
 
   <section id="wins">
     <div class="container animate-fade-rise-delay">
-      <div class="section-label">Wins &amp; Highlights</div>
+      <h2 class="section-label">Wins &amp; Highlights</h2>
       <ul class="wins-list">
         <li><span class="win-title">Wharton Global HS Investment Competition</span> <span class="win-detail">· Global Semi-finalist, Top 50 · UPenn, USA</span></li>
         <li><span class="win-title">Maverion 2026</span> <span class="win-detail">· Winner, Business Case Competition · Mesa School of Business × Swiggy Instamart</span></li>
@@ -793,7 +790,7 @@
 
   <section id="campus-leadership">
     <div class="container animate-fade-rise-2">
-      <div class="section-label">Campus Leadership &amp; Impact</div>
+      <h2 class="section-label">Campus Leadership &amp; Impact</h2>
       <ul class="wins-list">
         <li><span class="win-title">1,000+ School Students Taught</span> <span class="win-detail">· Finance &amp; AI · 8 Cities · Masters’ Union</span></li>
         <li><span class="win-title">200+ Comet Activations</span> <span class="win-detail">· Perplexity Campus Partner</span></li>
