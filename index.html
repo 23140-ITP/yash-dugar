@@ -502,13 +502,14 @@
       background: rgba(255, 255, 255, 0.94);
       box-shadow: 0 12px 34px rgba(76, 62, 132, 0.08);
     }
-    .chapter-head {
+    .chapter-head,
+    .chapter-head-static {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      cursor: pointer;
       gap: 16px;
     }
+    .chapter-head { cursor: pointer; }
     .chapter-left { display: flex; gap: 16px; align-items: flex-start; }
     .chapter-num {
       font-size: 13px;
@@ -535,6 +536,7 @@
       object-fit: contain;
       transition: transform 0.3s ease;
     }
+    .chapter-logo--bolna { background: #000000; }
     .chapter:hover .chapter-logo {
       transform: translateY(-1px);
     }
@@ -1151,6 +1153,11 @@
         gap: 12px;
         padding-right: 32px;
       }
+      .chapter-head-static {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
       .chapter-toggle {
         position: absolute;
         right: 0;
@@ -1672,10 +1679,42 @@
     <div class="container">
       <h2 class="section-label">Experience</h2>
 
+      <div class="chapter">
+        <div class="chapter-head-static">
+          <div class="chapter-left">
+            <div class="chapter-num"><i>I</i><br/>CHAPTER</div>
+            <div class="chapter-logo chapter-logo--bolna">
+              <img src="./logos/bolna_logo.svg" alt="Bolna logo" loading="lazy" />
+            </div>
+            <div>
+              <h2>AI Solutions Engineer</h2>
+              <p class="chapter-org">Bolna.AI (YCF25) · Oct ’26</p>
+            </div>
+          </div>
+          <span class="chapter-tag">Voice AI</span>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="chapter-head-static">
+          <div class="chapter-left">
+            <div class="chapter-num"><i>II</i><br/>CHAPTER</div>
+            <div class="chapter-logo">
+              <img src="./logos/ey_logo.svg" alt="EY logo" loading="lazy" />
+            </div>
+            <div>
+              <h2>Intern</h2>
+              <p class="chapter-org">EY · Summer ’26</p>
+            </div>
+          </div>
+          <span class="chapter-tag">Professional Services</span>
+        </div>
+      </div>
+
       <div class="chapter" onclick="toggleChapter(this)">
         <div class="chapter-head">
           <div class="chapter-left">
-            <div class="chapter-num"><i>I</i><br/>CHAPTER</div>
+            <div class="chapter-num"><i>III</i><br/>CHAPTER</div>
             <div class="chapter-logo">
               <img src="./logos/madverse_music_logo.jpg" alt="Madverse Music Group Logo" loading="lazy" />
             </div>
@@ -1702,7 +1741,7 @@
       <div class="chapter" onclick="toggleChapter(this)">
         <div class="chapter-head">
           <div class="chapter-left">
-            <div class="chapter-num"><i>II</i><br/>CHAPTER</div>
+            <div class="chapter-num"><i>IV</i><br/>CHAPTER</div>
             <div class="chapter-logo">
               <img src="./logos/veriseek_logo.jpg" alt="Veriseek Education Logo" loading="lazy" />
             </div>
@@ -1728,7 +1767,7 @@
       <div class="chapter" onclick="toggleChapter(this)">
         <div class="chapter-head">
           <div class="chapter-left">
-            <div class="chapter-num"><i>III</i><br/>CHAPTER</div>
+            <div class="chapter-num"><i>V</i><br/>CHAPTER</div>
             <div class="chapter-logo">
               <img src="./logos/youseai_logo.jpg" alt="Youse AI Logo" loading="lazy" />
             </div>
@@ -1753,7 +1792,7 @@
       <div class="chapter" onclick="toggleChapter(this)">
         <div class="chapter-head">
           <div class="chapter-left">
-            <div class="chapter-num"><i>IV</i><br/>CHAPTER</div>
+            <div class="chapter-num"><i>VI</i><br/>CHAPTER</div>
             <div class="chapter-logo">
               <img src="./logos/veriseek_logo.jpg" alt="Veriseek Education Logo" loading="lazy" />
             </div>
