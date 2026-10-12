@@ -476,13 +476,14 @@
     }
     .chapter-head,
     .chapter-head-static {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 220px 24px;
+      align-items: start;
       gap: 16px;
     }
     .chapter-head { cursor: pointer; }
-    .chapter-left { display: flex; gap: 16px; align-items: flex-start; }
+    .chapter-left { display: flex; gap: 16px; align-items: flex-start; min-width: 0; }
+    .chapter-left > div:last-child { min-width: 0; }
     .chapter-num {
       font-size: 13px;
       font-weight: 700;
@@ -520,6 +521,8 @@
     .chapter h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
     .chapter-org { font-size: 16px; color: var(--muted); }
     .chapter-tag {
+      grid-column: 2;
+      justify-self: start;
       font-size: 13px;
       color: var(--muted);
       background: rgba(0, 0, 0, 0.05);
@@ -529,8 +532,7 @@
       font-weight: 500;
     }
     .chapter.active .chapter-tag { background: #000000; color: #ffffff; }
-    .chapter-toggle { font-size: 22px; color: var(--muted); transition: 0.2s; flex-shrink: 0; }
-    .chapter-toggle-placeholder { visibility: hidden; }
+    .chapter-toggle { grid-column: 3; justify-self: end; font-size: 22px; color: var(--muted); transition: 0.2s; flex-shrink: 0; }
     .chapter.active .chapter-toggle { color: #000000; }
     .chapter-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
     .chapter.active .chapter-body {
@@ -1044,6 +1046,8 @@
     }
     footer .email { font-size: 19px; color: #000000; }
     footer .email a { color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+    footer .email a.social-link { display: inline-flex; width: 22px; height: 22px; align-items: center; justify-content: center; vertical-align: middle; }
+    footer .email a.social-link img { display: block; width: 20px; height: 20px; }
 
     /* -- Responsive -- */
     @media (max-width: 1100px) {
@@ -1127,6 +1131,7 @@
         padding-right: 32px;
       }
       .chapter-head-static {
+        display: flex;
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
@@ -1646,7 +1651,7 @@
       <div class="chapter">
         <div class="chapter-head-static">
           <div class="chapter-left">
-            <div class="chapter-num"><i>I</i><br/>CHAPTER</div>
+            <div class="chapter-num"><i>VI</i><br/>CHAPTER</div>
             <div class="chapter-logo chapter-logo--bolna">
               <img src="./logos/bolna_logo.svg" alt="Bolna logo" loading="lazy" />
             </div>
@@ -1655,15 +1660,14 @@
               <p class="chapter-org">Bolna.AI (YCF25) · Oct ’26</p>
             </div>
           </div>
-          <span class="chapter-tag">Voice AI</span>
-          <span class="chapter-toggle chapter-toggle-placeholder" aria-hidden="true">+</span>
+          <span class="chapter-tag">Voice AI Agents</span>
         </div>
       </div>
 
       <div class="chapter">
         <div class="chapter-head-static">
           <div class="chapter-left">
-            <div class="chapter-num"><i>II</i><br/>CHAPTER</div>
+            <div class="chapter-num"><i>V</i><br/>CHAPTER</div>
             <div class="chapter-logo">
               <img src="./logos/ey_logo.svg" alt="EY logo" loading="lazy" />
             </div>
@@ -1673,14 +1677,13 @@
             </div>
           </div>
           <span class="chapter-tag">Professional Services</span>
-          <span class="chapter-toggle chapter-toggle-placeholder" aria-hidden="true">+</span>
         </div>
       </div>
 
       <div class="chapter" onclick="toggleChapter(this)">
         <div class="chapter-head">
           <div class="chapter-left">
-            <div class="chapter-num"><i>III</i><br/>CHAPTER</div>
+            <div class="chapter-num"><i>IV</i><br/>CHAPTER</div>
             <div class="chapter-logo">
               <img src="./logos/madverse_music_logo.jpg" alt="Madverse Music Group Logo" loading="lazy" />
             </div>
@@ -1707,7 +1710,7 @@
       <div class="chapter" onclick="toggleChapter(this)">
         <div class="chapter-head">
           <div class="chapter-left">
-            <div class="chapter-num"><i>IV</i><br/>CHAPTER</div>
+            <div class="chapter-num"><i>III</i><br/>CHAPTER</div>
             <div class="chapter-logo">
               <img src="./logos/veriseek_logo.jpg" alt="Veriseek Education Logo" loading="lazy" />
             </div>
@@ -1733,7 +1736,7 @@
       <div class="chapter" onclick="toggleChapter(this)">
         <div class="chapter-head">
           <div class="chapter-left">
-            <div class="chapter-num"><i>V</i><br/>CHAPTER</div>
+            <div class="chapter-num"><i>II</i><br/>CHAPTER</div>
             <div class="chapter-logo">
               <img src="./logos/youseai_logo.jpg" alt="Youse AI Logo" loading="lazy" />
             </div>
@@ -1758,7 +1761,7 @@
       <div class="chapter" onclick="toggleChapter(this)">
         <div class="chapter-head">
           <div class="chapter-left">
-            <div class="chapter-num"><i>VI</i><br/>CHAPTER</div>
+            <div class="chapter-num"><i>I</i><br/>CHAPTER</div>
             <div class="chapter-logo">
               <img src="./logos/veriseek_logo.jpg" alt="Veriseek Education Logo" loading="lazy" />
             </div>
@@ -1814,7 +1817,7 @@
           </div>
           <div class="edu-content">
             <canvas class="edu-card-canvas"></canvas>
-            <h3>Kirori Mal College, DU</h3>
+            <h3>Kirori Mal College, University of Delhi</h3>
             <p class="edu-sub">Undergraduate · UG Certificate in Commerce</p>
           </div>
         </div>
@@ -1824,7 +1827,7 @@
           <div class="edu-content">
             <canvas class="edu-card-canvas"></canvas>
             <h3>Ralli International School</h3>
-            <p class="edu-sub">High School · Class 12 · 99.4%</p>
+            <p class="edu-sub">High School · Grade 12 · 99.4%</p>
             <span class="edu-details">Acharya Tulsi Gold Medal</span>
           </div>
           <div class="edu-node-container">
@@ -1839,7 +1842,7 @@
       <!-- Center Gold Achievement Seal at the end -->
       <div class="edu-achievement-container">
         <div class="edu-achievement-node">★</div>
-        <div class="edu-chip">CUET 2022 - AIR 1 in English &amp; Business Studies</div>
+        <div class="edu-chip">Common University Entrance Test (CUET) 2022 - All India Rank (AIR) 1 in two subjects</div>
       </div>
       
     </div>
@@ -1959,8 +1962,8 @@
 
   <footer>
     <div class="container">
-      <h2>If you’re building something ambitious — let’s talk.</h2>
-      <p class="email">yash.dugar@mastersunion.org · <a href="https://linkedin.com/in/yash--dugar" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+      <h2>If you’re building something ambitious - let’s talk.</h2>
+      <p class="email">yash.dugar@mastersunion.org · <a class="social-link" href="https://www.linkedin.com/in/yash--dugar/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile"><img src="./logos/linkedin_logo.svg" alt="" /></a> · <a href="https://x.com/the_yashdugar" target="_blank" rel="noopener noreferrer">X</a></p>
     </div>
   </footer>  <script>
     // ── Split-Flap Board (High-Fidelity) ──
