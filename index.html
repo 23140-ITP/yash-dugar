@@ -314,7 +314,7 @@
       -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 180px), transparent 100%);
       mask-image: linear-gradient(to bottom, black calc(100% - 180px), transparent 100%);
     }
-    .hero h1, .hero .inline-card-container {
+    .hero h1 {
       position: relative;
       z-index: 2;
     }
@@ -349,34 +349,6 @@
       padding-right: 4px;
     }
 
-    .inline-card-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 24px;
-    }
-    .inline-card {
-      display: inline-flex;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(20px) saturate(190%);
-      -webkit-backdrop-filter: blur(20px) saturate(190%);
-      border: 1px solid rgba(255, 255, 255, 0.45);
-      padding: 6px 16px;
-      border-radius: 100px;
-      font-size: 14px;
-      vertical-align: middle;
-      font-family: 'Inter', sans-serif;
-      font-weight: 500;
-      color: #000;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.6);
-      letter-spacing: normal;
-    }
-    .inline-card .dot {
-      display: none;
-    }
     .hero-meta {
       font-size: 1rem;
       color: var(--muted);
@@ -558,6 +530,7 @@
     }
     .chapter.active .chapter-tag { background: #000000; color: #ffffff; }
     .chapter-toggle { font-size: 22px; color: var(--muted); transition: 0.2s; flex-shrink: 0; }
+    .chapter-toggle-placeholder { visibility: hidden; }
     .chapter.active .chapter-toggle { color: #000000; }
     .chapter-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
     .chapter.active .chapter-body {
@@ -1480,7 +1453,6 @@
     }
 
     /* -- Liquid Glass navigation with CSS fallback -- */
-    .inline-card,
     .hamburger {
       position: relative;
       overflow: hidden;
@@ -1510,7 +1482,6 @@
       -webkit-backdrop-filter: blur(14px) url(#navbar-liquid-glass) brightness(1.06) saturate(1.35);
     }
 
-    .inline-card::before,
     .hamburger::before {
       content: '';
       display: block;
@@ -1526,7 +1497,6 @@
       -webkit-backdrop-filter: blur(10px) url(#navbar-liquid-glass) brightness(1.08) saturate(1.35);
     }
 
-    .inline-card::after,
     .hamburger::after {
       content: '';
       position: absolute;
@@ -1553,7 +1523,6 @@
     }
 
     nav .nav-inner,
-    .inline-card > *,
     .nav-links.open > :not(.menu-liquid-lens),
     .hamburger > * {
       position: relative;
@@ -1649,11 +1618,6 @@
     <h1 class="animate-fade-rise">
       <span id="hero-title-text" style="display: block;">Data-driven &amp; <span class="gradient-text">AI-native</span> <em>Builder   </em></span>
     </h1>
-    <div class="inline-card-container animate-fade-rise-delay">
-      <span class="inline-card"><span class="dot"></span> Delhi, IN</span>
-      <span class="inline-card"><span class="dot"></span> Masters&#8217; Union &#39;27</span>
-      <span class="inline-card"><span class="dot"></span> CFA L2 Candidate</span>
-    </div>
   </section>
 
   <div class="logos">
@@ -1692,6 +1656,7 @@
             </div>
           </div>
           <span class="chapter-tag">Voice AI</span>
+          <span class="chapter-toggle chapter-toggle-placeholder" aria-hidden="true">+</span>
         </div>
       </div>
 
@@ -1708,6 +1673,7 @@
             </div>
           </div>
           <span class="chapter-tag">Professional Services</span>
+          <span class="chapter-toggle chapter-toggle-placeholder" aria-hidden="true">+</span>
         </div>
       </div>
 
@@ -1826,7 +1792,7 @@
         <div class="edu-item odd">
           <div class="edu-content">
             <canvas class="edu-card-canvas"></canvas>
-            <h3>Masters’ Union</h3>
+            <h3>Masters' Union University</h3>
             <p class="edu-sub">Undergraduate · Technology &amp; Business Management</p>
             <span class="edu-details">#2 Dean’s List · CFA L2 Candidate</span>
           </div>
@@ -1873,7 +1839,7 @@
       <!-- Center Gold Achievement Seal at the end -->
       <div class="edu-achievement-container">
         <div class="edu-achievement-node">★</div>
-        <div class="edu-chip">CUET 2022 — AIR 1 in English &amp; Business Studies</div>
+        <div class="edu-chip">CUET 2022 - AIR 1 in English &amp; Business Studies</div>
       </div>
       
     </div>
@@ -1908,6 +1874,7 @@
           <div class="skill-pills">
             <span class="pill-domain">Growth</span>
             <span class="pill-domain">Strategy</span>
+            <span class="pill-domain">Consulting</span>
             <span class="pill-domain">AI Agents</span>
             <span class="pill-domain">Marketing</span>
             <span class="pill-domain">Sales</span>
@@ -1932,6 +1899,8 @@
             <a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/google_ai_studio_logo.jpg" alt="AI Studio" loading="lazy" /><span class="tool-name">AI Studio</span></a>
             <a href="https://deepmind.google/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/google_antigravity_logo.jpg" alt="Antigravity" loading="lazy" /><span class="tool-name">Antigravity</span></a>
             <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/gemini_logo.jpg" alt="Gemini" loading="lazy" /><span class="tool-name">Gemini</span></a>
+            <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/claude_logo.png" alt="Claude" loading="lazy" /><span class="tool-name">Claude</span></a>
+            <a href="https://openai.com/codex/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/codex_logo.svg" alt="Codex" loading="lazy" /><span class="tool-name">Codex</span></a>
             <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/perplexity_ai_logo.jpg" alt="Perplexity" loading="lazy" /><span class="tool-name">Perplexity</span></a>
           </div>
         </div>
@@ -1953,6 +1922,7 @@
             <a href="https://notebooklm.google/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/notebooklm-logo.jpg" alt="NotebookLM" loading="lazy" /><span class="tool-name">NotebookLM</span></a>
             <a href="https://www.wispr.ai/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/wisprflow_logo.jpg" alt="Wispr Flow" loading="lazy" /><span class="tool-name">Wispr Flow</span></a>
             <a href="https://www.comet.com/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/comet-logo.jpg" alt="Comet" loading="lazy" /><span class="tool-name">Comet</span></a>
+            <a href="https://www.granola.ai/" target="_blank" rel="noopener noreferrer" class="pill-tool"><img src="./logos/granola_logo.svg" alt="Granola" loading="lazy" /><span class="tool-name">Granola</span></a>
           </div>
         </div>
 
